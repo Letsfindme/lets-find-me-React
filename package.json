@@ -1,0 +1,36 @@
+{
+  "name": "lets-find-me",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "connected-react-router": "^6.5.2",
+    "contentful": "^7.9.1",
+    "contentful-management": "^5.9.0",
+    "dotenv": "^8.0.0",
+    "history": "^4.9.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "less": "^3.9.0",
+    "parcel-bundler": "^1.12.3"
+  },
+  "author": "Fadi NOUFAL",
+  "license": "ISC"
+}
