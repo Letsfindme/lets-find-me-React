@@ -1,0 +1,85 @@
+.bs-solid {
+  border-style: solid;
+}
+
+.border-width-generator(10);
+
+.border-width-generator(@counter) when (@counter >= 0) {
+  .border-width-generator((@counter - 1));
+  .bw-@{counter} {
+    border-width: @counter*1px;
+  }
+
+  .bt-w-@{counter} {
+    border-top-width: @counter*1px;
+  }
+  .bl-w-@{counter} {
+    border-left-width: @counter*1px;
+  }
+  .br-w-@{counter} {
+    border-right-width: @counter*1px;
+  }
+  .bb-w-@{counter} {
+    border-bottom-width: @counter*1px;
+  }
+
+  @media screen and (max-width: @breakpoint-md) {
+    .bw-@{counter}-md {
+      border-width: @counter*1px;
+    }
+    .bt-w-@{counter}-md {
+      border-top-width: @counter*1px;
+    }
+    .bl-w-@{counter}-md {
+      border-left-width: @counter*1px;
+    }
+    .br-w-@{counter}-md {
+      border-right-width: @counter*1px;
+    }
+    .bb-w-@{counter}-md {
+      border-bottom-width: @counter*1px;
+    }
+  }
+
+  @media screen and (max-width: @breakpoint-xs) {
+
+    .bw-@{counter}-xs {
+      border-width: @counter*1px;
+    }
+
+    .bt-w-@{counter}-xs {
+      border-top-width: @counter*1px;
+    }
+    .bl-w-@{counter}-xs {
+      border-left-width: @counter*1px;
+    }
+    .br-w-@{counter}-xs {
+      border-right-width: @counter*1px;
+    }
+    .bb-w-@{counter}-xs {
+      border-bottom-width: @counter*1px;
+    }
+  }
+}
+
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {// Generating border-color
+      .bc-@{value} {border-color: @@value;}
+      .hover\:bc-@{value}:hover {border-color: @@value;}
+    }
+  )
+  ;
+
+  @media screen and (max-width: @breakpoint-md) {
+    .border-0-md {
+      border: none;
+    }
+  }
+
+  @media screen and (max-width: @breakpoint-md) {
+    .border-0-xs {
+      border: none;
+    }
+  }

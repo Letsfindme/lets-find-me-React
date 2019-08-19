@@ -1,0 +1,203 @@
+//Horizontal & vertical aligns
+//They are generated using a recurvise less loop as well, allowing us to generate many classes from just a list of values we want.
+//Responsive is generated at the end in another loop, allowing them to take precedence in responsive designs without using !important
+
+@aligmentValues: start, end, center, stretch;
+
+// prettier-ignore
+.for(@aligmentValues,{
+  .justify-@{value} {
+    justify-items: @value;
+  } 
+  .justify-self-@{value} {
+    justify-self:@value;
+  }
+  
+  .align-@{value} {
+    align-items: @value;
+  } 
+  .align-self-@{value} {
+    align-self:@value;
+  }
+}
+);
+
+//-md versions
+// prettier-ignore
+.for(@aligmentValues, {
+    @media screen and (max-width: @breakpoint-md) {
+    .justify-@{value}-md {
+      justify-items: @value;
+    }
+
+    .justify-self-@{value}-md {
+      justify-self: @value;
+    }
+
+    .align-@{value}-md {
+      align-items: @value;
+    }
+
+    .align-self-@{value}-md {
+      align-self: @value;
+    }
+  }
+});
+
+//-xs versions
+// prettier-ignore
+.for(@aligmentValues, {
+  @media screen and (max-width: @breakpoint-xs) {
+  .justify-@{value}-xs {
+    justify-items: @value;
+  }
+
+  .justify-self-@{value}-xs {
+    justify-self: @value;
+  }
+
+  .align-@{value}-xs {
+    align-items: @value;
+  }
+
+  .align-self-@{value}-xs {
+    align-self: @value;
+  }
+}
+});
+
+//Columns starts, ends & spans
+//Rows starts & ends
+//They are generated using a recursive less loop, because this work isn't humane even for trainees
+//Responsive is generated in another loop to prevent non-responsive style ending up higher and taking precedence
+//In the same fashion, we first generate the `-md` then the `-xs` classes to allow them to naturally take precedence.
+//This could be refactored in a single function that takes the suffix as an argument but I'm too lazy to do that right now. Sue me.
+
+.column-row-generator(12);
+.column-responsive-generator-md(12);
+.column-responsive-generator-xs(12);
+
+.column-row-generator(@counter) when (@counter > 0) {
+  .column-row-generator((@counter - 1));
+
+  .column-span-@{counter} {
+    grid-column: auto / span @counter;
+  }
+
+  .column-start-@{counter} {
+    grid-column-start: @counter;
+  }
+
+  .column-end-@{counter} {
+    grid-column-end: @counter;
+  }
+
+  .row-start-@{counter} {
+    grid-row-start: @counter;
+  }
+
+  .row-end-@{counter} {
+    grid-row-end: @counter;
+  }
+}
+
+//Grid columns need to be able to stop at grid.length + 1, ie 13 for us
+.column-row-generator(@counter) when (@counter = 12) {
+  .column-end-13 {
+    grid-column-end: 13;
+  }
+}
+
+.column-responsive-generator-md(@counter) when (@counter > 0) {
+  .column-responsive-generator-md((@counter - 1));
+
+  @media screen and (max-width: @breakpoint-md) {
+    .column-span-@{counter}-md {
+      grid-column: auto / span @counter;
+    }
+
+    .column-start-@{counter}-md {
+      grid-column-start: @counter;
+    }
+
+    .column-end-@{counter}-md {
+      grid-column-end: @counter;
+    }
+
+    .row-start-@{counter}-md  {
+      grid-row-start: @counter;
+    }
+
+    .row-end-@{counter}-md  {
+      grid-row-start: @counter;
+    }
+  }
+}
+
+//Grid columns need to be able to stop at grid.length + 1, ie 13 for us too
+.column-responsive-generator-md(@counter) when (@counter = 12) {
+  @media screen and (max-width: @breakpoint-md) {
+    .column-end-13-md {
+      grid-column-end: 13;
+    }
+  }
+}
+
+.column-responsive-generator-xs(@counter) when (@counter > 0) {
+  .column-responsive-generator-xs((@counter - 1));
+
+  @media screen and (max-width: @breakpoint-xs) {
+    .column-span-@{counter}-xs {
+      grid-column: auto / span @counter;
+    }
+
+    .column-start-@{counter}-xs {
+      grid-column-start: @counter;
+    }
+
+    .column-end-@{counter}-xs {
+      grid-column-end: @counter;
+    }
+
+    .row-start-@{counter}-xs  {
+      grid-row-start: @counter;
+    }
+
+    .row-end-@{counter}-xs  {
+      grid-row-start: @counter;
+    }
+  }
+}
+
+//Grid columns need to be able to stop at grid.length + 1, ie 13 for us too
+.column-responsive-generator-xs(@counter) when (@counter = 12) {
+  @media screen and (max-width: @breakpoint-xs) {
+    .column-end-13-xs {
+      grid-column-end: 13;
+    }
+  }
+}
+
+.grid-inline {
+  display: inline-grid;
+}
+
+@media screen and (max-width: @breakpoint-md) {
+  .grid-template-columns-auto-md {
+    grid-template-columns: auto;
+  }
+}
+
+//Here will be all miscellaneous attributes about grid such as columns-gap specifications
+
+.column-gap-0 {
+  grid-column-gap: 0;
+}
+
+.row-gap-0 {
+  grid-row-gap: 0;
+}
+
+.grid-template-rows-65-px {
+  grid-template-rows: 65px;
+}

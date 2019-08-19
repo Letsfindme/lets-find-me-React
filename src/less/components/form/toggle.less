@@ -1,0 +1,47 @@
+.toggle {
+    .relative;
+    .w-10;
+    .h-6;
+  }
+  
+  .toggle input {
+    .opacity-0;
+    .w-0;
+    .h-0;
+  }
+  
+  .slider {
+    .absolute;
+    .cursor-pointer;
+    .pin-y;
+    .pin-l;
+    .pin-r;
+    .br-35;
+    .bs-solid;
+    .bw-1;
+    .bc-purple-grey;
+    .bg-white;
+    
+  }
+  
+  .slider:before {
+    .absolute;
+    content: "";
+    .w-5;
+    .h-5;
+    left: 2px;
+    bottom: 1px;
+    .bg-purple-grey;
+    .br-35;
+    .transition-1;
+  }
+  
+  input:checked + .slider {
+    .bc-orange;
+  }
+  
+  input:checked + .slider:before {
+    transform: translate3d(14px, 0, 0);
+    .bg-orange;
+  }
+  

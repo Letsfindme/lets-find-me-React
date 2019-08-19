@@ -1,0 +1,24 @@
+//Custom CSS transitions
+.main-nav  {
+  .navlink {
+    svg {
+      * {
+        .transition-1;
+      }
+    }
+  }
+}
+
+.main-nav  {
+  li {
+    .navlink {
+      &.active {
+        svg {
+          * {
+            fill: @orange;
+          }
+        }
+      }
+    }
+  }
+}

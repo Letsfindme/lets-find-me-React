@@ -1,0 +1,17 @@
+// Background color
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {// Generating border-color
+      .bg-@{value} {background-color: @@value;}}
+  )
+  ;
+
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {
+      .hover\:bg-@{value}:hover {
+        background-color: @@value;
+      }
+});

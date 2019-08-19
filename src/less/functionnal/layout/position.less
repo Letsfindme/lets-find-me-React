@@ -1,0 +1,155 @@
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.pin-y {
+  bottom: 0;
+  top: 0;
+}
+
+.pin-r {
+  right: 0;
+}
+
+.pin-t {
+  top: 0;
+}
+
+.pin-l {
+  left: 0;
+}
+
+.pin-b {
+  bottom: 0;
+}
+
+.pos-top-90  {
+  top: 90%;
+}
+
+.pos-top-100  {
+  top: 100%;
+}
+
+//Poppers : get the element out of the way
+.pop-right-center {
+  right: 0;
+  top: 50%;
+  transform: translateX(100%) translateY(-50%);
+}
+
+.pop-top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+}
+
+.pop-left-center {
+  left: 0;
+  top: 50%;
+  transform: translateX(-100%) translateY(-50%);
+}
+
+.pop-bottom-center {
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(100%);
+}
+
+@media screen and (max-width: @breakpoint-md) {
+  .absolute-md {
+    .absolute;
+  }
+}
+
+@media screen and (max-width: @breakpoint-xs) {
+  .absolute-xs {
+    .absolute;
+  }
+}
+
+.position-generator(40);
+
+.position-generator(@counter) when (@counter >= 0) {
+  .position-generator((@counter - 1));
+
+  .t-@{counter} {
+    top: @counter*0.25rem;
+  }
+
+  .l-@{counter} {
+    left: @counter*0.25rem;
+  }
+
+  .r-@{counter} {
+    right: @counter*0.25rem;
+  }
+
+  .b-@{counter} {
+    bottom: @counter*0.25rem;
+  }
+
+  @media screen and (max-width: @breakpoint-md) {
+    .t-@{counter}-md {
+      width: @counter*0.25rem;
+    }
+    .l-@{counter}-md {
+      height: @counter*0.25rem;
+    }
+
+    .l-@{counter}-md {
+      left: @counter*0.25rem;
+    }
+    .b-@{counter}-md {
+      bottom: @counter*0.25rem;
+    }
+  }
+
+  @media screen and (max-width: @breakpoint-xs) {
+    .t-@{counter}-xs {
+      width: @counter*0.25rem;
+    }
+    .l-@{counter}-xs {
+      height: @counter*0.25rem;
+    }
+    .l-@{counter}-xs {
+      left: @counter*0.25rem;
+    }
+    .b-@{counter}-xs {
+      bottom: @counter*0.25rem;
+    }
+  }
+}
+
+@media screen and (max-width: @breakpoint-md) {
+  .sticky-md {
+    .sticky;
+  }
+  .relative-md {
+    .relative;
+  }
+}
+
+@media screen and (max-width: @breakpoint-xs) {
+  .t-auto-xs {
+    top: auto !important;
+  }
+}
+
+.t-90px {
+  top: 90px;
+}
+
+

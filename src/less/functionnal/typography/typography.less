@@ -1,0 +1,52 @@
+@import "https://use.typekit.net/aoo6xbu.css";
+
+@light: 300;
+@normal: 400;
+@medium: 500;
+@bold: 700;
+
+@basefont: 1;
+@font-size: @basefont + 0em;
+@font-family: "roboto-slab", sans-serif;
+
+html {
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+body {
+  font-size: @font-size;
+  font-family: @font-family;
+  font-weight: @normal;
+  color: @purple-dark;
+}
+
+.roboto {
+  font-family: "roboto-slab", serif;
+}
+
+.sofia {
+  font-family: "sofia-pro", sans-serif;
+}
+
+@media screen and (max-width: @breakpoint-md) {
+  .sofia-md {
+    .sofia;
+  }
+
+  .roboto-md {
+    .roboto;
+  }
+}
+
+@media screen and (max-width: @breakpoint-xs) {
+  .sofia-xs {
+    .sofia;
+  }
+
+  .roboto-xs {
+    .roboto;
+  }
+}

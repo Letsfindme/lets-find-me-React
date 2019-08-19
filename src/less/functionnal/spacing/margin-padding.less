@@ -1,0 +1,216 @@
+.margin-generator(40);
+.margin-generator-md(40);
+.margin-generator-xs(40);
+
+.margin-generator(@counter) when (@counter >= 0) {
+  .margin-generator((@counter - 1));
+
+  .my-@{counter} {
+    margin-top: @counter*0.25rem;
+    margin-bottom: @counter*0.25rem;
+  }
+  .mx-@{counter} {
+    margin-left: @counter*0.25rem;
+    margin-right: @counter*0.25rem;
+  }
+  .m-@{counter} {
+    margin: @counter*0.25rem;
+  }
+  .mt-@{counter} {
+    margin-top: @counter*0.25rem;
+  }
+  .mb-@{counter} {
+    margin-bottom: @counter*0.25rem;
+  }
+  .ml-@{counter} {
+    margin-left: @counter*0.25rem;
+  }
+  .mr-@{counter} {
+    margin-right: @counter*0.25rem;
+  }
+  .py-@{counter} {
+    padding-top: @counter*0.25rem;
+    padding-bottom: @counter*0.25rem;
+  }
+  .px-@{counter} {
+    padding-left: @counter*0.25rem;
+    padding-right: @counter*0.25rem;
+  }
+  .p-@{counter} {
+    padding: @counter*0.25rem;
+  }
+  .pt-@{counter} {
+    padding-top: @counter*0.25rem;
+  }
+  .pb-@{counter} {
+    padding-bottom: @counter*0.25rem;
+  }
+  .pl-@{counter} {
+    padding-left: @counter*0.25rem;
+  }
+  .pr-@{counter} {
+    padding-right: @counter*0.25rem;
+  }
+
+  // Negative values
+
+  .-mt-@{counter} {
+    margin-top: -@counter*0.25rem;
+  }
+  .-mb-@{counter} {
+    margin-bottom: -@counter*0.25rem;
+  }
+  .-ml-@{counter} {
+    margin-left: -@counter*0.25rem;
+  }
+  .-mr-@{counter} {
+    margin-right: -@counter*0.25rem;
+  }
+}
+
+.margin-generator-md(@counter) when (@counter >= 0) {
+  .margin-generator-md((@counter - 1));
+
+  @media screen and (max-width: @breakpoint-md) {
+    .my-@{counter}-md {
+      margin-top: @counter*0.25rem;
+      margin-bottom: @counter*0.25rem;
+    }
+    .mx-@{counter}-md {
+      margin-left: @counter*0.25rem;
+      margin-right: @counter*0.25rem;
+    }
+    .m-@{counter}-md {
+      margin: @counter*0.25rem;
+    }
+    .mt-@{counter}-md {
+      margin-top: @counter*0.25rem;
+    }
+    .mb-@{counter}-md {
+      margin-bottom: @counter*0.25rem;
+    }
+    .ml-@{counter}-md {
+      margin-left: @counter*0.25rem;
+    }
+    .mr-@{counter}-md {
+      margin-right: @counter*0.25rem;
+    }
+    .py-@{counter}-md {
+      padding-top: @counter*0.25rem;
+      padding-bottom: @counter*0.25rem;
+    }
+    .px-@{counter}-md {
+      padding-left: @counter*0.25rem;
+      padding-right: @counter*0.25rem;
+    }
+    .p-@{counter}-md {
+      padding: @counter*0.25rem;
+    }
+    .pt-@{counter}-md {
+      padding-top: @counter*0.25rem;
+    }
+    .pb-@{counter}-md {
+      padding-bottom: @counter*0.25rem;
+    }
+    .pl-@{counter}-md {
+      padding-left: @counter*0.25rem;
+    }
+    .pr-@{counter}-md {
+      padding-right: @counter*0.25rem;
+    }
+
+    // Negative values
+
+    .-mt-@{counter}-md {
+      margin-top: -@counter*0.25rem;
+    }
+    .-mb-@{counter}-md {
+      margin-bottom: -@counter*0.25rem;
+    }
+    .-ml-@{counter}-md {
+      margin-left: -@counter*0.25rem;
+    }
+    .-mr-@{counter}-md {
+      margin-right: -@counter*0.25rem;
+    }
+  }
+}
+
+.margin-generator-xs(@counter) when (@counter >= 0) {
+  .margin-generator-xs((@counter - 1));
+
+  @media screen and (max-width: @breakpoint-xs) {
+    .my-@{counter}-xs {
+      margin-top: @counter*0.25rem;
+      margin-bottom: @counter*0.25rem;
+    }
+    .mx-@{counter}-xs {
+      margin-left: @counter*0.25rem;
+      margin-right: @counter*0.25rem;
+    }
+    .m-@{counter}-xs {
+      margin: @counter*0.25rem;
+    }
+    .mt-@{counter}-xs {
+      margin-top: @counter*0.25rem;
+    }
+    .mb-@{counter}-xs {
+      margin-bottom: @counter*0.25rem;
+    }
+    .ml-@{counter}-xs {
+      margin-left: @counter*0.25rem;
+    }
+    .mr-@{counter}-xs {
+      margin-right: @counter*0.25rem;
+    }
+    .py-@{counter}-xs {
+      padding-top: @counter*0.25rem;
+      padding-bottom: @counter*0.25rem;
+    }
+    .px-@{counter}-xs {
+      padding-left: @counter*0.25rem;
+      padding-right: @counter*0.25rem;
+    }
+    .p-@{counter}-xs {
+      padding: @counter*0.25rem;
+    }
+    .pt-@{counter}-xs {
+      padding-top: @counter*0.25rem;
+    }
+    .pb-@{counter}-xs {
+      padding-bottom: @counter*0.25rem;
+    }
+    .pl-@{counter}-xs {
+      padding-left: @counter*0.25rem;
+    }
+    .pr-@{counter}-xs {
+      padding-right: @counter*0.25rem;
+    }
+
+    // Negative values
+
+    .-mt-@{counter}-xs {
+      margin-top: -@counter*0.25rem;
+    }
+    .-mb-@{counter}-xs {
+      margin-bottom: -@counter*0.25rem;
+    }
+    .-ml-@{counter}-xs {
+      margin-left: -@counter*0.25rem;
+    }
+    .-mr-@{counter}-xs {
+      margin-right: -@counter*0.25rem;
+    }
+  }
+}
+
+.my-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: @breakpoint-xs) {
+  .my-auto-xs {
+    .my-auto;
+  }
+}

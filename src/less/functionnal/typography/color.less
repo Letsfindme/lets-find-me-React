@@ -1,0 +1,17 @@
+// Font color
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {// Generating border-color
+      .text-@{value} {color: @@value;}}
+  )
+  ;
+
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {
+      .hover\:text-@{value}:hover {
+        color: @@value;
+      }
+});

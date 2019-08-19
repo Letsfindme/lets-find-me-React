@@ -1,0 +1,20 @@
+.btn {
+  &.secondary {
+    .bw-1;
+    .bc-orange;
+    .bg-transparent;
+    .text-orange;
+
+    &:hover {
+      &:not(.disabled) {
+        .bg-transparent;
+        .bc-orange-dark;
+        .text-orange-dark;
+      }
+    }
+
+    &.disabled {
+      .opacity-06;
+    }
+  }
+}

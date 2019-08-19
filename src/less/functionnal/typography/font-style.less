@@ -1,0 +1,29 @@
+.italic {
+  font-style: italic;
+}
+
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+}
+
+.text-nowrap  {
+  white-space: nowrap;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: @breakpoint-xs) {
+  .underline-xs {
+    .underline;
+  }
+}
+
+.one-line-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
