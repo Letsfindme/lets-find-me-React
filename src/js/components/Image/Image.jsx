@@ -4,7 +4,7 @@ import "./Image.css";
 
 export default props => (
   <div
-    className="image"
+    className= {props.className ? props.className : "image"}
     style={{
       backgroundImage: `url('${"http://localhost:8080/" + props.imageUrl}')`,
       backgroundSize: props.contain ? "contain" : "cover",
