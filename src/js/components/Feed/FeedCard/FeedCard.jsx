@@ -6,7 +6,7 @@ export default props => (
   <div className="post-card">
     <Image
         imageUrl={props.image}
-        className={"thumb"}
+        className="thumb"
         alt="profile avatar"
       />
     <article>
@@ -22,7 +22,7 @@ export default props => (
       />
       <div className="title">
         <div>{props.author}</div>
-        <div className="date">{props.updatedAt}</div>
+        <div className="date">{props.date}</div>
       </div>
       <div className="spacer" />
     </div>
