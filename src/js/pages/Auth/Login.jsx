@@ -1,11 +1,16 @@
 import React, { Component, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
 import Button from "../../components/Button/Button.jsx";
 import { required, length, email } from "../../util/validators";
 import Auth from "./Auth.jsx";
 
 export default props => {
+  const [authLoading, setAuthLoading] = useState(false);
+
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const getAuth = useSelector(state => state.auth.isAuthenticated);
   const [state, setState] = useState({
     loginForm: {
       email: {
@@ -23,6 +28,70 @@ export default props => {
       formIsValid: false
     }
   });
+
+  const loginHandler = (event, authData) => {
+    
+    event.preventDefault();
+    setAuthLoading(true);
+    fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: authData.email,
+        password: authData.password
+      })
+    })
+      .then(res => {
+        if (res.status === 422) {
+          throw new Error("Validation failed.");
+        }
+        if (res.status !== 200 && res.status !== 201) {
+          console.log("Error!");
+          throw new Error("Could not authenticate you!");
+        }
+        return res.json();
+      })
+      .then(resData => {
+        dispatch({ type: "SET_TOK", payload: resData.token });
+        dispatch({ type: "SET_UID", payload: resData.userId });
+        localStorage.setItem("token", resData.token);
+        localStorage.setItem("userId", resData.userId);
+        const remainingMilliseconds = 60 * 60 * 1000;
+        const expiryDate = new Date(
+          new Date().getTime() + remainingMilliseconds
+        );
+        localStorage.setItem("expiryDate", expiryDate.toISOString());
+        setAutoLogout(remainingMilliseconds);
+        setAuthLoading(false);
+        dispatch({ type: "SET_ISAUTH", payload: true });
+        props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: "SET_ISAUTH", payload: false });
+        setAuthLoading(false);
+        setError(err);
+      });
+  };
+
+  const setAutoLogout = milliseconds => {
+    setTimeout(() => {
+      logoutHandler();
+    }, milliseconds);
+  };
+
+  const logoutHandler = () => {
+    dispatch({ type: "SET_ISAUTH", payload: false });
+    dispatch({ type: "SET_TOK", payload: null });
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiryDate");
+    localStorage.removeItem("userId");
+    console.log("logoutHandler", props);
+
+    props.history.push("/hi");
+  };
 
   const inputChangeHandler = (input, value) => {
     setState(prevState => {
@@ -65,39 +134,47 @@ export default props => {
 
   return (
     <Auth>
-      <form
-        onSubmit={e =>
-          props.onLogin(e, {
-            email: state.loginForm.email.value,
-            password: state.loginForm.password.value
-          })
-        }>
-        <Input
-          id="email"
-          label="Your E-Mail"
-          type="email"
-          control="input"
-          onChange={inputChangeHandler}
-          onBlur={inputBlurHandler.bind(this, "email")}
-          value={state.loginForm["email"].value}
-          valid={state.loginForm["email"].valid}
-          touched={state.loginForm["email"].touched}
-        />
-        <Input
-          id="password"
-          label="Password"
-          type="password"
-          control="input"
-          onChange={inputChangeHandler}
-          onBlur={inputBlurHandler.bind(this, "password")}
-          value={state.loginForm["password"].value}
-          valid={state.loginForm["password"].valid}
-          touched={state.loginForm["password"].touched}
-        />
-        <Button design="raised" type="submit" loading={props.loading}>
-          Login
-        </Button>
-      </form>
+      <div className="login-card">
+        <form
+          onSubmit={e =>
+            loginHandler(e, {
+              email: state.loginForm.email.value,
+              password: state.loginForm.password.value
+            })
+          }
+        >
+          <Input
+            id="email"
+            label="Your E-Mail"
+            type="email"
+            control="input"
+            onChange={inputChangeHandler}
+            onBlur={inputBlurHandler.bind(this, "email")}
+            value={state.loginForm["email"].value}
+            valid={state.loginForm["email"].valid}
+            touched={state.loginForm["email"].touched}
+          />
+          <Input
+            id="password"
+            label="Password"
+            type="password"
+            control="input"
+            onChange={inputChangeHandler}
+            onBlur={inputBlurHandler.bind(this, "password")}
+            value={state.loginForm["password"].value}
+            valid={state.loginForm["password"].valid}
+            touched={state.loginForm["password"].touched}
+          />
+          <Button design="raised" type="submit" loading={authLoading}>
+            Login
+          </Button>
+        </form>
+        <div className="login-aside">
+          <div className="login-aside-overlay" />
+          <h1 className="login-welcome-text">Welcome Back!</h1>
+          <hr className="login-aside-hr" />
+        </div>
+      </div>
     </Auth>
   );
 };
