@@ -15,3 +15,10 @@
         background-color: @@value;
       }
 });
+/* prettier-ignore */
+.for(
+    @colorsValues,
+    {// Generating border-color
+      .@{value} {color: @@value;}}
+  )
+  ;
