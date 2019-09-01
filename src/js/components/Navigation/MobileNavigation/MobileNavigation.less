@@ -1,9 +1,10 @@
 .mobile-nav {
+  background-color: #303030 !important;
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 30rem;
+  width: 15rem;
   max-width: 90%;
   background: white;
   box-shadow: 1px 0 8px rbga(0, 0, 0, 0.26);
@@ -18,12 +19,15 @@
 }
 
 .mobile-nav__items {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mobile-nav__items.mobile {
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    height: 4rem;
+  }
+  a:visited {
+    color: white;
+  }
 }
