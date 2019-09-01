@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FeedCard from "../../../components/Feed/FeedCard/FeedCard";
-import Button from "../../../components/Button/Button";
-import Loader from "../../../components/Loader/Loader";
+import { makeStyles } from "@material-ui/core/styles";
 import "./HomePosts.less";
+import SearchCard from "../../../components/Search/SearchCard";
 export default props => {
   const dispatch = useDispatch();
   const getPosts = useSelector(state => state.feed.posts);
@@ -17,6 +17,40 @@ export default props => {
   const [postsLoading, setPostsLoading] = useState(true);
   const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const useStyles = makeStyles(theme => ({
+    text: {
+      padding: theme.spacing(2, 2, 0)
+    },
+    paper: {
+      paddingBottom: 50
+    },
+    list: {
+      marginBottom: theme.spacing(2)
+    },
+    subheader: {
+      backgroundColor: theme.palette.background.paper
+    },
+    appBar: {
+      top: "100px",
+      position: "sticky",
+      bottom: 0,
+      left: 0
+    },
+    grow: {
+      flexGrow: 1
+    },
+    fabButton: {
+      position: "absolute",
+      zIndex: 1,
+      top: -30,
+      left: 0,
+      right: 0,
+      margin: "0 auto"
+    }
+  }));
+
+  const classes = useStyles();
 
   useEffect(() => {
     loadPosts();
@@ -76,29 +110,33 @@ export default props => {
 
   return (
     <Fragment>
-      <section className="feed__control">
+      <div className="search-container">
+        <div className="search-card" position="sticky">
+          <SearchCard className="box-shadow-7" />
+        </div>
+      </div>
+      {/* <section className="feed__control">
         <Button mode="raised" design="accent" onClick={newPostHandler}>
           New Post
         </Button>
-      </section>
-      <section>
-        {!postsLoading && (
-          <div className="post-grid">
-            {getPosts.map(post => (
-              <FeedCard
-                key={post.id}
-                id={post.id}
-                author={post.author}
-                date={new Date(post.createdAt).toLocaleDateString("en-US")}
-                title={post.title}
-                image={post.imageUrl}
-                content={post.content}
-                onStartEdit={startEditPostHandler.bind(this, post.id)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      </section> */}
+      <div className="posts-container">
+        <h1>Check out Best ME articles</h1>
+        <div className="post-grid">
+          {getPosts.map(post => (
+            <FeedCard
+              key={post.id}
+              id={post.id}
+              author={post.author}
+              date={new Date(post.createdAt).toLocaleDateString("en-US")}
+              title={post.title}
+              image={post.imageUrl}
+              content={post.content}
+              onStartEdit={startEditPostHandler.bind(this, post.id)}
+            />
+          ))}
+        </div>
+      </div>
     </Fragment>
   );
 };

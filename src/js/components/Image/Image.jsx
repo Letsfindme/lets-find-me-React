@@ -8,7 +8,7 @@ export default props => (
     style={{
       backgroundImage: `url('${"http://localhost:8080/" + props.imageUrl}')`,
       backgroundSize: props.contain ? "contain" : "cover",
-      backgroundPosition: props.left ? "left" : "center"
+      backgroundPosition: props.backgroundPosition ? props.backgroundPosition : "center"
     }}
   />
 );
