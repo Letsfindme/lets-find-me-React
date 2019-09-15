@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FeedCard from "../../../components/Feed/FeedCard/FeedCard";
 import { makeStyles } from "@material-ui/core/styles";
-import "./HomePosts.less";
 import SearchCard from "../../../components/Search/SearchCard";
 export default props => {
   const dispatch = useDispatch();
   const getPosts = useSelector(state => state.feed.posts);
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [editPost, setEditPost] = useState(null);
@@ -107,9 +107,14 @@ export default props => {
   const catchError = error => {
     setError(error);
   };
+  const goToFeed = () => {
+    props.history.push("/feed");
+
+    return <Redirect to="/login" />;
+  };
 
   return (
-    <Fragment>
+    <div className="home-wrapper">
       <div className="search-container">
         <div className="search-card" position="sticky">
           <SearchCard className="box-shadow-7" />
@@ -137,6 +142,20 @@ export default props => {
           ))}
         </div>
       </div>
-    </Fragment>
+      {/* <!-- Add new post button  --> */}
+      <div className="plus-button-container">
+        <Route
+          render={({ history }) => (
+            <button
+              className="plus-button"
+              type="button"
+              onClick={() => {
+                history.push("/feed");
+              }}
+            ></button>
+          )}
+        />
+      </div>
+    </div>
   );
 };
