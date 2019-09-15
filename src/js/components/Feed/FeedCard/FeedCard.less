@@ -1,7 +1,7 @@
 /* card */
 .post-card {
-  width: 23vw;
-  min-width: 263px;
+  //width: 23vw;
+  min-width: 46%;
   margin: 2vh 1vw;
   background: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -11,7 +11,7 @@
   color: #444;
   position: relative;
   top: 0;
-  transition: all .1s ease-in;
+  transition: all 0.1s ease-in;
 
   &:hover {
     top: -2px;
@@ -51,7 +51,7 @@
     font-weight: bold;
     color: #999;
     text-transform: uppercase;
-    letter-spacing: .05em;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -68,7 +68,7 @@
   overflow: hidden;
   font-size: 0.8rem;
 
-  &>:first-child {
+  & > :first-child {
     font-weight: 500;
   }
 }
@@ -89,4 +89,10 @@ h1 {
   font-size: 20px;
   margin: 0;
   color: #333;
+}
+
+@media (max-width: 992px) {
+  .post-card {
+    width: 100%;
+  }
 }
