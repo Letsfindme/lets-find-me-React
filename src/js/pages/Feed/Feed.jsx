@@ -11,9 +11,7 @@ import "./Feed.less";
 
 export default props => {
   const dispatch = useDispatch();
-  const getPosts = useSelector(state => state.feed.posts);
-
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [editPost, setEditPost] = useState(null);
@@ -22,25 +20,32 @@ export default props => {
   const [postsLoading, setPostsLoading] = useState(true);
   const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState(false);
+  const getAuth = useSelector(state => state.auth.isAuthenticated);
+  const getToken = useSelector(state => state.auth.token);
+  const getPosts = useSelector(state => state.feed.posts);
 
   useEffect(() => {
-    fetch("http://localhost:8080/auth/status", {
-      headers: {
-        Authorization: "Bearer " + props.token
-      }
-    })
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error("Failed to fetch user status.");
+    if (getToken) {
+      loadPosts();
+      fetch("http://localhost:8080/auth/status", {
+        headers: {
+          Authorization: "Bearer " + getToken
         }
-        return res.json();
       })
-      .then(resData => {
-        setStatus(resData.status);
-      })
-      .catch(catchError);
-    loadPosts();
-  }, []);
+        .then(res => {
+          if (res.status !== 200) {
+            throw new Error("Failed to fetch user status.");
+          }
+          return res.json();
+        })
+        .then(resData => {
+          setStatus(resData.status);
+        })
+        .catch(catchError);
+    }
+  }, [getToken]);
+
+  useEffect(() => {}, [status]);
 
   const loadPosts = direction => {
     if (direction) {
@@ -58,11 +63,13 @@ export default props => {
     }
     fetch("http://localhost:8080/feed/posts?page=" + page, {
       headers: {
-        Authorization: "Bearer " + props.token
+        Authorization: "Bearer " + getToken
       }
     })
       .then(res => {
         if (res.status !== 200) {
+          console.log("res.status", res.status);
+
           throw new Error("Failed to fetch posts.");
         }
         return res.json();
@@ -81,7 +88,7 @@ export default props => {
     fetch("http://localhost:8080/auth/status", {
       method: "PATCH",
       headers: {
-        Authorization: "Bearer " + props.token,
+        Authorization: "Bearer " + getToken,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -115,6 +122,7 @@ export default props => {
   };
 
   const finishEditHandler = postData => {
+    console.log("tryng to post ",postData);
     setEditLoading(true);
     const formData = new FormData();
     formData.append("title", postData.title);
@@ -132,7 +140,7 @@ export default props => {
       method: method,
       body: formData,
       headers: {
-        Authorization: "Bearer " + props.token
+        Authorization: "Bearer " + getToken
       }
     })
       .then(res => {
@@ -219,16 +227,9 @@ export default props => {
 
   return (
     <Fragment>
-      <ErrorHandler error={error} onHandle={errorHandler} />
-      <FeedEdit
-        editing={isEditing}
-        selectedPost={editPost}
-        loading={editLoading}
-        onCancelEdit={cancelEditHandler}
-        onFinishEdit={finishEditHandler}
-      />
+      {error && <ErrorHandler error={error} onHandle={errorHandler} />}
       <section className="feed__status">
-        <form onSubmit={statusUpdateHandler}>
+        {/* <form onSubmit={statusUpdateHandler}>
           <Input
             type="text"
             placeholder="Your status"
@@ -239,13 +240,22 @@ export default props => {
           <Button mode="flat" type="submit">
             Update
           </Button>
-        </form>
+        </form> */}
       </section>
-      <section className="feed__control">
+      <FeedEdit
+        editing={isEditing}
+        selectedPost={editPost}
+        loading={editLoading}
+        onCancelEdit={cancelEditHandler}
+        onFinishEdit={finishEditHandler}
+        title="Start wrinting your post!!"
+      />
+
+      {/* <section className="feed__control">
         <Button mode="raised" design="accent" onClick={newPostHandler}>
           New Post
         </Button>
-      </section>
+      </section> */}
       <section className="feed">
         {postsLoading && (
           <div style={{ textAlign: "center", marginTop: "2rem" }}>
