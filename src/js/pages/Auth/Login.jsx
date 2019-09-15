@@ -3,9 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
 import Button from "../../components/Button/Button.jsx";
 import { required, length, email } from "../../util/validators";
+import { loginValid } from "../../components/Form/Input/validation";
+
 import Auth from "./Auth.jsx";
 
 export default props => {
+  const fields = [
+    { label: "Email", type: "input", name: "email", value: "" },
+    { label: "Password", type: "input", name: "password", value: "" }
+  ];
   const [authLoading, setAuthLoading] = useState(false);
 
   const [error, setError] = useState(null);
@@ -29,9 +35,8 @@ export default props => {
     }
   });
 
-  const loginHandler = (event, authData) => {
-    
-    event.preventDefault();
+  const loginHandler = ( authData) => {
+    // event.preventDefault();
     setAuthLoading(true);
     fetch("http://localhost:8080/auth/login", {
       method: "POST",
@@ -88,8 +93,6 @@ export default props => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
-    console.log("logoutHandler", props);
-
     props.history.push("/hi");
   };
 
@@ -135,7 +138,24 @@ export default props => {
   return (
     <Auth>
       <div className="login-card">
-        <form
+        <h1>Welcome Back!</h1>
+        <Input
+          control="form"
+          btnValue="Login"
+          fields={fields}
+          validation={loginValid}
+          formSubmit={e =>
+            loginHandler(e)
+          }
+        />
+      </div>
+    </Auth>
+  );
+};
+
+
+
+  /* <form
           onSubmit={e =>
             loginHandler(e, {
               email: state.loginForm.email.value,
@@ -143,6 +163,7 @@ export default props => {
             })
           }
         >
+          <h1>Welcome Back!</h1>
           <Input
             id="email"
             label="Your E-Mail"
@@ -168,13 +189,10 @@ export default props => {
           <Button design="raised" type="submit" loading={authLoading}>
             Login
           </Button>
-        </form>
-        <div className="login-aside">
+        </form> */
+
+  /* <div className="login-aside">
           <div className="login-aside-overlay" />
           <h1 className="login-welcome-text">Welcome Back!</h1>
           <hr className="login-aside-hr" />
-        </div>
-      </div>
-    </Auth>
-  );
-};
+        </div> */
