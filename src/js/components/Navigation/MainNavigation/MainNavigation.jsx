@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { NavLink, Route, withRouter } from "react-router-dom";
 import { history } from "../../../store/";
 import MobileToggle from "../MobileToggle/MobileToggle";
@@ -6,17 +6,32 @@ import Logo from "../../Logo/Logo";
 import avatar from "../../../../assets/images/User_Avatar.png";
 import logo from "../../../../assets/images/logo.png";
 import NavigationItems from "../NavigationItems/NavigationItems";
-import "./MainNavigation.less";
+import Submenu from "./SubMenu";
 import { useDispatch } from "react-redux";
+import ProfileAvatar from "../ProfileAvatar/profileAvatar";
 
 const mainNavigation = props => {
   const dispatch = useDispatch();
+  const [showAboutMenu, setShowAboutMenu] = useState(false);
+
+  const handleHover = event => {
+    console.log(true);
+    setShowAboutMenu(true);
+  };
+
+  const handleLeave = event => {
+    console.log(false);
+
+    setShowAboutMenu(false);
+  };
 
   const logoutHandler = () => {
     console.log("nav", props.history);
   };
 
   const onChoose = item => {
+    console.log(item.id);
+
     var anchors = document.querySelectorAll("a");
     Array.prototype.forEach.call(anchors, function(anchor) {
       anchor.addEventListener("click", explode);
@@ -135,38 +150,53 @@ const mainNavigation = props => {
 
   const navItems = [
     {
-      id: "guide",
-      text: "Become a Guide",
+      id: "guidbecomea",
+      text: "Join us",
       link: "/guide",
       show: true,
-      className: ""
+      className: "hideOnTablette",
+      logo: <i className="fas fa-hands-helping"></i>
     },
     {
-      id: "store",
+      id: "dtorenavitem",
       text: "Store",
       link: "/hi",
       show: true,
-      className: ""
+      className: "hideOnTablette",
+      logo: <i className="fas fa-shopping-bag"></i>
     },
     {
-      id: "signup",
+      id: "signupitemid",
       text: "Signup",
       link: "/signup",
       onAuth: false,
-      className: "hideOnMobile"
+      className: "hideOnTablette",
+      logo: <i className="fas fa-user-plus"></i>
     },
     {
-      id: "login",
+      id: "loinitemnav",
       text: "Login",
       link: "/login",
       onAuth: false,
-      className: "hideOnMobile"
+      className: "hideOnTablette",
+      logo: <i className="fas fa-user-circle"></i>
+    }
+  ];
+  const subItems = [
+    {
+      id: "loginjnin",
+      text: "Login",
+      link: "/login",
+      onAuth: false,
+      className: "hideOnTablette",
+      logo: <i className="fas fa-user-circle"></i>
     },
     {
       id: "logout",
       text: "Logout",
       link: "/logout",
-      onAuth: true
+      onAuth: true,
+      logo: <i className="fas fa-power-off"></i>
     }
   ];
 
@@ -180,23 +210,27 @@ const mainNavigation = props => {
       <div className="main-nav__logo">
         <NavLink className="flex items-center" to="/">
           <img className="nav-logo" src={logo} alt="img" />
-          <Logo />
+          <Logo className="textlogo" />
         </NavLink>
       </div>
       <div className="spacer" />
 
-      <ul className="nav-list">
+      <ul className="nav-list nav-list-design hideOnMobile">
         <NavigationItems
           navItems={navItems}
           isAuth={props.isAuth}
-          onLogout={logoutHandler}
           onChoose={onChoose}
         />
-        {props.isAuth && (
-          <li className="box">
-            <img className="user-profile" src={avatar} />
-          </li>
-        )}
+        <ProfileAvatar
+          isAuth={props.isAuth}
+          onLogout={logoutHandler}
+          onChoose={onChoose}
+          // handleLeave={handleLeave}
+          // handleHover={handleHover}
+          showAboutMenu={showAboutMenu}
+          avatar={avatar}
+          subItems={subItems}
+        />
       </ul>
     </nav>
   );
