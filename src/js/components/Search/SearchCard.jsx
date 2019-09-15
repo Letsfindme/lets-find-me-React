@@ -3,18 +3,24 @@ import Input from "../Form/Input/Input";
 import Button from "../Button/Button";
 import Options from "../Form/Options/Options";
 import { required, length } from "../../util/validators";
-import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
-import "./SearchCard.less";
+import { Formik } from "formik";
+import {searchValid} from '../Form/Input/validation';
 
 export default props => {
+  const fields = [
+    {label: 'What are you looking for?', type: 'input', name: 'what', value: ''},
+    {label: 'In which city', type: 'input', name: 'city', value: ''}, 
+    {label: 'Category', type: 'select', data: ['Restaurant', 'Hotel', 'House', 'Villages'], name: 'category', value: 'Please Select'},
+    
+  ];
   const SEARCH_FORM = {
     what: {
       value: "",
       valid: false,
       touched: false,
-      validators: [required, length({ min: 5 })]
+      validators: []
     },
     category: {
       value: "",
@@ -29,6 +35,9 @@ export default props => {
       validators: [required, length({ min: 5 })]
     }
   };
+
+  const options = ["Restaurant", "Hotel", "Home"];
+
   const useStyles = makeStyles(theme => ({
     card: {
       maxWidth: 345
@@ -54,12 +63,11 @@ export default props => {
 
   const [searchForm, setSearchForm] = useState(SEARCH_FORM);
   const [formIsValid, setFormIsValid] = useState(false);
-  //const classes = useStyles();
-  // const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
+
   useEffect(() => {
     //setSearchForm(SEARCH_FORM);
   }, []);
@@ -69,6 +77,7 @@ export default props => {
       let isValid = true;
       for (const validator of prevState[input].validators) {
         isValid = isValid && validator(value);
+        console.log("validator(value)", validator(value));
       }
       const updatedForm = {
         ...searchForm,
@@ -114,27 +123,32 @@ export default props => {
   return (
     <Fragment>
       <div className="text-guid">
-        <p className='box-shadow-7'>Find Your Guid</p>
+        <h1 className="box-shadow-7">Find Your Guid</h1>
       </div>
-      <form>
+      <Input control="form" 
+      btnValue="Search"
+      fields={fields} validation={searchValid} />
+     
+    {/*   <form>
         <Input
           id="what"
-          label="What"
+          type="email"
+          placeholder="restaurant"
+          label="What're you looking for?"
           control="input"
-          placeholder="What're you looking for?"
           onChange={postInputChangeHandler}
           onBlur={inputBlurHandler.bind(this, "what")}
           value={searchForm["what"].value}
           valid={searchForm["what"].valid}
           touched={searchForm["what"].touched}
         />
-        <Options />
+        <Options options={options} />
         <Input
           id="city"
-          label="City"
+          placeholder="Paris"
+          label="I'm looking in?"
           control="input"
           rows="5"
-          placeholder="Paris"
           onChange={postInputChangeHandler}
           onBlur={inputBlurHandler.bind(this, "city")}
           valid={searchForm["city"].valid}
@@ -144,7 +158,7 @@ export default props => {
         <Button mode="raised" design="accent">
           Search
         </Button>
-      </form>
+      </form> */}
     </Fragment>
   );
 };
