@@ -5,6 +5,8 @@ import HomePage from "../../pages/Home/Home";
 import SignupPage from "../../pages/Auth/Signup";
 import PrivateRoute from "./PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
+import AddPost from "../Feed/AddPost/AddPost";
+import Feed from "../Feed/Feed";
 
 export default props => {
   const [authLoading, setAuthLoading] = useState(false);
@@ -12,26 +14,9 @@ export default props => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const getAuth = useSelector(state => state.auth.isAuthenticated);
-
+  
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const expiryDate = localStorage.getItem("expiryDate");
-    if (!token || !expiryDate) {
-      return;
-    }
-    if (new Date(expiryDate) <= new Date()) {
-      logoutHandler();
-      return;
-    }
-    if (!getAuth) {
-      const userId = localStorage.getItem("userId");
-      const remainingMilliseconds =
-        new Date(expiryDate).getTime() - new Date().getTime();
-      dispatch({ type: "SET_TOK", payload: token });
-      dispatch({ type: "SET_UID", payload: userId });
-      setAutoLogout(remainingMilliseconds);
-      dispatch({ type: "SET_ISAUTH", payload: true });
-    }
+    
   }, [getAuth]);
 
   useEffect(() => {
@@ -103,19 +88,20 @@ export default props => {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/login" exact component={LoginPage} />
+        <Route path="/add" exact component={AddPost} />
+        <Route path="/feed" exact component={Feed} />
         <Route
           path="/signup"
           exact
           render={props => (
             <SignupPage
-              {...props}
               onSignup={signupHandler}
               loading={authLoading}
             />
           )}
         />
         <PrivateRoute
-          path="/hi"
+          path="/test"
           {...props}
           wasInitialized={wasInitialized}
           component={HomePage}
