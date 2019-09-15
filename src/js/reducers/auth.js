@@ -17,20 +17,21 @@ const isLoading = (state = false, action) => {
   }
 };
 
-const token = (state = null, action) => {
+const token = (state = "", action) => {
   switch (action.type) {
     case "SET_TOK":
       return action.payload;
     default:
-      return null;
+      return state;
   }
 };
+
 const userId = (state = null, action) => {
   switch (action.type) {
     case "SET_UID":
       return action.payload;
     default:
-      return null;
+      return state;
   }
 };
 
