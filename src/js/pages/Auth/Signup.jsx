@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Input from '../../components/Form/Input/Input';
-import Button from '../../components/Button/Button.jsx';
-import { required, length, email } from '../../util/validators';
-import Auth from './Auth.jsx';
+import Input from "../../components/Form/Input/Input";
+import Button from "../../components/Button/Button.jsx";
+import { required, length, email } from "../../util/validators";
+import Auth from "./Auth.jsx";
+import { signUpValid } from "../../components/Form/Input/validation";
+
 
 export default props => {
-  const [state, setstate] = useState({
+  const fields = [
+    { label: "Name", type: "input", name: "name", value: "" },
+    { label: "Email", type: "input", name: "email", value: "" },
+    { label: "Password", type: "input", name: "password", value: "" },
+    { label: "Confirm Password", type: "input", name: "confirmPassword", value: "" }
+  ];
+  const [state, setState] = useState({
     signupForm: {
       email: {
-        value: '',
+        value: "",
         valid: false,
         touched: false,
         validators: [required, email]
       },
       password: {
-        value: '',
+        value: "",
         valid: false,
         touched: false,
         validators: [required, length({ min: 5 })]
       },
       name: {
-        value: '',
+        value: "",
         valid: false,
         touched: false,
         validators: [required]
@@ -30,9 +38,8 @@ export default props => {
     }
   });
 
-
-  inputChangeHandler = (input, value) => {
-    this.setState(prevState => {
+  const inputChangeHandler = (input, value) => {
+    setState(prevState => {
       let isValid = true;
       for (const validator of prevState.signupForm[input].validators) {
         isValid = isValid && validator(value);
@@ -56,8 +63,8 @@ export default props => {
     });
   };
 
-  inputBlurHandler = input => {
-    this.setState(prevState => {
+  const inputBlurHandler = input => {
+    setState(prevState => {
       return {
         signupForm: {
           ...prevState.signupForm,
@@ -72,44 +79,56 @@ export default props => {
 
   return (
     <Auth>
-      <form onSubmit={e => this.props.onSignup(e, this.state)}>
+      <div className="login-card">
+        <h1>Welcome Back!</h1>
         <Input
-          id="email"
-          label="Your E-Mail"
-          type="email"
-          control="input"
-          onChange={this.inputChangeHandler}
-          onBlur={this.inputBlurHandler.bind(this, 'email')}
-          value={this.state.signupForm['email'].value}
-          valid={this.state.signupForm['email'].valid}
-          touched={this.state.signupForm['email'].touched}
+          control="form"
+          btnValue="Login"
+          fields={fields}
+          validation={signUpValid}
         />
-        <Input
-          id="name"
-          label="Your Name"
-          type="text"
-          control="input"
-          onChange={this.inputChangeHandler}
-          onBlur={this.inputBlurHandler.bind(this, 'name')}
-          value={this.state.signupForm['name'].value}
-          valid={this.state.signupForm['name'].valid}
-          touched={this.state.signupForm['name'].touched}
-        />
-        <Input
-          id="password"
-          label="Password"
-          type="password"
-          control="input"
-          onChange={this.inputChangeHandler}
-          onBlur={this.inputBlurHandler.bind(this, 'password')}
-          value={this.state.signupForm['password'].value}
-          valid={this.state.signupForm['password'].valid}
-          touched={this.state.signupForm['password'].touched}
-        />
-        <Button design="raised" type="submit" loading={this.props.loading}>
-          Signup
-          </Button>
-      </form>
+      </div>
     </Auth>
   );
-}
+};
+
+
+// <form onSubmit={e => props.onSignup(e, state)}>
+//           <h1>Welcome Back!</h1>
+//           <Input
+//             id="email"
+//             label="Your E-Mail"
+//             type="email"
+//             control="input"
+//             onChange={inputChangeHandler}
+//             onBlur={inputBlurHandler.bind(this, "email")}
+//             value={state.signupForm["email"].value}
+//             valid={state.signupForm["email"].valid}
+//             touched={state.signupForm["email"].touched}
+//           />
+//           <Input
+//             id="name"
+//             label="Your Name"
+//             type="text"
+//             control="input"
+//             onChange={inputChangeHandler}
+//             onBlur={inputBlurHandler.bind(this, "name")}
+//             value={state.signupForm["name"].value}
+//             valid={state.signupForm["name"].valid}
+//             touched={state.signupForm["name"].touched}
+//           />
+//           <Input
+//             id="password"
+//             label="Password"
+//             type="password"
+//             control="input"
+//             onChange={inputChangeHandler}
+//             onBlur={inputBlurHandler.bind(this, "password")}
+//             value={state.signupForm["password"].value}
+//             valid={state.signupForm["password"].valid}
+//             touched={state.signupForm["password"].touched}
+//           />
+//           <Button design="raised" type="submit" loading={props.loading}>
+//             Signup
+//           </Button>
+//         </form>

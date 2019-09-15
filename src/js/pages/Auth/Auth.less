@@ -1,31 +1,47 @@
 .auth-form {
   margin: auto;
-  min-height: 90vh;
-  width: 90vw;
+  height: 92vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  animation: fadeIn 2.25s ease-in-out;
+  background: url("https://source.unsplash.com/random/1200x900?mountain")
+    no-repeat center center;
+  background-size: cover;
 }
 
 .login-card {
+  width: 90%;
   position: relative;
   display: flex;
   background-color: #ffffff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width: 85%;
-  min-height: 80vh;
   animation: fadeIn 1s ease-in-out;
 
-  form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 2rem 1rem 2rem;
+  .wrapper {
+    width: 100%;
+  }
+  button {
+    margin-top: 2rem;
+  }
+  h1 {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    padding-left: 4rem;
+    top: 1rem;
+    left: 2rem;
+    padding: 0.8rem 3rem 0.8rem 3rem;
   }
 }
-
 
 .login-aside {
   animation: fadeIn 2.25s ease-in-out;
@@ -34,7 +50,8 @@
   justify-content: flex-end;
   flex-flow: column;
   min-height: 100%;
-  background: url("https://source.unsplash.com/random/1200x900?mountain") no-repeat center center;
+  background: url("https://source.unsplash.com/random/1200x900?mountain")
+    no-repeat center center;
   background-size: cover;
   position: relative;
 }
@@ -70,14 +87,17 @@
   animation: slideInFromLeft 2s ease-out;
 }
 
-@media (min-width: 768px) {
-  .auth-form {
-    width: 40rem;
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .login-card {
+    width: 50%;
   }
 }
 
-
-
+@media (min-width: 992px) {
+  .login-card {
+    width: 30%;
+  }
+}
 /* Animations */
 
 @keyframes fade-slide-down {
