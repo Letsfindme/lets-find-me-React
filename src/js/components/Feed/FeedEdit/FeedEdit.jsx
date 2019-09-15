@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from "react";
-
 import Backdrop from "../../Backdrop/Backdrop";
 import Modal from "../../Modal/Modal.jsx";
 import Input from "../../Form/Input/Input";
@@ -7,8 +6,26 @@ import FilePicker from "../../Form/Input/FilePicker";
 import Image from "../../Image/Image.jsx";
 import { required, length } from "../../../util/validators";
 import { generateBase64FromImage } from "../../../util/image";
+import Button from "../../Button/Button";
+import { newPostValid } from "../../Form/Input/validation";
 
 export default props => {
+  const fields = [
+    { label: "Title for your post", type: "input", name: "title", value: "" },
+    {
+      label: "Post content goes here!",
+      type: "textarea",
+      name: "content",
+      value: ""
+    },
+    {
+      label: "Add images",
+      type: "file",
+      name: "images",
+      value: ""
+    }
+  ];
+
   const POST_FORM = {
     title: {
       value: "",
@@ -29,15 +46,15 @@ export default props => {
       validators: [required, length({ min: 5 })]
     }
   };
-  const [postForm, setPostForm] = useState(POST_FORM);
+  const [postForm, setPostForm] = useState([]);
   const [formIsValid, setFormIsValid] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState([]);
   const [filesToBeSent, setFilesToBeSent] = useState([]);
 
   useEffect(() => {
-    if (props.selectedPost) {
-      console.log("props.selectedPost", props.selectedPost);
+    console.log("{formIsValid}", formIsValid);
 
+    if (props.selectedPost) {
       const postForm = {
         title: {
           value: props.selectedPost.title,
@@ -45,7 +62,7 @@ export default props => {
           touched: false,
           validators: [required, length({ min: 5 })]
         },
-        image: {
+        images: {
           value: props.selectedPost.imageUrl,
           valid: true,
           touched: false,
@@ -58,46 +75,46 @@ export default props => {
           validators: [required, length({ min: 5 })]
         }
       };
-      console.log("useeffect edit postForm", postForm);
-      setPostForm(postForm);
-      setFormIsValid(true);
+      //setPostForm(postForm);
     }
-    
   }, [props.editing]);
 
-  const postInputChangeHandler = (input, value, files) => {
+  const postInputChangeHandler = (postContent, files) => {
+    // console.log(postContent);
     if (files) {
       setFilesToBeSent(oldArray => [...oldArray, files[0]]);
       generateBase64FromImage(files[0])
         .then(b64 => {
-          console.log("setImagePreview");
-          setImagePreview(b64);
+          setImagePreview(oldImages => oldImages.concat(b64));
         })
         .catch(e => {
-          setImagePreview(null);
+          setImagePreview(oldImages => [...oldImages]);
         });
     }
-    setPostForm(prevState => {
-      let isValid = true;
-      for (const validator of prevState[input].validators) {
-        isValid = isValid && validator(value);
-      }
-      const updatedForm = {
-        ...postForm,
-        [input]: {
-          ...postForm[input],
-          valid: isValid,
-          value: files ? files[0] : value
-        }
-      };
-      
-      let formIsValid = true;
-      for (const inputName in updatedForm) {
-        formIsValid = formIsValid && updatedForm[inputName].valid;
-      }
-      setFormIsValid(formIsValid);
-      return updatedForm;
-    });
+    // setPostForm(prevState => {
+    //   let isValid = true;
+    //   const updatedForm = {
+    //     ...postForm,
+    //     [input]: {
+    //       ...postForm[input],
+    //       valid: isValid,
+    //       value: files ? files[0] : value
+    //     }
+    // };
+    // setPostForm(postContent);
+    // let formIsValid = true;
+    // setFormIsValid(formIsValid);
+    // return postForm;
+    // });
+  };
+
+  const handleRemoveImage = index => {
+    const newFilesToBeSent = [...filesToBeSent];
+    const newArray = [...imagePreview];
+    newFilesToBeSent.splice(index, 1);
+    newArray.splice(index, 1);
+    setImagePreview(newArray);
+    setFilesToBeSent(newFilesToBeSent);
   };
 
   const inputBlurHandler = input => {
@@ -118,29 +135,68 @@ export default props => {
     props.onCancelEdit();
   };
 
-  const acceptPostChangeHandler = () => {
+  const acceptPostChangeHandler = formValue => {
     const post = {
-      title: postForm.title.value,
+      title: formValue.title,
       image: filesToBeSent,
-      content: postForm.content.value
+      content: formValue.content
     };
     props.onFinishEdit(post);
-    setPostForm(POST_FORM);
-    setFormIsValid(false);
-    setImagePreview(null);
+    //setPostForm(POST_FORM);
+    //setFormIsValid(false);
+    //setImagePreview(null);
   };
 
   return props.editing ? (
     <Fragment>
-      <Modal
+      
+      <div className="feed_edit">
+        {props.title && <h1>{props.title}</h1>}
+        <Input
+          cancel
+          value={postForm.title}
+          control="form"
+          fields={fields}
+          validation={newPostValid}
+          onChange={postInputChangeHandler}
+          formSubmit={value => acceptPostChangeHandler(value)}
+          btnValue="Create my post"
+          cancelPostChangeHandler={cancelPostChangeHandler}
+        >
+          <div className="new-post__preview-image">
+            {imagePreview &&
+              imagePreview.map((images, index) => (
+                <Image
+                  onClick={() => handleRemoveImage(index)}
+                  previews
+                  key={index + "imagesPreview"}
+                  className={"imageItem"}
+                  imageUrl={images}
+                  left
+                />
+              ))}
+          </div>
+        </Input>
+      </div>
+    </Fragment>
+  ) : null;
+};
+
+
+
+
+
+{/* <Modal
         title="New Post"
         acceptEnabled={formIsValid}
         onCancelModal={cancelPostChangeHandler}
         onAcceptModal={acceptPostChangeHandler}
         isLoading={props.loading}
-      >
-        <form>
-          <Input
+      > */}
+
+
+{
+  /* <Input
             id="title"
             label="Title"
             control="input"
@@ -149,21 +205,10 @@ export default props => {
             value={postForm.title.value}
             valid={postForm.title.valid}
             touched={postForm.title.touched}
-          />
-          <FilePicker
-            id="image"
-            label="Image"
-            control="input"
-            onChange={postInputChangeHandler}
-            onBlur={inputBlurHandler.bind(this, "image")}
-            valid={postForm["image"].valid}
-            touched={postForm["image"].touched}
-          />
-          <div className="new-post__preview-image">
-            {!imagePreview && <p>Please choose an image.</p>}
-            {imagePreview && <Image imageUrl={imagePreview} contain left />}
-          </div>
-          <Input
+          /> */
+}
+{
+  /* <Input
             id="content"
             label="Content"
             control="textarea"
@@ -173,9 +218,19 @@ export default props => {
             valid={postForm["content"].valid}
             touched={postForm["content"].touched}
             value={postForm["content"].value}
-          />
-        </form>
-      </Modal>
-    </Fragment>
-  ) : null;
-};
+          /> */
+}
+{
+  /* {!imagePreview.length && <p>Please choose some images.</p>} */
+}
+{
+  /* <FilePicker
+            id="image"
+            label="Image"
+            control="input"
+            onChange={postInputChangeHandler}
+            onBlur={inputBlurHandler.bind(this, "image")}
+            valid={postForm["image"].valid}
+            touched={postForm["image"].touched}
+          /> */
+}
