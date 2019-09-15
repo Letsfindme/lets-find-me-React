@@ -1,45 +1,80 @@
 import React from "react";
-
+import ProfileAvatar from "../ProfileAvatar/profileAvatar";
 import NavigationItems from "../NavigationItems/NavigationItems";
-import "./MobileNavigation.less";
+import avatar from "../../../../assets/images/User_Avatar.png";
 const navItems = [
   {
     id: "guide",
-    text: "Become a Guide",
+    text: "Join us",
     link: "/guide",
     show: true,
-    className: ""
+    className: "",
+    logo: <i className="fas fa-hands-helping"></i>
   },
-  { id: "store", text: "Store", link: "/hi", show: true, className: "" },
+  {
+    id: "store",
+    text: "Store",
+    link: "/hi",
+    show: true,
+    className: "",
+    logo: <i className="fas fa-shopping-bag"></i>
+  },
   {
     id: "signup",
     text: "Signup",
     link: "/signup",
-    onAuth: false
+    onAuth: false,
+    logo: <i className="fas fa-user-plus"></i>
   },
   {
     id: "login",
     text: "Login",
     link: "/login",
-    onAuth: false
+    onAuth: false,
+    logo: <i className="fas fa-user-circle"></i>
   },
   {
     id: "logout",
     text: "Logout",
     link: "/logout",
-    onAuth: true
+    onAuth: true,
+    logo: <i className="fas fa-power-off"></i>
+  }
+];
+const subItems = [
+  {
+    id: "loginjnin",
+    text: "Login",
+    link: "/login",
+    onAuth: false,
+    className: "hideOnTablette",
+    logo: <i className="fas fa-user-circle"></i>
+  },
+  {
+    id: "logout",
+    text: "Logout",
+    link: "/logout",
+    onAuth: true,
+    logo: <i className="fas fa-power-off"></i>
   }
 ];
 const mobileNavigation = props => (
   <nav className={["mobile-nav", props.open ? "open" : ""].join(" ")}>
-    <ul
-      className={"mobile-nav__items"}
-    >
+    <ul className={"nav-list-design  nav-list-mobile"}>
       <NavigationItems
         navItems={navItems}
         mobile
         onChoose={props.onChooseItem}
         isAuth={props.isAuth}
+      />
+      <ProfileAvatar
+        className={"hideOnTabletteOnly"}
+        isAuth={props.isAuth}
+        onChoose={props.onChooseItem}
+        // handleLeave={handleLeave}
+        // handleHover={handleHover}
+        avatar={avatar}
+        subItems={subItems}
       />
     </ul>
   </nav>
