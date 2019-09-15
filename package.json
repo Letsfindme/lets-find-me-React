@@ -9,13 +9,21 @@
     "build": "parcel build src/index.html"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.10.2",
+    "@fortawesome/free-regular-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^4.4.0",
     "axios": "^0.19.0",
     "connected-react-router": "^6.5.2",
     "contentful": "^7.9.1",
     "contentful-management": "^5.9.0",
     "dotenv": "^8.0.0",
+    "formik": "^1.5.8",
     "history": "^4.9.0",
     "react": "^16.9.0",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.0",
     "react-router": "^5.0.1",
@@ -24,7 +32,8 @@
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",
