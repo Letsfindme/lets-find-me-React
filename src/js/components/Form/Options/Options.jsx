@@ -1,13 +1,9 @@
 import React from "react";
 
-import "./Options.less";
-
 const input = props => (
-  <div className="select">
+  <div className="select group">
     <select className="select-text" required>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      {props.options.map(option => <option key={option} value="1">{option}</option>)}
     </select>
     <span className="select-highlight" />
     <span className="select-bar" />
