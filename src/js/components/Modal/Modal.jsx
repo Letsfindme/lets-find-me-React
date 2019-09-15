@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Button from '../Button/Button.jsx';
-import './Modal.css';
+
 
 const modal = props =>
   ReactDOM.createPortal(

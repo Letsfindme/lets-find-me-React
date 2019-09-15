@@ -28,10 +28,6 @@
   text-align: right;
 }
 
-.modal__actions button {
-  margin: 0 0.5rem;
-}
-
 @media (min-width: 768px) {
   .modal {
     width: 40rem;
