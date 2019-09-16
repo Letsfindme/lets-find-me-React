@@ -33,13 +33,6 @@ const navItems = [
     onAuth: false,
     logo: <i className="fas fa-user-circle"></i>
   },
-  {
-    id: "logout",
-    text: "Logout",
-    link: "/logout",
-    onAuth: true,
-    logo: <i className="fas fa-power-off"></i>
-  }
 ];
 const subItems = [
   {
