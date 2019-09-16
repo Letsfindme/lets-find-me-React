@@ -1,6 +1,19 @@
+article.post-card {
+  padding: 1rem;
+}
+@media (min-width: @breakpoint-xs) {
+  article.post-card {
+    width: auto;
+  }
+}
+@media (max-width: @breakpoint-xs) {
+  article.post-card {
+    width: 100%;
+  }
+}
+
 .post {
   margin: 1rem 0;
-  border: 1px solid #3b0062;
   border-radius: 5px;
   padding: 0.5rem;
 }
@@ -14,7 +27,6 @@
 .post__title {
   font-size: 1.5rem;
   margin: 1rem 0;
-  color: #3b0062;
 }
 
 .post__image {

@@ -122,7 +122,7 @@ export default props => {
   };
 
   const finishEditHandler = postData => {
-    console.log("tryng to post ",postData);
+    console.log("tryng to post ", postData);
     setEditLoading(true);
     const formData = new FormData();
     formData.append("title", postData.title);
@@ -266,14 +266,16 @@ export default props => {
           <p style={{ textAlign: "center" }}>No posts found.</p>
         ) : null}
         {!postsLoading && (
-          <Paginator
-            onPrevious={loadPosts.bind(this, "previous")}
-            onNext={loadPosts.bind(this, "next")}
-            lastPage={Math.ceil(totalPosts / 2)}
-            currentPage={postPage}
-          >
+          // <Paginator
+          //   onPrevious={loadPosts.bind(this, "previous")}
+          //   onNext={loadPosts.bind(this, "next")}
+          //   lastPage={Math.ceil(totalPosts / 2)}
+          //   currentPage={postPage}
+          // >
+          <div className="post-grid">
             {getPosts.map(post => (
               <Post
+                {...props}
                 key={post.id}
                 id={post.id}
                 author={post.author}
@@ -285,7 +287,9 @@ export default props => {
                 onDelete={deletePostHandler.bind(this, post.id)}
               />
             ))}
-          </Paginator>
+          </div>
+
+          // </Paginator>
         )}
       </section>
     </Fragment>

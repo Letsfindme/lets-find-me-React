@@ -6,6 +6,7 @@ import SignupPage from "../../pages/Auth/Signup";
 import PrivateRoute from "./PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import AddPost from "../Feed/AddPost/AddPost";
+import SinglePost from "../Feed/SinglePost/SinglePost";
 import Feed from "../Feed/Feed";
 
 export default props => {
@@ -14,10 +15,9 @@ export default props => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const getAuth = useSelector(state => state.auth.isAuthenticated);
-  
-  useEffect(() => {
-    
-  }, [getAuth]);
+  const getToken = useSelector(state => state.auth.token);
+
+  useEffect(() => {}, [getAuth]);
 
   useEffect(() => {
     setWasInitialized(true);
@@ -89,15 +89,23 @@ export default props => {
         <Route path="/" exact component={HomePage} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/add" exact component={AddPost} />
-        <Route path="/feed" exact component={Feed} />
+        <Route path="/feed" exact render={props => <Feed {...props} />} />
+        <Route
+          path="/feed/:postId"
+          exact
+          render={props => (
+            <SinglePost
+              {...props}
+              //userId={this.state.userId}
+              token={getToken}
+            />
+          )}
+        />
         <Route
           path="/signup"
           exact
           render={props => (
-            <SignupPage
-              onSignup={signupHandler}
-              loading={authLoading}
-            />
+            <SignupPage onSignup={signupHandler} loading={authLoading} />
           )}
         />
         <PrivateRoute
