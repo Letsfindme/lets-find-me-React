@@ -43,7 +43,7 @@ export default props => {
   }, []);
 
   return (
-    <section className="single-post">
+    <section className="feed_edit">
       <h1>{state.title}</h1>
       <h2>
         Created by {state.author} on {state.date}

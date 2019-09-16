@@ -60,14 +60,14 @@ const input = props => {
                     className={[hasError, istouched]}
                     type="text"
                   />
+                  <span className="highlight" />
+                  <span className="bar" />
+                  <label htmlFor={field.name}>{input.label}</label>
                   <ErrorMessage
                     name={input.name}
                     component="div"
                     className="required"
                   />
-                  <span className="highlight" />
-                  <span className="bar" />
-                  <label htmlFor={field.name}>{input.label}</label>
                 </Fragment>
               );
             }}

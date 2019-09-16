@@ -3,7 +3,7 @@ import React from 'react';
 import './Paginator.css';
 
 const paginator = props => (
-  <div className="paginator">
+  <div className="post-grid">
     {props.children}
     <div className="paginator__controls">
       {props.currentPage > 1 && (
