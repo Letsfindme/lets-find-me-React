@@ -16,8 +16,9 @@
 }
 
 .nav-list-mobile {
-  flex-direction: row;
-  justify-content: left;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   align-items: flex-start;
   li &:not(.avatar-container) {
     display: flex;
@@ -34,6 +35,7 @@
 .mobile-nav.open {
   transform: translateX(0);
 }
+
 @media (min-width: @breakpoint-xs) {
   .hideOnTabletteOnly {
     display: none !important;
