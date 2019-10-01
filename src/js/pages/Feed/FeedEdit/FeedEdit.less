@@ -6,27 +6,8 @@
   padding: 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   p {
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    max-width: 17rem;
-    margin-left: -1rem;
-    background-color: @black;
-    color: white;
-    font-size: 12px;
-    text-transform: uppercase;
+    padding: 1rem;
     letter-spacing: 1px;
-  }
-}
-
-@media (max-width: @breakpoint-xs) {
-  .feed_edit {
-    padding: .5rem;
-    h1 {
-      margin-left: -1rem;
-    }
-    p {
-      background-color: inherit;
-       color: inherit
-    }
   }
 }
 
@@ -80,15 +61,21 @@
   }
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: @breakpoint-xs) {
   .feed_edit {
     width: 90%;
+    padding: 0.5rem;
+    h1 {
+      margin-left: -1rem;
+    }
     p {
+      padding: 0.5rem;
       width: 95%;
       font-size: 0.7rem;
     }
   }
 }
+
 @media (max-width: 375.98px) {
   .feed_edit {
     p:first-of-type {
