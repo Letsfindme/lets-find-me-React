@@ -93,8 +93,8 @@ textarea {
       outline: none;
     }
     &:focus ~ label:not(.btn-3),
-    &.touched ~ label 
-    //&:valid ~ label 
+    &.touched:not(.empty) ~ label 
+    // &:valid ~ label 
     {
       top: -17px;
       font-size: 12px;

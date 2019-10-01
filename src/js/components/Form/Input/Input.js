@@ -43,14 +43,13 @@ const input = props => {
             name={input.name}
             render={props => {
               const { field } = props;
-              const { errors, touched, handleBlur } = props.form;
+              const { errors, touched, handleBlur,values } = props.form;
               const hasError =
                 errors[input.name] && touched[input.name]
                   ? "wrong  invalid"
                   : "";
-              const istouched = touched[input.name] ? " touched" : "";
-              const notEmpty = input.value.length > 1 ? " touched" : "";
-
+              const istouched = touched[input.name] ? " touched " : "";
+              const empty = (values[input.name] == "" ? " empty " : "");
               return (
                 <Fragment>
                   <input
@@ -59,7 +58,7 @@ const input = props => {
                     onBlur={handleBlur}
                     id={field.name}
                     name={input.name}
-                    className={[hasError, istouched, notEmpty]}
+                    className={[hasError, istouched, empty]}
                     type="text"
                   />
                   <span className="highlight" />
@@ -225,8 +224,8 @@ const input = props => {
               name={props.name}
               required="required"
               className={[
-                !props.valid ? "invalid" : "valid",
-                props.touched ? "touched" : "untouched"
+                !props.valid ? "invalid " : "valid ",
+                props.touched ? "touched " : "untouched "
               ].join(" ")}
               id={props.id}
               value={props.value}
@@ -237,8 +236,8 @@ const input = props => {
           {props.control === "textarea" && (
             <textarea
               className={[
-                !props.valid ? "invalid" : "valid",
-                props.touched ? "touched" : "untouched"
+                !props.valid ? "invalid " : "valid ",
+                props.touched ? "touched " : "untouched "
               ].join(" ")}
               id={props.id}
               rows={props.rows}

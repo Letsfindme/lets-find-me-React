@@ -43,23 +43,29 @@
   padding: 0.2rem 0;
   margin: 0;
 }
-.comment-contain:last-child:after {
-   position: absolute;
-  /* bottom: 0;  */
+.comment-contain time {
+  font-size: 0.7rem;
+}
+.comment-contain div p {
+  display: flex;
+}
+.comment-contain p:after {
+  position: absolute;
+  bottom: 0;
   content: "";
-  width: 80%;
+  width: 90%;
   height: 1px;
   background-color: #8080802e;
 }
 
-li.comment-contain .comment-right:after {
+/* li.comment-contain .comment-right:after {
   position: absolute;
   bottom: 0;
   content: "";
   width: 100%;
   height: 1px;
   background-color: #8080802e;
-}
+} */
 
 @media (min-width: 768px) {
   .single-post {
