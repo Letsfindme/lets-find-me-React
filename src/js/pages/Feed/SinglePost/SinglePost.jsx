@@ -96,31 +96,34 @@ export default props => {
         </div>
         <p>{state.content}</p>
       </section>
-      <ul className="feed_edit">
-        {state.postComments
-          ? state.postComments.map(comment => {
-              return (
-                <li key={comment.id} className="comment-contain">
-                  <Image
-                    key={"imagesPreview avatar"}
-                    className={"user-profile"}
-                    imageUrl={comment.imageRef}
-                    left
-                  />
-                  <div>
-                    <div className="comment-right">
-                      <h5>{comment.user.username}</h5>
-                      <Moment format="YYYY/MM/DD">{comment.createdAt}</Moment>
-                      {/* <span>{comment.createdAt}</span> */}
-                    </div>
-                    <p>{comment.text}</p>
+
+      {state.postComments && (
+        <ul className="feed_edit comments">
+          <p>{state.postComments.length} comments</p>
+          {state.postComments.map(comment => {
+            return (
+              <li key={comment.id} className="comment-contain">
+                <Image
+                  key={"imagesPreview avatar"}
+                  className={"user-profile"}
+                  imageUrl={comment.imageRef}
+                  left
+                />
+                <div>
+                  <div className="comment-right">
+                    <h5>{comment.user.username}</h5>
+                    <Moment format="YYYY/MM/DD hh:mm">{comment.createdAt}</Moment>
+                    {/* <span>{comment.createdAt}</span> */}
                   </div>
-                </li>
-              );
-            })
-          : ""}
-      </ul>
-      <section className="feed_edit">
+                  <p>{comment.text}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <section className="feed_edit comment-add">
+        <i class="far fa-comment-dots"></i>
         <Input
           control="form"
           fields={fields}
