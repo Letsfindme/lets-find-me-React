@@ -1,7 +1,8 @@
 /* card */
 .post-card {
-  //width: 23vw;
-  min-width: 46%;
+  max-width: 25vw;
+  width: 100%;
+  //min-width: 46%;
   margin: 2vh 1vw;
   background: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -34,16 +35,16 @@
 
   .thumb {
     object-fit: cover;
-    height: 22vh;
+    height: 20vh;
   }
 
   p {
-    flex: 1;
-    /* make p grow to fill available space */
-    white-space: nowrap;
+    line-height: 1.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   span {
@@ -52,6 +53,18 @@
     color: #999;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+}
+
+@media (max-width: @breakpoint-md) {
+  .post-card {
+    max-width: 45vw;
+  }
+}
+
+@media (max-width: @breakpoint-xs) {
+  .post-card {
+    max-width: 100%;
   }
 }
 
@@ -79,20 +92,8 @@
 }
 
 .im-here-img {
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   margin-right: 5px;
-}
-
-/* typography */
-h1 {
-  font-size: 20px;
-  margin: 0;
-  color: #333;
-}
-
-@media (max-width: 992px) {
-  .post-card {
-    width: 100%;
-  }
 }
