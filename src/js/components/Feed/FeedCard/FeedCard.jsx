@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "../../Image/Image";
-import "./FeedCard.less";
 import { Link } from "react-router-dom";
 
 export default props => (
