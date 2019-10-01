@@ -1,41 +1,49 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
 import Button from "../../components/Button/Button.jsx";
 import { required, length, email } from "../../util/validators";
 import { loginValid } from "../../components/Form/Input/validation";
-
+import { NavLink, Route, withRouter } from "react-router-dom";
+import {
+  CSSTransition,
+  Transition,
+  TransitionGroup
+} from "react-transition-group";
 import Auth from "./Auth.jsx";
 
 export default props => {
+  let modal = props.modal;
   const fields = [
     { label: "Email", type: "input", name: "email", value: "" },
     { label: "Password", type: "input", name: "password", value: "" }
   ];
-  const [authLoading, setAuthLoading] = useState(false);
+  const fieldsSignUp = [
+    { label: "Name", type: "input", name: "name", value: "" },
+    { label: "Email", type: "input", name: "email", value: "" },
+    { label: "Password", type: "input", name: "password", value: "" },
+    {
+      label: "Confirm Password",
+      type: "input",
+      name: "confirmPassword",
+      value: ""
+    }
+  ];
 
+  const [authLoading, setAuthLoading] = useState(false);
+  const [registred, setRegistred] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const getAuth = useSelector(state => state.auth.isAuthenticated);
-  const [state, setState] = useState({
-    loginForm: {
-      email: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required, email]
-      },
-      password: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required, length({ min: 5 })]
-      },
-      formIsValid: false
-    }
-  });
 
-  const loginHandler = ( authData) => {
+  // useEffect(() => {
+  //   props.history.location.pathname == "/signup"
+  //     ? setRegistred(false)
+  //     : setRegistred(true);
+  // }, [props.history.location]);
+
+  const loginHandler = authData => {
     // event.preventDefault();
     setAuthLoading(true);
     fetch("http://localhost:8080/auth/login", {
@@ -63,7 +71,7 @@ export default props => {
         dispatch({ type: "SET_UID", payload: resData.userId });
         localStorage.setItem("token", resData.token);
         localStorage.setItem("userId", resData.userId);
-        const remainingMilliseconds = 60 * 60 * 1000;
+        const remainingMilliseconds = 6.048e+8;
         const expiryDate = new Date(
           new Date().getTime() + remainingMilliseconds
         );
@@ -71,7 +79,13 @@ export default props => {
         setAutoLogout(remainingMilliseconds);
         setAuthLoading(false);
         dispatch({ type: "SET_ISAUTH", payload: true });
-        props.history.push("/");
+        if (!modal) {
+          props.history.push("/");
+        } else {
+          console.log("closind");
+
+          props.closeModal();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -96,66 +110,94 @@ export default props => {
     props.history.push("/hi");
   };
 
-  const inputChangeHandler = (input, value) => {
-    setState(prevState => {
-      let isValid = true;
-      for (const validator of prevState.loginForm[input].validators) {
-        isValid = isValid && validator(value);
-      }
-      const updatedForm = {
-        ...prevState.loginForm,
-        [input]: {
-          ...prevState.loginForm[input],
-          valid: isValid,
-          value: value
-        }
-      };
-      let formIsValid = true;
-      for (const inputName in updatedForm) {
-        formIsValid = formIsValid && updatedForm[inputName].valid;
-      }
-      return {
-        loginForm: updatedForm,
-        formIsValid: formIsValid
-      };
-    });
+  const toggleRegidtred = () => {
+    // props.history.location.pathname == "/signup"
+    //   ? props.history.push("/login")
+    //   : props.history.push("/signup");
+    setRegistred(!registred);
+    //props.history.push("/signup");
   };
 
-  const inputBlurHandler = input => {
-    setState(prevState => {
-      return {
-        loginForm: {
-          ...prevState.loginForm,
-          [input]: {
-            ...prevState.loginForm[input],
-            touched: true
-          }
+  const signupHandler = authData => {
+    //setAuthLoading(true);
+    fetch("http://localhost:8080/auth/signup", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: authData.email,
+        password: authData.password,
+        name: authData.name
+      })
+    })
+      .then(res => {
+        if (res.status === 422) {
+          throw new Error(
+            "Validation failed. Make sure the email address isn't used yet!"
+          );
         }
-      };
-    });
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Creating a user failed!");
+        }
+        return res.json();
+      })
+      .then(resData => {
+        dispatch({ type: "SET_ISAUTH", payload: false });
+        setRegistred(!registred);
+        setMessage("Registred successfully! please signin!");
+        //setAuthLoading(false);
+        // props.history.push("/");
+        // console.log('signup ',props.history);
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: "SET_AUTH_LOADING", payload: false });
+        //setAuthLoading(false);
+        setError(err);
+      });
   };
 
   return (
     <Auth>
-      <div className="login-card">
-        <h1>Welcome Back!</h1>
-        <Input
-          control="form"
-          btnValue="Login"
-          fields={fields}
-          validation={loginValid}
-          formSubmit={e =>
-            loginHandler(e)
-          }
-        />
-      </div>
+      {registred ? (
+        <CSSTransition timeout={500} className="login-card">
+          <div key="A">
+            {message ? <p> {message}</p> : ""}
+            <h1>Welcome Back!</h1>
+            <Input
+              control="form"
+              btnValue="Login"
+              fields={fields}
+              validation={loginValid}
+              formSubmit={e => loginHandler(e)}
+            />
+            <a onClick={toggleRegidtred}>Don't have an account? join us</a>
+
+          </div>
+        </CSSTransition>
+      ) : (
+        <CSSTransition timeout={500} className="login-card">
+          <div key="B">
+            <h1>Welcome !</h1>
+            <Input
+              control="form"
+              btnValue="Signup"
+              fields={fieldsSignUp}
+              validation={loginValid}
+              formSubmit={e => signupHandler(e)}
+            />
+            <a onClick={toggleRegidtred}>
+              Already registred? Go to Login
+            </a>
+          </div>
+        </CSSTransition>
+      )}
     </Auth>
   );
 };
 
-
-
-  /* <form
+/* <form
           onSubmit={e =>
             loginHandler(e, {
               email: state.loginForm.email.value,
@@ -191,7 +233,7 @@ export default props => {
           </Button>
         </form> */
 
-  /* <div className="login-aside">
+/* <div className="login-aside">
           <div className="login-aside-overlay" />
           <h1 className="login-welcome-text">Welcome Back!</h1>
           <hr className="login-aside-hr" />
