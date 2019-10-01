@@ -1,38 +1,64 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, withRouter } from "react-router-dom";
 import { history } from "../../../store/";
 import MobileToggle from "../MobileToggle/MobileToggle";
 import Logo from "../../Logo/Logo";
-import avatar from "../../../../assets/images/User_Avatar.png";
+import avatarPng from "../../../../assets/images/User_Avatar.png";
 import logo from "../../../../assets/images/logo.png";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Submenu from "./SubMenu";
-import { useDispatch } from "react-redux";
 import ProfileAvatar from "../ProfileAvatar/profileAvatar";
 
 const mainNavigation = props => {
   const dispatch = useDispatch();
-  const [showAboutMenu, setShowAboutMenu] = useState(false);
+  const token = useSelector(state => state.auth.token);
+  const [avatar, setAvatar] = useState(null);
+  const updateAvatar = useSelector(state => state.app.updateAvatar);
 
-  const handleHover = event => {
-    console.log(true);
-    setShowAboutMenu(true);
+  useEffect(() => {
+    setAvatar(updateAvatar);
+  }, [updateAvatar]);
+
+  useEffect(() => {
+    token
+      ? getUserProfileImage(newAvatar => {
+          setAvatar(newAvatar);
+        })
+      : "";
+  }, [token]);
+
+  const getUserProfileImage = cb => {
+    fetch("http://localhost:8080/user/profile/avatar", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error("Failed to fetch avatar.");
+        }
+        return res.json();
+      })
+      .then(newAvatar => {
+        cb(newAvatar.Avatar);
+      }); //.catch(catchError);
   };
 
-  const handleLeave = event => {
-    console.log(false);
-
-    setShowAboutMenu(false);
-  };
-
-  const logoutHandler = () => {
-    console.log("nav", props.history);
-  };
+  const logoutHandler = () => {};
 
   const onChoose = item => {
-    console.log(item.id);
+    if (item.id === "logout") {
+      dispatch({ type: "SET_TOK", payload: null });
+      dispatch({ type: "SET_ISAUTH", payload: false });
+      localStorage.removeItem("token");
+      localStorage.removeItem("expiryDate");
+      localStorage.removeItem("userId");
+      props.history.push("/login");
+    }
 
-    var anchors = document.querySelectorAll("a");
+    ////////////// explode function //////////////
+    var anchors = document.querySelectorAll("li");
     Array.prototype.forEach.call(anchors, function(anchor) {
       anchor.addEventListener("click", explode);
     });
@@ -47,6 +73,7 @@ const mainNavigation = props => {
       document.body.appendChild(c);
 
       c.style.position = "absolute";
+      c.style.zIndex = "1000";
       c.style.left = x - 100 + "px";
       c.style.top = y - 100 + "px";
       c.style.pointerEvents = "none";
@@ -74,7 +101,7 @@ const mainNavigation = props => {
         particles.push(Particle());
       }
 
-      console.log(particles[0]);
+      //console.log(particles[0]);
 
       function render() {
         ctx.clearRect(0, 0, c.width, c.height);
@@ -138,14 +165,6 @@ const mainNavigation = props => {
         )
       );
     }
-    if (item.id === "logout") {
-      dispatch({ type: "SET_TOK", payload: null });
-      dispatch({ type: "SET_ISAUTH", payload: false });
-      localStorage.removeItem("token");
-      localStorage.removeItem("expiryDate");
-      localStorage.removeItem("userId");
-      props.history.push("/login");
-    }
   };
 
   const navItems = [
@@ -160,7 +179,7 @@ const mainNavigation = props => {
     {
       id: "dtorenavitem",
       text: "Store",
-      link: "/hi",
+      link: "/store",
       show: true,
       className: "hideOnTablette",
       logo: <i className="fas fa-shopping-bag"></i>
@@ -175,7 +194,7 @@ const mainNavigation = props => {
     },
     {
       id: "loinitemnav",
-      text: "Login",
+      text: "Account",
       link: "/login",
       onAuth: false,
       className: "hideOnTablette",
@@ -185,7 +204,7 @@ const mainNavigation = props => {
   const subItems = [
     {
       id: "loginjnin",
-      text: "Login",
+      text: "Account",
       link: "/login",
       onAuth: false,
       className: "hideOnTablette",
@@ -197,6 +216,13 @@ const mainNavigation = props => {
       link: "/logout",
       onAuth: true,
       logo: <i className="fas fa-power-off"></i>
+    },
+    {
+      id: "profile",
+      text: "Profile",
+      link: "/profile",
+      onAuth: true,
+      logo: <i className="fas fa-user-circle"></i>
     }
   ];
 
@@ -215,7 +241,7 @@ const mainNavigation = props => {
       </div>
       <div className="spacer" />
 
-      <ul className="nav-list nav-list-design hideOnMobile">
+      <ul className="nav-list nav-list-design ">
         <NavigationItems
           navItems={navItems}
           isAuth={props.isAuth}
@@ -225,10 +251,8 @@ const mainNavigation = props => {
           isAuth={props.isAuth}
           onLogout={logoutHandler}
           onChoose={onChoose}
-          // handleLeave={handleLeave}
-          // handleHover={handleHover}
-          showAboutMenu={showAboutMenu}
           avatar={avatar}
+          logo={avatarPng}
           subItems={subItems}
         />
       </ul>

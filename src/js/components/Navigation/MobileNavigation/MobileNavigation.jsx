@@ -28,16 +28,23 @@ const navItems = [
   },
   {
     id: "login",
-    text: "Login",
+    text: "Account",
     link: "/login",
     onAuth: false,
+    logo: <i className="fas fa-user-circle"></i>
+  },
+  {
+    id: "profile",
+    text: "Profile",
+    link: "/profile",
+    onAuth: true,
     logo: <i className="fas fa-user-circle"></i>
   },
 ];
 const subItems = [
   {
     id: "loginjnin",
-    text: "Login",
+    text: "Account",
     link: "/login",
     onAuth: false,
     className: "hideOnTablette",
@@ -60,7 +67,7 @@ const mobileNavigation = props => (
         onChoose={props.onChooseItem}
         isAuth={props.isAuth}
       />
-      <ProfileAvatar
+      {/* <ProfileAvatar
         className={"hideOnTabletteOnly"}
         isAuth={props.isAuth}
         onChoose={props.onChooseItem}
@@ -68,7 +75,7 @@ const mobileNavigation = props => (
         // handleHover={handleHover}
         avatar={avatar}
         subItems={subItems}
-      />
+      /> */}
     </ul>
   </nav>
 );
