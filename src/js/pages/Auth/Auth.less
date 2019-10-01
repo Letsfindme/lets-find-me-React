@@ -7,7 +7,7 @@
   align-items: center;
   overflow: hidden;
 
-  animation: fadeIn 2.25s ease-in-out;
+  //animation: fadeIn 2.25s ease-in-out;
   background: url("https://source.unsplash.com/random/1200x900?mountain")
     no-repeat center center;
   background-size: cover;
@@ -26,6 +26,12 @@
   justify-content: center;
   align-items: center;
   padding: 5rem 2rem 1rem 2rem;
+
+  & > p {
+    animation: fadeIn 1s ease-in-out;
+    background-color: @orange;
+    padding: 0.5rem;
+  }
   .wrapper {
     width: 100%;
   }
@@ -38,8 +44,24 @@
     width: 100%;
     padding-left: 4rem;
     top: 1rem;
-    left: 2rem;
+    left: 1rem;
     padding: 0.8rem 3rem 0.8rem 3rem;
+  }
+  & > a {
+    position: relative;
+    animation: slideInFromLeft 2s ease-out;
+    cursor: pointer;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      right: 0;
+      margin: auto;
+      background: @orange;
+      height: 3px;
+    }
+    //text-decoration: underline #E18728;
   }
 }
 
@@ -98,12 +120,13 @@
     width: 30%;
   }
 }
+
 /* Animations */
 
 @keyframes fade-slide-down {
   0% {
     opacity: 0;
-    transform: translateY(-4rem);
+    transform: translateY(-3rem);
   }
 
   100% {
@@ -114,7 +137,7 @@
 
 @keyframes slideInFromLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 
   100% {
@@ -142,4 +165,23 @@
     opacity: 1;
     left: 0;
   }
+}
+
+.remove-btn {
+  margin-right: 0.5rem;
+}
+
+.login-card-enter {
+  opacity: 0;
+}
+.login-card-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.login-card-exit {
+  opacity: 1;
+}
+.login-card-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
 }
