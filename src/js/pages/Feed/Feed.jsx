@@ -2,15 +2,19 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../../components/Feed/Post/Post";
 import Button from "../../components/Button/Button";
-import FeedEdit from "../../components/Feed/FeedEdit/FeedEdit";
+import FeedEdit from "./FeedEdit/FeedEdit";
 import Input from "../../components/Form/Input/Input";
 import Paginator from "../../components/Paginator/Paginator";
 import Loader from "../../components/Loader/Loader";
 import ErrorHandler from "../../components/ErrorHandler/ErrorHandler";
-import "./Feed.less";
+import Modal from "../../components/Modal/Modal";
+import Backdrop from "../../components/Backdrop/Backdrop";
+import Login from "../../pages/Auth/Login";
+import { NavLink, Route, withRouter } from "react-router-dom";
 
 export default props => {
   const dispatch = useDispatch();
+  const [modalIsOpen, setModalIsOpeng] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
@@ -46,6 +50,10 @@ export default props => {
   }, [getToken]);
 
   useEffect(() => {}, [status]);
+
+  const closeModal = () => {
+    setModalIsOpeng(false);
+  };
 
   const loadPosts = direction => {
     if (direction) {
@@ -122,68 +130,72 @@ export default props => {
   };
 
   const finishEditHandler = postData => {
-    console.log("tryng to post ", postData);
-    setEditLoading(true);
-    const formData = new FormData();
-    formData.append("title", postData.title);
-    formData.append("content", postData.content);
-    for (var x = 0; x < postData.image.length; x++) {
-      formData.append("image", postData.image[x]);
-    }
-    let url = "http://localhost:8080/feed/post";
-    let method = "POST";
-    if (editPost) {
-      url = "http://localhost:8080/feed/post/" + editPost._id;
-      method = "PUT";
-    }
-    fetch(url, {
-      method: method,
-      body: formData,
-      headers: {
-        Authorization: "Bearer " + getToken
+    if (!getAuth) {
+      setModalIsOpeng(true);
+      console.log(modalIsOpen);
+    } else {
+      setEditLoading(true);
+      const formData = new FormData();
+      formData.append("title", postData.title);
+      formData.append("content", postData.content);
+      for (var x = 0; x < postData.image.length; x++) {
+        formData.append("image", postData.image[x]);
       }
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error("Creating or editing a post failed!");
+      let url = "http://localhost:8080/feed/post";
+      let method = "POST";
+      if (editPost) {
+        url = "http://localhost:8080/feed/post/" + editPost._id;
+        method = "PUT";
+      }
+      fetch(url, {
+        method: method,
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + getToken
         }
-        return res.json();
       })
-      .then(resData => {
-        const post = {
-          id: resData.post.id,
-          title: resData.post.title,
-          content: resData.post.content,
-          creator: resData.post.creator,
-          createdAt: resData.post.createdAt
-        };
-        setPosts(prevState => {
-          let updatedPosts = [...prevState.posts];
-          if (prevState.editPost) {
-            const postIndex = prevState.posts.findIndex(
-              p => p.id === prevState.editPost.id
-            );
-            updatedPosts[postIndex] = post;
-          } else if (prevState.posts.length < 2) {
-            updatedPosts = prevState.posts.concat(post);
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error("Creating or editing a post failed!");
           }
-          return {
-            posts: updatedPosts,
-            isEditing: false,
-            editPost: null,
-            editLoading: false
+          return res.json();
+        })
+        .then(resData => {
+          const post = {
+            id: resData.post.id,
+            title: resData.post.title,
+            content: resData.post.content,
+            creator: resData.post.creator,
+            createdAt: resData.post.createdAt
           };
+          setPosts(prevState => {
+            let updatedPosts = [...prevState.posts];
+            if (prevState.editPost) {
+              const postIndex = prevState.posts.findIndex(
+                p => p.id === prevState.editPost.id
+              );
+              updatedPosts[postIndex] = post;
+            } else if (prevState.posts.length < 2) {
+              updatedPosts = prevState.posts.concat(post);
+            }
+            return {
+              posts: updatedPosts,
+              isEditing: false,
+              editPost: null,
+              editLoading: false
+            };
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          // setState(...state, {
+          //   isEditing: false,
+          //   editPost: null,
+          //   editLoading: false,
+          //   error: err
+          // });
         });
-      })
-      .catch(err => {
-        console.log(err);
-        // setState(...state, {
-        //   isEditing: false,
-        //   editPost: null,
-        //   editLoading: false,
-        //   error: err
-        // });
-      });
+    }
   };
 
   const statusInputChangeHandler = (input, value) => {
@@ -227,9 +239,28 @@ export default props => {
 
   return (
     <Fragment>
+      <Button link="home" className="btn mx--1 mt-8 mb-0">  back to home </Button>
       {error && <ErrorHandler error={error} onHandle={errorHandler} />}
-      <section className="feed__status">
-        {/* <form onSubmit={statusUpdateHandler}>
+      {modalIsOpen ? (
+        <Fragment>
+          <Backdrop />
+          <Modal
+            mobile
+            noHeader
+            noAction
+            // acceptEnabled={formIsValid}
+            // onCancelModal={cancelPostChangeHandler}
+            // onAcceptModal={acceptPostChangeHandler}
+            // isLoading={props.loading}
+          >
+            <Login {...props} modal={true} closeModal={closeModal} />
+          </Modal>
+        </Fragment>
+      ) : (
+        ""
+      )}
+      {/* <section className="feed__status">
+         <form onSubmit={statusUpdateHandler}>
           <Input
             type="text"
             placeholder="Your status"
@@ -240,8 +271,8 @@ export default props => {
           <Button mode="flat" type="submit">
             Update
           </Button>
-        </form> */}
-      </section>
+        </form>
+      </section>*/}
       <FeedEdit
         editing={isEditing}
         selectedPost={editPost}
