@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Backdrop from "../../Backdrop/Backdrop";
-import Modal from "../../Modal/Modal.jsx";
-import Input from "../../Form/Input/Input";
-import FilePicker from "../../Form/Input/FilePicker";
-import Image from "../../Image/Image.jsx";
+import Backdrop from "../../../components/Backdrop/Backdrop";
+import Modal from "../../../components/Modal/Modal.jsx";
+import Input from "../../../components/Form/Input/Input";
+import FilePicker from "../../../components/Form/Input/FilePicker";
+import Image from "../../../components/Image/Image.jsx";
 import { required, length } from "../../../util/validators";
 import { generateBase64FromImage } from "../../../util/image";
-import Button from "../../Button/Button";
-import { newPostValid } from "../../Form/Input/validation";
+import Button from "../../../components/Button/Button";
+import { newPostValid } from "../../../components/Form/Input/validation";
 
 export default props => {
   const fields = [
@@ -80,7 +80,6 @@ export default props => {
   }, [props.editing]);
 
   const postInputChangeHandler = (postContent, files) => {
-    // console.log(postContent);
     if (files) {
       setFilesToBeSent(oldArray => [...oldArray, files[0]]);
       generateBase64FromImage(files[0])
@@ -91,21 +90,6 @@ export default props => {
           setImagePreview(oldImages => [...oldImages]);
         });
     }
-    // setPostForm(prevState => {
-    //   let isValid = true;
-    //   const updatedForm = {
-    //     ...postForm,
-    //     [input]: {
-    //       ...postForm[input],
-    //       valid: isValid,
-    //       value: files ? files[0] : value
-    //     }
-    // };
-    // setPostForm(postContent);
-    // let formIsValid = true;
-    // setFormIsValid(formIsValid);
-    // return postForm;
-    // });
   };
 
   const handleRemoveImage = index => {
@@ -149,7 +133,6 @@ export default props => {
 
   return props.editing ? (
     <Fragment>
-      
       <div className="feed_edit">
         {props.title && <h1>{props.title}</h1>}
         <Input
@@ -182,18 +165,15 @@ export default props => {
   ) : null;
 };
 
-
-
-
-
-{/* <Modal
+{
+  /* <Modal
         title="New Post"
         acceptEnabled={formIsValid}
         onCancelModal={cancelPostChangeHandler}
         onAcceptModal={acceptPostChangeHandler}
         isLoading={props.loading}
-      > */}
-
+      > */
+}
 
 {
   /* <Input

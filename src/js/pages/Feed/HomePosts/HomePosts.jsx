@@ -116,6 +116,7 @@ export default props => {
   return (
     <div className="home-wrapper">
       <div className="search-container">
+
         <div className="search-card" position="sticky">
           <SearchCard className="box-shadow-7" />
         </div>

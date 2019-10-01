@@ -1,6 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter,
+  Switch,
+  Redirect,
+  withRouter
+} from "react-router-dom";
 import LoginPage from "../../pages/Auth/Login";
+import User from "../../pages/User/User";
 import HomePage from "../../pages/Home/Home";
 import SignupPage from "../../pages/Auth/Signup";
 import PrivateRoute from "./PrivateRoute";
@@ -9,11 +16,8 @@ import AddPost from "../Feed/AddPost/AddPost";
 import SinglePost from "../Feed/SinglePost/SinglePost";
 import Feed from "../Feed/Feed";
 
-export default props => {
-  const [authLoading, setAuthLoading] = useState(false);
+const routs = props => {
   const [wasInitialized, setWasInitialized] = useState(false);
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
   const getAuth = useSelector(state => state.auth.isAuthenticated);
   const getToken = useSelector(state => state.auth.token);
 
@@ -23,64 +27,6 @@ export default props => {
     setWasInitialized(true);
   }, [getAuth]);
 
-  const signupHandler = (event, authData) => {
-    event.preventDefault();
-    setAuthLoading(true);
-    fetch("http://localhost:8080/auth/signup", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: authData.signupForm.email.value,
-        password: authData.signupForm.password.value,
-        name: authData.signupForm.name.value
-      })
-    })
-      .then(res => {
-        if (res.status === 422) {
-          throw new Error(
-            "Validation failed. Make sure the email address isn't used yet!"
-          );
-        }
-        if (res.status !== 200 && res.status !== 201) {
-          console.log("Error!");
-          throw new Error("Creating a user failed!");
-        }
-        return res.json();
-      })
-      .then(resData => {
-        dispatch({ type: "SET_ISAUTH", payload: false });
-        setAuthLoading(false);
-        this.props.history.replace("/");
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: "SET_AUTH_LOADING", payload: false });
-        setAuthLoading(false);
-        setError(err);
-      });
-  };
-
-  const setAutoLogout = milliseconds => {
-    setTimeout(() => {
-      logoutHandler();
-    }, milliseconds);
-  };
-
-  const errorHandler = () => {
-    setError(null);
-  };
-
-  const logoutHandler = () => {
-    dispatch({ type: "SET_ISAUTH", payload: false });
-    dispatch({ type: "SET_TOK", payload: null });
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiryDate");
-    localStorage.removeItem("userId");
-
-    props.history.push("/");
-  };
 
   return (
     <BrowserRouter>
@@ -88,6 +34,7 @@ export default props => {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/login" exact component={LoginPage} />
+        <Route path="/profile" exact component={User} />
         <Route path="/add" exact component={AddPost} />
         <Route path="/feed" exact render={props => <Feed {...props} />} />
         <Route
@@ -96,20 +43,12 @@ export default props => {
           render={props => (
             <SinglePost
               {...props}
-              //userId={this.state.userId}
               token={getToken}
             />
           )}
         />
-        <Route
-          path="/signup"
-          exact
-          render={props => (
-            <SignupPage onSignup={signupHandler} loading={authLoading} />
-          )}
-        />
         <PrivateRoute
-          path="/test"
+          path="/admin"
           {...props}
           wasInitialized={wasInitialized}
           component={HomePage}
@@ -119,3 +58,73 @@ export default props => {
     </BrowserRouter>
   );
 };
+export default withRouter(routs);
+
+
+
+{/* <Route
+          path="/signup"
+          exact
+          render={props => (
+            // onSignup={signupHandler}loading={authLoading} 
+            <LoginPage signup {...props}/>
+          )}
+        /> */}
+  // const signupHandler = authData => {
+  //   console.log(props);
+
+  //   setAuthLoading(true);
+  //   fetch("http://localhost:8080/auth/signup", {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       email: authData.email,
+  //       password: authData.password,
+  //       name: authData.name
+  //     })
+  //   })
+  //     .then(res => {
+  //       if (res.status === 422) {
+  //         throw new Error(
+  //           "Validation failed. Make sure the email address isn't used yet!"
+  //         );
+  //       }
+  //       if (res.status !== 200 && res.status !== 201) {
+  //         console.log("Error!");
+  //         throw new Error("Creating a user failed!");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then(resData => {
+  //       dispatch({ type: "SET_ISAUTH", payload: false });
+  //       setAuthLoading(false);
+  //       props.history.push("/");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       dispatch({ type: "SET_AUTH_LOADING", payload: false });
+  //       setAuthLoading(false);
+  //       setError(err);
+  //     });
+  // };
+
+  // const setAutoLogout = milliseconds => {
+  //   setTimeout(() => {
+  //     logoutHandler();
+  //   }, milliseconds);
+  // };
+
+  // const errorHandler = () => {
+  //   setError(null);
+  // };
+
+  // const logoutHandler = () => {
+  //   dispatch({ type: "SET_ISAUTH", payload: false });
+  //   dispatch({ type: "SET_TOK", payload: null });
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("expiryDate");
+  //   localStorage.removeItem("userId");
+  //   props.history.push("/");
+  // };
