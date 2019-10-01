@@ -49,15 +49,17 @@ const input = props => {
                   ? "wrong  invalid"
                   : "";
               const istouched = touched[input.name] ? " touched" : "";
+              const notEmpty = input.value.length > 1 ? " touched" : "";
 
               return (
                 <Fragment>
                   <input
                     {...field}
+                    value={field.value}
                     onBlur={handleBlur}
                     id={field.name}
                     name={input.name}
-                    className={[hasError, istouched]}
+                    className={[hasError, istouched, notEmpty]}
                     type="text"
                   />
                   <span className="highlight" />
@@ -117,6 +119,7 @@ const input = props => {
       </div>
     );
   };
+
   const renderTextArea = input => {
     return (
       <div className="group" key={"tr eer"}>

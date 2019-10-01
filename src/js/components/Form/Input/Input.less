@@ -76,7 +76,7 @@ textarea {
   }
 }
 
-.wrapper {
+
   input,
   textarea {
     background: none;
@@ -92,10 +92,10 @@ textarea {
     &:focus {
       outline: none;
     }
-    &:focus ~ label:not(.btn-3)
-    ,&.touched ~ label
-    //  ,&:valid ~ label 
- {
+    &:focus ~ label:not(.btn-3),
+    &.touched ~ label 
+    //&:valid ~ label 
+    {
       top: -17px;
       font-size: 12px;
       color: @orange;
@@ -141,4 +141,4 @@ textarea {
       left: 0%;
     }
   }
-}
+
