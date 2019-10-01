@@ -37,8 +37,18 @@ const title = (state = 'My default title', action) => {
     }
 };
 
+const updateAvatar = (state = '', action) => {
+    switch (action.type) {
+        case "UPDATE_AVATAR":
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
     isLoaded,
     title,
-    fullscreen: windowSize
+    fullscreen: windowSize,
+    updateAvatar
 });

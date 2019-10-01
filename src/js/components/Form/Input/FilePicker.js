@@ -1,20 +1,26 @@
-import React from 'react';
-
-import './Input.css';
-
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const filePicker = props => (
-  <div className="input">
-    <label htmlFor={props.id}>{props.label}</label>
+  <div className="input file_picker">
     <input
-      className={[
-        !props.valid ? 'invalid' : 'valid',
-        props.touched ? 'touched' : 'untouched'
-      ].join(' ')}
+      // onChange={e => props.onChange(props.id, e.target.value, e.target.files)}
+      //onBlur={props.onBlur}
       type="file"
       id={props.id}
-      onChange={e => props.onChange(props.id, e.target.value, e.target.files)}
-      onBlur={props.onBlur}
     />
+    <label
+      className={[
+        // !props.valid ? "invalid" : "valid",
+        // props.touched ? "touched" : "untouched",
+        "btn-3"
+      ].join(" ")}
+      htmlFor={props.id}
+    >
+      <span>
+        <i className="fas fa-plus"></i>
+        Add {props.label}s
+      </span>
+    </label>
   </div>
 );
 

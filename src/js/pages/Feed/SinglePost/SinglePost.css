@@ -14,9 +14,79 @@
 
 .single-post__image {
   height: 20rem;
-  width: 20rem;
+  width: 100%;
   margin: 1rem auto;
 }
+
+.feed_edit .comment-contain ~ .comment-contain {
+  margin-top: 0.5rem;
+}
+.comment-contain {
+  position: relative;
+  display: flex;
+}
+.comment-contain div:last-child{
+  position: relative;
+}
+.comment-contain .user-profile {
+  margin-right: 0.5rem;
+}
+.comment-contain .comment-right {
+  position: relative;
+  padding: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+
+.comment-contain div h5,
+.comments p {
+  padding: 0.3rem 0 !important;
+  margin: 0 !important;
+}
+
+.comments > p {
+  margin-bottom: 0.5rem !important;
+}
+.comment-contain time {
+  font-size: 0.7rem;
+}
+.comment-contain div p {
+  display: flex;
+}
+.comment-contain p:after {
+  position: absolute;
+  bottom: 0;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #8080802e;
+}
+
+.comment-add {
+  flex-direction: row !important;
+}
+.comment-add > i {
+  margin-top: 3rem;
+  color: gray;
+}
+
+.comment-add .wrapper {
+  width: 100%;
+}
+
+.comment-add .feed__actions {
+  display: none;
+}
+/* li.comment-contain .comment-right:after {
+  position: absolute;
+  bottom: 0;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #8080802e;
+} */
 
 @media (min-width: 768px) {
   .single-post {

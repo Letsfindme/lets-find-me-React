@@ -1,8 +1,41 @@
 .common-input {
+  .p-1;
+  .my-1;
+  width: 100%;
+
   &::placeholder {
     .f4;
+    .m-1;
     .text-grey-lighter;
     .font-normal;
     .sofia;
   }
 }
+
+.wrong {
+  border-radius: 2px;
+  border: 2px solid @red-light;
+}
+
+.required {
+  color: @red-light;
+  font-size: 16px;
+  font-weight: normal;
+}
+// label {
+//   display: block;
+//   text-transform: uppercase;
+//   margin-bottom: 0.25rem;
+// }
+
+// &.touched.invalid {
+//   border-color: @red;
+//   background: @red-light;
+// }
+
+// input:focus,
+// textarea:focus {
+//   outline: none;
+//   border-color: @red;
+//   color: @yellow;
+// }

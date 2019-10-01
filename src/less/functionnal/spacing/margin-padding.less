@@ -1,6 +1,6 @@
-.margin-generator(40);
-.margin-generator-md(40);
-.margin-generator-xs(40);
+.margin-generator(20);
+.margin-generator-md(20);
+.margin-generator-xs(20);
 
 .margin-generator(@counter) when (@counter >= 0) {
   .margin-generator((@counter - 1));
@@ -9,9 +9,17 @@
     margin-top: @counter*0.25rem;
     margin-bottom: @counter*0.25rem;
   }
+  .my--@{counter} {
+    margin-top: @counter*5vh;
+    margin-bottom: @counter*5vh;
+  }
   .mx-@{counter} {
     margin-left: @counter*0.25rem;
     margin-right: @counter*0.25rem;
+  }
+  .mx--@{counter} {
+    margin-left: @counter*5vw;
+    margin-right: @counter*5vw;
   }
   .m-@{counter} {
     margin: @counter*0.25rem;

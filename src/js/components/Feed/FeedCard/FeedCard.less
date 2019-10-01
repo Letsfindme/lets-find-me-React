@@ -1,0 +1,99 @@
+/* card */
+.post-card {
+  max-width: 25vw;
+  width: 100%;
+  //min-width: 46%;
+  margin: 2vh 1vw;
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #444;
+  position: relative;
+  top: 0;
+  transition: all 0.1s ease-in;
+
+  &:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  article {
+    padding: 10px 10px 0 10px;
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    justify-content: space-between;
+    flex-direction: column;
+
+    p {
+      padding: 0;
+      margin: 0.5em 0;
+    }
+  }
+
+  .thumb {
+    object-fit: cover;
+    height: 20vh;
+  }
+
+  p {
+    line-height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (max-width: @breakpoint-md) {
+  .post-card {
+    max-width: 45vw;
+  }
+}
+
+@media (max-width: @breakpoint-xs) {
+  .post-card {
+    max-width: 100%;
+  }
+}
+
+.post-header {
+  margin: 0 10px 10px 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 0.8rem;
+
+  & > :first-child {
+    font-weight: 500;
+  }
+}
+
+.spacer {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.im-here-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+}

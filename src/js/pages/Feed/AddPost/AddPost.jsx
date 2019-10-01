@@ -2,12 +2,12 @@ import React, { Component, Fragment, useEffect, useState } from "react";
 
 import Post from "../../../components/Feed/Post/Post";
 import Button from "../../../components/Button/Button.jsx";
-import FeedEdit from "../../../components/Feed/FeedEdit/FeedEdit";
+import FeedEdit from "../FeedEdit/FeedEdit";
 import Input from "../../../components/Form/Input/Input";
 import Paginator from "../../../components/Paginator/Paginator";
 import Loader from "../../../components/Loader/Loader";
 import ErrorHandler from "../../../components/ErrorHandler/ErrorHandler";
-import "./Feed.css";
+
 
 export default props => {
   const [isEditing, setIsEditing] = useState(false);

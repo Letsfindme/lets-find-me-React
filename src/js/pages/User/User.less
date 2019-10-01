@@ -1,0 +1,51 @@
+.profile-wrapper {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  & :first-child {
+    form {
+      align-items: center;
+    }
+  }
+  .login-card {
+    padding: 0rem 2rem 1rem 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    > h2 {
+      text-transform: uppercase;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .new-post__preview-image {
+        width: auto;
+      }
+      .feed__actions {
+        align-self: flex-end;
+      }
+    }
+    .imageItem {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      margin: 0;
+    }
+  }
+  @media (min-width: @breakpoint-md) {
+    .login-card {
+      width: 50%;
+    }
+  }
+  @media (max-width: @breakpoint-md) {
+    .login-card {
+      padding: 0rem 1rem 1rem 1rem;
+      .group {
+        margin-top: 1.5rem;
+        & > p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+// VARIABLES // ============================== //
+@muted-color: @grey;
+@trans-time: 300ms;
+@width: 100%;
+
+.group {
+  position: relative;
+  margin-top: 2rem;
+}
+
+// INPUTS // ============================== //
+textarea {
+  resize: none;
+}
+
+.file_picker {
+  position: relative;
+  [type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+    padding: 0;
+  }
+
+  .btn-3 {
+    pointer-events: auto;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: inherit;
+    font-weight: 600;
+    margin: 1rem 0;
+    outline: none;
+    padding: 1rem 50px;
+    position: relative;
+    transition: all 0.3s;
+    vertical-align: middle;
+    background-color: @orange;
+    border-radius: 0;
+    overflow: hidden;
+    &:hover {
+      background-color: @orange-dark;
+
+      span {
+        transform: translateY(300%);
+      }
+
+      &::before {
+        top: 0;
+      }
+    }
+    span {
+      display: inline-block;
+      height: 100%;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    &:before {
+      text-align: center;
+      font-weight: 600;
+      color: #fff;
+      content: "\f083";
+      font-family: "Font Awesome 5 Free";
+      font-size: 130%;
+      height: 100%;
+      left: 0;
+      line-height: 2.6;
+      position: absolute;
+      top: -180%;
+      transition: all 0.3s;
+      width: 100%;
+    }
+  }
+}
+
+
+  input,
+  textarea {
+    background: none;
+    color: @black-text;
+    font-size: 18px;
+    padding: 8px 8px 10px 5px;
+    display: block;
+    width: @width;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid @muted-color;
+    transition: @trans-time ease all;
+    &:focus {
+      outline: none;
+    }
+    &:focus ~ label:not(.btn-3),
+    &.touched:not(.empty) ~ label 
+    // &:valid ~ label 
+    {
+      top: -17px;
+      font-size: 12px;
+      color: @orange;
+    }
+    &.touched.invalid ~ label,
+    .wrong ~ label {
+      top: -17px;
+      font-size: 14px;
+      color: @red-dark;
+    }
+    &:focus ~ .bar:before {
+      width: @width;
+    }
+  }
+
+  input[type="password"] {
+    letter-spacing: 0.3em;
+  }
+
+  label {
+    color: @grey-dark;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: @trans-time ease all;
+  }
+
+  .bar {
+    position: relative;
+    display: block;
+    width: @width;
+    &:before {
+      content: "";
+      height: 2px;
+      width: 0;
+      bottom: 0px;
+      position: absolute;
+      background: @orange;
+      transition: @trans-time ease all;
+      left: 0%;
+    }
+  }
+

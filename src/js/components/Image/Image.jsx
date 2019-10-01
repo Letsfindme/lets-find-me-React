@@ -1,14 +1,41 @@
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Image.css";
 
-export default props => (
-  <div
-    className="image"
-    style={{
-      backgroundImage: `url('${"http://localhost:8080/" + props.imageUrl}')`,
-      backgroundSize: props.contain ? "contain" : "cover",
-      backgroundPosition: props.left ? "left" : "center"
-    }}
-  />
-);
+export default props =>
+  props.previews ? (
+    props.imageUrl.length > 1 ? (
+      <div
+        className={props.className}
+        style={{
+          backgroundImage: `url('${props.imageUrl}')`,
+          backgroundSize: props.contain ? "contain" : "cover",
+          backgroundPosition: props.backgroundPosition
+            ? props.backgroundPosition
+            : "center"
+        }}
+      >
+        <span onClick={props.onClick}>
+          <FontAwesomeIcon icon="trash-alt" />
+        </span>
+      </div>
+    ) : (
+      ""
+    )
+  ) : props.imageUrl ? (
+    <div>
+      <div
+        className={props.className ? props.className : "image"}
+        style={{
+          backgroundImage: `url('${"http://localhost:8080/" +
+            props.imageUrl}')`,
+          backgroundSize: props.contain ? "contain" : "cover",
+          backgroundPosition: props.backgroundPosition
+            ? props.backgroundPosition
+            : "center"
+        }}
+      />
+    </div>
+  ) : (
+    ""
+  );
