@@ -77,7 +77,6 @@ export default props => {
       let isValid = true;
       for (const validator of prevState[input].validators) {
         isValid = isValid && validator(value);
-        console.log("validator(value)", validator(value));
       }
       const updatedForm = {
         ...searchForm,
