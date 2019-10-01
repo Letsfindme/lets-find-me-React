@@ -1,4 +1,6 @@
 .avatar-container {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   height: 100%;
   padding: 0.2rem !important;
@@ -8,9 +10,9 @@
     }
   }
   @media screen and (max-width: @breakpoint-xs) {
-    display: initial !important;
+    //display: initial !important;
     .user-profile {
-      width: 3.5rem;
+      //width: 3.5rem;
     }
   }
   .dropdown {
@@ -23,9 +25,9 @@
     width: 12rem;
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-    @media screen and (max-width: @breakpoint-xs) {
-      top: -26%;
-    }
+    // @media screen and (max-width: @breakpoint-xs) {
+    //   top: -26%;
+    // }
     .dropdown-ul {
       text-align: center;
       text-transform: uppercase;
