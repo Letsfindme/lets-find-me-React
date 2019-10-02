@@ -18,6 +18,10 @@
   margin: 1rem auto;
 }
 
+.feed_edit .post-content {
+  display: flex;
+  align-items: center;
+}
 .feed_edit .comment-contain ~ .comment-contain {
   margin-top: 0.5rem;
 }
@@ -25,7 +29,7 @@
   position: relative;
   display: flex;
 }
-.comment-contain div:last-child{
+.comment-contain div:last-child {
   position: relative;
 }
 .comment-contain .user-profile {
@@ -41,7 +45,8 @@
 }
 
 .comment-contain div h5,
-.comments p {
+.comments p,
+.post-content {
   padding: 0.3rem 0 !important;
   margin: 0 !important;
 }
