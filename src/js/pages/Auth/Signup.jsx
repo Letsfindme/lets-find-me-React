@@ -9,7 +9,7 @@ import { NavLink, Route, withRouter } from "react-router-dom";
 
 export default props => {
   const fields = [
-    { label: "Name", type: "input", name: "name", value: "" },
+    { label: "User name", type: "input", name: "username", value: "" },
     { label: "Email", type: "input", name: "email", value: "" },
     { label: "Password", type: "input", name: "password", value: "" },
     { label: "Confirm Password", type: "input", name: "confirmPassword", value: "" }
@@ -29,7 +29,7 @@ export default props => {
       body: JSON.stringify({
         email: authData.email,
         password: authData.password,
-        name: authData.name
+        username: authData.username
       })
     })
       .then(res => {

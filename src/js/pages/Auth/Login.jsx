@@ -19,7 +19,7 @@ export default props => {
     { label: "Password", type: "input", name: "password", value: "" }
   ];
   const fieldsSignUp = [
-    { label: "Name", type: "input", name: "name", value: "" },
+    { label: "User name", type: "input", name: "username", value: "" },
     { label: "Email", type: "input", name: "email", value: "" },
     { label: "Password", type: "input", name: "password", value: "" },
     {
@@ -128,7 +128,7 @@ export default props => {
       body: JSON.stringify({
         email: authData.email,
         password: authData.password,
-        name: authData.name
+        username: authData.username
       })
     })
       .then(res => {
