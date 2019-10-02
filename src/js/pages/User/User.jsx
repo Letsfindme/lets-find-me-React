@@ -54,20 +54,22 @@ export default props => {
 
   const appendUserDate = data => {
     setLodaingProfile(true);
-    fields[0].value = data.firstname;
-    fields[1].value = data.lastname;
-    fields[2].value = data.email;
+    if (data.firstname) {
+      fields[0].value = data.firstname;
+      fields[1].value = data.lastname;
+      fields[2].value = data.email;
 
-    addressFields[0].value = data.address.street;
-    addressFields[1].value = data.address.city;
-    addressFields[2].value = data.address.country;
-    addressFields[3].value = data.address.postcode;
+      addressFields[0].value = data.address.street;
+      addressFields[1].value = data.address.city;
+      addressFields[2].value = data.address.country;
+      addressFields[3].value = data.address.postcode;
 
-    setImageDefault(data.Avatar.imageRef);
-    setLoadedFields(fields);
-    setLoadedAddress(addressFields);
-    console.log(addressFields);
-    
+      setImageDefault(data.Avatar.imageRef);
+      setLoadedFields(fields);
+      setLoadedAddress(addressFields);
+    } else {
+    }
+
     setLodaingProfile(false);
   };
 
@@ -178,14 +180,14 @@ export default props => {
                 left
               />
             ) : (
-              <Image
-                onClick={handleRemoveImage}
-                key={"imagesPreview avatar"}
-                className={"user-profile"}
-                imageUrl={imageDefault}
-                left
-              />
-            )}
+                <Image
+                  onClick={handleRemoveImage}
+                  key={"imagesPreview avatar"}
+                  className={"user-profile"}
+                  imageUrl={imageDefault}
+                  left
+                />
+              )}
           </div>
         </Input>
       </div>
@@ -200,22 +202,22 @@ export default props => {
             formSubmit={e => profileInfoHandler(e)}
           />
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
       <div className="login-card">
         <h2>My Address</h2>
         {!lodaingProfile ? (
-        <Input
-          control="form"
-          btnValue="Update My Address"
-          fields={loadedAddress}
-          //   validation={loginValid}
-          formSubmit={e => adressInfoHandler(e)}
-        />
+          <Input
+            control="form"
+            btnValue="Update My Address"
+            fields={loadedAddress}
+            //   validation={loginValid}
+            formSubmit={e => adressInfoHandler(e)}
+          />
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     </div>
   );
