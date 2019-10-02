@@ -19,8 +19,7 @@
 }
 
 .feed_edit .post-content {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
 }
 .feed_edit .comment-contain ~ .comment-contain {
   margin-top: 0.5rem;
@@ -46,7 +45,7 @@
 
 .comment-contain div h5,
 .comments p,
-.post-content {
+.post-content p{
   padding: 0.3rem 0 !important;
   margin: 0 !important;
 }

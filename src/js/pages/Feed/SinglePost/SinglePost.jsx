@@ -88,9 +88,6 @@ export default props => {
       </Button>
       <section className="feed_edit">
         <h1>{state.title}</h1>
-        <h2>
-          Created by {state.author} on {state.date}
-        </h2>
         <div className="single-post__image">
           <Image imageUrl={state.imageUrl} />
         </div>
@@ -129,7 +126,7 @@ export default props => {
         </div> */}
       </section>
 
-      {state.postComments && (
+      {state.postComments && state.postComments.length > 0 && (
         <ul className="feed_edit comments">
           <p>{state.postComments.length} comments</p>
           {state.postComments.map(comment => {
@@ -165,7 +162,7 @@ export default props => {
           //onChange={postInputChangeHandler}
           formSubmit={value => addCommentHandler(value)}
           btnValue="Add commit"
-          //cancelPostChangeHandler={cancelPostChangeHandler}
+        //cancelPostChangeHandler={cancelPostChangeHandler}
         ></Input>
       </section>
     </Fragment>

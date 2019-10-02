@@ -133,10 +133,10 @@ export default props => {
             <FeedCard
               key={post.id}
               id={post.id}
-              author={post.author}
+              author={post.user.username}
               date={new Date(post.createdAt).toLocaleDateString("en-US")}
               title={post.title}
-              image={post.imageUrl}
+              image={post.user.Avatar.imageRef}
               content={post.content}
               onStartEdit={startEditPostHandler.bind(this, post.id)}
             />
