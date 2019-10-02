@@ -94,7 +94,39 @@ export default props => {
         <div className="single-post__image">
           <Image imageUrl={state.imageUrl} />
         </div>
-        <p>{state.content}</p>
+
+        <li className="post-content comment-contain">
+          {state.user && (
+            <Fragment>
+              <Image
+                key={"imagesPreview avatar"}
+                className={"user-profile"}
+                imageUrl={state.user.Avatar.imageRef}
+                left
+              />
+
+              <div>
+                <div className="comment-right">
+                  <h5>{state.user.username}</h5>
+                  <Moment format="YYYY/MM/DD hh:mm">{state.createdAt}</Moment>
+                </div>
+                <p>{state.content}</p>
+              </div>
+            </Fragment>
+          )}
+        </li>
+
+        {/* <div className="post-content">
+          {state.user && (
+            <Image
+              key={"imagesPreview avatar"}
+              className={"user-profile"}
+              imageUrl={state.user.Avatar.imageRef}
+              left
+            />
+          )}
+          <p>{state.content}</p>
+        </div> */}
       </section>
 
       {state.postComments && (
@@ -112,7 +144,9 @@ export default props => {
                 <div>
                   <div className="comment-right">
                     <h5>{comment.user.username}</h5>
-                    <Moment format="YYYY/MM/DD hh:mm">{comment.createdAt}</Moment>
+                    <Moment format="YYYY/MM/DD hh:mm">
+                      {comment.createdAt}
+                    </Moment>
                     {/* <span>{comment.createdAt}</span> */}
                   </div>
                   <p>{comment.text}</p>
