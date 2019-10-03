@@ -57,9 +57,7 @@ export default props => {
       setPostsLoading(true);
       loadPosts();
     } else {
-      console.log(getPosts);
-      
-      //setPostsLoading(false);
+      setPostsLoading(false);
     }
   }, []);
 
@@ -144,6 +142,7 @@ export default props => {
                 author={post.user.username}
                 date={new Date(post.createdAt).toLocaleDateString("en-US")}
                 title={post.title}
+                thumb={post.imageUrl}
                 image={post.user.Avatar.imageRef}
                 content={post.content}
                 onStartEdit={startEditPostHandler.bind(this, post.id)}

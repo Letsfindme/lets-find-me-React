@@ -52,8 +52,6 @@ export default props => {
   const [filesToBeSent, setFilesToBeSent] = useState([]);
 
   useEffect(() => {
-    console.log("{formIsValid}", formIsValid);
-
     if (props.selectedPost) {
       const postForm = {
         title: {
