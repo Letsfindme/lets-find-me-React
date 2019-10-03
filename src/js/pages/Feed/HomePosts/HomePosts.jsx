@@ -53,7 +53,14 @@ export default props => {
   const classes = useStyles();
 
   useEffect(() => {
-    loadPosts();
+    if (getPosts.length == 0) {
+      setPostsLoading(true);
+      loadPosts();
+    } else {
+      console.log(getPosts);
+      
+      //setPostsLoading(false);
+    }
   }, []);
 
   const loadPosts = () => {
@@ -65,9 +72,9 @@ export default props => {
         return res.json();
       })
       .then(resData => {
-        dispatch({ type: "SET_POSTS", payload: resData.posts }),
-          setPostsLoading(false);
+        dispatch({ type: "SET_POSTS", payload: resData.posts });
       })
+      .then(setPostsLoading(false))
       .catch(catchError);
   };
 
@@ -116,7 +123,6 @@ export default props => {
   return (
     <div className="home-wrapper">
       <div className="search-container">
-
         <div className="search-card" position="sticky">
           <SearchCard className="box-shadow-7" />
         </div>
@@ -129,18 +135,20 @@ export default props => {
       <div className="posts-container">
         <h1>Check out Best ME articles</h1>
         <div className="post-grid">
-          {getPosts.map(post => (
-            <FeedCard
-              key={post.id}
-              id={post.id}
-              author={post.user.username}
-              date={new Date(post.createdAt).toLocaleDateString("en-US")}
-              title={post.title}
-              image={post.user.Avatar.imageRef}
-              content={post.content}
-              onStartEdit={startEditPostHandler.bind(this, post.id)}
-            />
-          ))}
+          {!postsLoading &&
+            // getPosts &&
+            getPosts.map(post => (
+              <FeedCard
+                key={post.id}
+                id={post.id}
+                author={post.user.username}
+                date={new Date(post.createdAt).toLocaleDateString("en-US")}
+                title={post.title}
+                image={post.user.Avatar.imageRef}
+                content={post.content}
+                onStartEdit={startEditPostHandler.bind(this, post.id)}
+              />
+            ))}
         </div>
       </div>
       {/* <!-- Add new post button  --> */}
