@@ -30,7 +30,7 @@ export default props => {
 
   useEffect(() => {
     if (getToken) {
-      loadPosts();
+      // loadPosts();
       fetch("http://localhost:8080/auth/status", {
         headers: {
           Authorization: "Bearer " + getToken
@@ -76,8 +76,6 @@ export default props => {
     })
       .then(res => {
         if (res.status !== 200) {
-          console.log("res.status", res.status);
-
           throw new Error("Failed to fetch posts.");
         }
         return res.json();
@@ -132,7 +130,6 @@ export default props => {
   const finishEditHandler = postData => {
     if (!getAuth) {
       setModalIsOpeng(true);
-      console.log(modalIsOpen);
     } else {
       setEditLoading(true);
       const formData = new FormData();

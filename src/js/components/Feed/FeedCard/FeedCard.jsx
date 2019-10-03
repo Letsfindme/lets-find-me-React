@@ -6,7 +6,7 @@ import Moment from "react-moment";
 export default props => (
   <div className="post-card" link={"/feed/" + props.id}>
     <Link to={"/feed/" + props.id}>
-      <Image imageUrl={props.image} className="thumb" alt="profile avatar" />
+      <Image imageUrl={props.thumb} className="thumb" alt="profile avatar" />
       <article>
         <span>{props.title}</span>
         <p>{props.content}</p>
