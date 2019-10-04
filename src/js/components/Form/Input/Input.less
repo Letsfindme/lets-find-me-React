@@ -6,6 +6,13 @@
 .group {
   position: relative;
   margin-top: 2rem;
+  &.image-group {
+    margin-top: 0rem;
+    p {
+      padding: 1rem 0 0 0;
+      margin: 0;
+    }
+  }
 }
 
 // INPUTS // ============================== //
@@ -22,6 +29,10 @@ textarea {
     padding: 0;
   }
 
+  label.btn-3 {
+    left: 0;
+  }
+
   .btn-3 {
     pointer-events: auto;
     border: none;
@@ -33,7 +44,7 @@ textarea {
     font-weight: 600;
     margin: 1rem 0;
     outline: none;
-    padding: 1rem 50px;
+    padding: 0.5rem;
     position: relative;
     transition: all 0.3s;
     vertical-align: middle;
@@ -67,7 +78,7 @@ textarea {
       font-size: 130%;
       height: 100%;
       left: 0;
-      line-height: 2.6;
+      line-height: 1.7;
       position: absolute;
       top: -180%;
       transition: all 0.3s;
@@ -76,69 +87,67 @@ textarea {
   }
 }
 
-
-  input,
-  textarea {
-    background: none;
-    color: @black-text;
-    font-size: 18px;
-    padding: 8px 8px 10px 5px;
-    display: block;
-    width: @width;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid @muted-color;
-    transition: @trans-time ease all;
-    &:focus {
-      outline: none;
-    }
-    &:focus ~ label:not(.btn-3),
+input,
+textarea {
+  background: none;
+  color: @black-text;
+  font-size: 18px;
+  padding: 8px 8px 10px 5px;
+  display: block;
+  width: @width;
+  border: none;
+  // border-radius: 0;
+  border-bottom: 1px solid @muted-color;
+  transition: @trans-time ease all;
+  &:focus {
+    outline: none;
+  }
+  &:focus ~ label:not(.btn-3),
     &.touched:not(.empty) ~ label 
     // &:valid ~ label 
-    {
-      top: -17px;
-      font-size: 12px;
-      color: @orange;
-    }
-    &.touched.invalid ~ label,
-    .wrong ~ label {
-      top: -17px;
-      font-size: 14px;
-      color: @red-dark;
-    }
-    &:focus ~ .bar:before {
-      width: @width;
-    }
+ {
+    top: -17px;
+    font-size: 12px;
+    color: @orange;
   }
-
-  input[type="password"] {
-    letter-spacing: 0.3em;
+  &.touched.invalid ~ label,
+  .wrong ~ label {
+    top: -17px;
+    font-size: 14px;
+    color: @red-dark;
   }
-
-  label {
-    color: @grey-dark;
-    font-size: 16px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 10px;
-    transition: @trans-time ease all;
-  }
-
-  .bar {
-    position: relative;
-    display: block;
+  &:focus ~ .bar:before {
     width: @width;
-    &:before {
-      content: "";
-      height: 2px;
-      width: 0;
-      bottom: 0px;
-      position: absolute;
-      background: @orange;
-      transition: @trans-time ease all;
-      left: 0%;
-    }
   }
+}
 
+input[type="password"] {
+  letter-spacing: 0.3em;
+}
+
+label {
+  color: @grey-dark;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: @trans-time ease all;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: @width;
+  &:before {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0px;
+    position: absolute;
+    background: @orange;
+    transition: @trans-time ease all;
+    left: 0%;
+  }
+}

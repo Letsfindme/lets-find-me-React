@@ -25,6 +25,7 @@
   margin-top: 0.5rem;
 }
 .comment-contain {
+  background-color: #eaeaea;
   position: relative;
   display: flex;
 }

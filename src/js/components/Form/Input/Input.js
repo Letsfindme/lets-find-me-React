@@ -142,7 +142,7 @@ const input = props => {
 
   const renderImageInput = input => {
     return (
-      <div className="group" key={"tadsopi"}>
+      <div className="group image-group" key={"tadsopi"}>
         <p>Please choose some images.</p>
         <Field
           name={input.name}
