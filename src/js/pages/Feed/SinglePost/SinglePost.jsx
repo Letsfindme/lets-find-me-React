@@ -4,7 +4,6 @@ import Input from "../../../components/Form/Input/Input";
 import Image from "../../../components/Image/Image.jsx";
 import Back from "../../../components/Button/Back";
 
-
 export default props => {
   const fields = [
     {
@@ -78,15 +77,12 @@ export default props => {
 
   return (
     <Fragment>
-      {/* <a onClick={props.history.goBack}>baaaacklink="home"</a> */}
-
       <section className="feed_edit">
         <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
         <div className="single-post__image">
           <Image imageUrl={state.imageUrl} />
         </div>
-
         <li className="post-content comment-contain">
           {state.user && (
             <Fragment>
@@ -96,7 +92,6 @@ export default props => {
                 imageUrl={state.user.Avatar.imageRef}
                 left
               />
-
               <div>
                 <div className="comment-right">
                   <h5>{state.user.username}</h5>
@@ -107,7 +102,11 @@ export default props => {
             </Fragment>
           )}
         </li>
-
+        <div className="post-action">
+          <i className="far fa-thumbs-up"></i>
+          <i className="far fa-comment-alt"></i>
+        </div>
+        {/* profile public et profile privee */}
         {/* <div className="post-content">
           {state.user && (
             <Image
@@ -148,7 +147,14 @@ export default props => {
           })}
 
           <section className="comment-add">
-            <i className="far fa-comment-dots"></i>
+            {state.user && (
+              <Image
+                key={"imagesPreview avatar"}
+                className={"user-profile user-profile-commment"}
+                imageUrl={state.user.Avatar.imageRef}
+                left
+              />
+            )}
             <Input
               control="form"
               fields={fields}
