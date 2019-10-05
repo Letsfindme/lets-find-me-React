@@ -236,40 +236,17 @@ export default props => {
 
   return (
     <Fragment>
-      <Button link="home" className="btn mx--1 mt-8 mb-0">  back to home </Button>
       {error && <ErrorHandler error={error} onHandle={errorHandler} />}
       {modalIsOpen ? (
         <Fragment>
           <Backdrop />
-          <Modal
-            mobile
-            noHeader
-            noAction
-            // acceptEnabled={formIsValid}
-            // onCancelModal={cancelPostChangeHandler}
-            // onAcceptModal={acceptPostChangeHandler}
-            // isLoading={props.loading}
-          >
+          <Modal mobile noHeader noAction>
             <Login {...props} modal={true} closeModal={closeModal} />
           </Modal>
         </Fragment>
       ) : (
         ""
       )}
-      {/* <section className="feed__status">
-         <form onSubmit={statusUpdateHandler}>
-          <Input
-            type="text"
-            placeholder="Your status"
-            control="input"
-            onChange={statusInputChangeHandler}
-            value={status}
-          />
-          <Button mode="flat" type="submit">
-            Update
-          </Button>
-        </form>
-      </section>*/}
       <FeedEdit
         editing={isEditing}
         selectedPost={editPost}
@@ -277,13 +254,11 @@ export default props => {
         onCancelEdit={cancelEditHandler}
         onFinishEdit={finishEditHandler}
         title="Start wrinting your post!!"
-      />
-
-      {/* <section className="feed__control">
-        <Button mode="raised" design="accent" onClick={newPostHandler}>
-          New Post
+      >
+        <Button link="home" className="back-link">
+          back to home
         </Button>
-      </section> */}
+      </FeedEdit>
       <section className="feed">
         {postsLoading && (
           <div style={{ textAlign: "center", marginTop: "2rem" }}>

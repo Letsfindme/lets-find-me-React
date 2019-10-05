@@ -132,6 +132,7 @@ export default props => {
   return props.editing ? (
     <Fragment>
       <div className="feed_edit">
+        {props.children}
         {props.title && <h1>{props.title}</h1>}
         <Input
           cancel
