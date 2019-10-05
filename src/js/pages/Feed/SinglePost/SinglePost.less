@@ -21,6 +21,23 @@
 .feed_edit .post-content {
   /* display: flex; */
 }
+.post-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 1rem;
+  i {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    cursor: pointer;
+  }
+}
+@media screen and(max-width:@breakpoint-xs) {
+  .post-action {
+    padding-top: .5rem;
+  }
+}
 .feed_edit.comments {
   background-color: #eaeaea;
 }
@@ -90,6 +107,9 @@
 
 .comment-add .feed__actions {
   display: none;
+}
+.user-profile.user-profile-commment{
+  margin-top: 1.8rem;
 }
 /* li.comment-contain .comment-right:after {
   position: absolute;
