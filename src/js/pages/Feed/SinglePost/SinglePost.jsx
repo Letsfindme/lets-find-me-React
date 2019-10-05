@@ -77,7 +77,7 @@ export default props => {
 
   return (
     <Fragment>
-      <section className="feed_edit">
+      <section className="feed_edit post-content">
         <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
         <div className="single-post__image">
@@ -97,11 +97,11 @@ export default props => {
                   <h5>{state.user.username}</h5>
                   <Moment format="YYYY/MM/DD hh:mm">{state.createdAt}</Moment>
                 </div>
-                <p>{state.content}</p>
               </div>
             </Fragment>
           )}
         </li>
+        <p>{state.content}</p>
         <div className="post-action">
           <i className="far fa-thumbs-up"></i>
           <i className="far fa-comment-alt"></i>

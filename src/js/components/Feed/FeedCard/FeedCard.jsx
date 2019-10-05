@@ -19,12 +19,11 @@ export default props => (
           imageUrl={props.image}
           left
         />
-        <div>
           <div className="comment-right">
             <h5>{props.author}</h5>
             <Moment format="YYYY/MM/DD hh:mm">{props.date}</Moment>
           </div>
-        </div>
+       
       </li>
 
       {/* <div className="post-header">
