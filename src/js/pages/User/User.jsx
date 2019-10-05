@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
-import Button from "../../components/Button/Button.jsx";
+import Back from "../../components/Button/Back";
 import { required, length, email } from "../../util/validators";
 import { loginValid } from "../../components/Form/Input/validation";
 import { generateBase64FromImage } from "../../util/image";
@@ -160,7 +160,10 @@ export default props => {
   return (
     <div className="profile-wrapper">
       <div className="login-card">
-        <h2>My avatar!</h2>
+        <Back click={props.history.goBack} text=" back to home" />
+        <span>
+          <h2>My avatar!</h2>
+        </span>
         <Input
           control="form"
           btnValue="Update my avatar"
@@ -180,19 +183,22 @@ export default props => {
                 left
               />
             ) : (
-                <Image
-                  onClick={handleRemoveImage}
-                  key={"imagesPreview avatar"}
-                  className={"user-profile"}
-                  imageUrl={imageDefault}
-                  left
-                />
-              )}
+              <Image
+                onClick={handleRemoveImage}
+                key={"imagesPreview avatar"}
+                className={"user-profile"}
+                imageUrl={imageDefault}
+                left
+              />
+            )}
           </div>
         </Input>
       </div>
       <div className="login-card">
-        <h2>Profile info!</h2>
+        <span>
+          {" "}
+          <h2>Profile info!</h2>
+        </span>
         {!lodaingProfile ? (
           <Input
             control="form"
@@ -202,11 +208,14 @@ export default props => {
             formSubmit={e => profileInfoHandler(e)}
           />
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
       <div className="login-card">
-        <h2>My Address</h2>
+        <span>
+          <h2>My Address</h2>
+        </span>
+
         {!lodaingProfile ? (
           <Input
             control="form"
@@ -216,8 +225,8 @@ export default props => {
             formSubmit={e => adressInfoHandler(e)}
           />
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
     </div>
   );

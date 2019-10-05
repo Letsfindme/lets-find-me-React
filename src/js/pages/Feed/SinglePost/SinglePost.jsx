@@ -2,8 +2,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import Moment from "react-moment";
 import Input from "../../../components/Form/Input/Input";
 import Image from "../../../components/Image/Image.jsx";
-import Button from "../../../components/Button/Button";
-import "./SinglePost.css";
+import Back from "../../../components/Button/Back";
+
 
 export default props => {
   const fields = [
@@ -79,14 +79,9 @@ export default props => {
   return (
     <Fragment>
       {/* <a onClick={props.history.goBack}>baaaacklink="home"</a> */}
-      <Button
-        click
-        onClick={props.history.goBack}
-        className="btn mx--1 mt-8 mb-0"
-      >
-        back to home
-      </Button>
+
       <section className="feed_edit">
+        <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
         <div className="single-post__image">
           <Image imageUrl={state.imageUrl} />
@@ -151,20 +146,21 @@ export default props => {
               </li>
             );
           })}
+
+          <section className="comment-add">
+            <i className="far fa-comment-dots"></i>
+            <Input
+              control="form"
+              fields={fields}
+              //validation={newPostValid}
+              //onChange={postInputChangeHandler}
+              formSubmit={value => addCommentHandler(value)}
+              btnValue="Add commit"
+              //cancelPostChangeHandler={cancelPostChangeHandler}
+            ></Input>
+          </section>
         </ul>
       )}
-      <section className="feed_edit comment-add">
-        <i class="far fa-comment-dots"></i>
-        <Input
-          control="form"
-          fields={fields}
-          //validation={newPostValid}
-          //onChange={postInputChangeHandler}
-          formSubmit={value => addCommentHandler(value)}
-          btnValue="Add commit"
-        //cancelPostChangeHandler={cancelPostChangeHandler}
-        ></Input>
-      </section>
     </Fragment>
   );
 };

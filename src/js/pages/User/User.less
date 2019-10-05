@@ -1,4 +1,5 @@
 .profile-wrapper {
+  padding-top: 2rem;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -11,9 +12,51 @@
     padding: 0rem 2rem 1rem 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    > h2 {
-      text-transform: uppercase;
+    .back-link{
+      position: absolute;
     }
+    & span {
+      width: fit-content;
+      position: relative;
+      > h2 {
+        text-transform: uppercase;
+      }
+      h2:before {
+        width: auto;
+        left: 20%;
+        right: 20%;
+        top: 50%;
+        content: "";
+        background-color: transparent;
+        border-left: 12px solid @orange;
+        border-right: 12px solid @orange;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        height: 3px;
+        opacity: 0;
+        position: absolute;
+        -webkit-transition: all 0.35s ease;
+        transition: all 0.35s ease;
+      }
+      h2:hover,
+      .current h2 {
+        color: #000000;
+      }
+      h2:before,
+      .current h2:before {
+        left: -20px;
+        right: -20px;
+        opacity: 1;
+      }
+    }
+
+    &:hover h2:before,
+    .current h2:before {
+      left: -20px;
+      right: -20px;
+      opacity: 1;
+    }
+
     form {
       display: flex;
       flex-direction: column;

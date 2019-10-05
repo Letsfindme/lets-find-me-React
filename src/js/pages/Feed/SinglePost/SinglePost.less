@@ -21,11 +21,13 @@
 .feed_edit .post-content {
   /* display: flex; */
 }
+.feed_edit.comments {
+  background-color: #eaeaea;
+}
 .feed_edit .comment-contain ~ .comment-contain {
   margin-top: 0.5rem;
 }
 .comment-contain {
-  background-color: #eaeaea;
   position: relative;
   display: flex;
 }
@@ -46,7 +48,7 @@
 
 .comment-contain div h5,
 .comments p,
-.post-content p{
+.post-content p {
   padding: 0.3rem 0 !important;
   margin: 0 !important;
 }
@@ -70,10 +72,15 @@
 }
 
 .comment-add {
+  display: flex;
   flex-direction: row !important;
 }
+
 .comment-add > i {
-  margin-top: 3rem;
+  width: 3rem;
+  margin-right: 0.5rem;
+  font-size: 3rem;
+  margin-top: 1.5rem;
   color: gray;
 }
 
