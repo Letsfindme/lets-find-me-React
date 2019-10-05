@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 const Button = props =>
   !props.link ? (
     <button
-      className={["btn", `btn--${props.design}`, `btn--${props.mode}`, props.className].join(
-        " "
-      )}
+      className={[
+        "btn",
+        `btn--${props.design}`,
+        `btn--${props.mode}`,
+        props.className
+      ].join(" ")}
       onClick={props.onClick}
       disabled={props.disabled || props.loading}
       type={props.type}
@@ -16,12 +19,12 @@ const Button = props =>
   ) : (
     <Link
       className={[
-        "btn",
         `btn--${props.design}`,
         `btn--${props.mode}, ${props.className}`
       ].join(" ")}
       to={props.link}
     >
+      <i className="fas fa-arrow-circle-left mx-1"></i>
       {props.children}
     </Link>
   );

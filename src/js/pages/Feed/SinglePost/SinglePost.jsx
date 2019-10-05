@@ -2,8 +2,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import Moment from "react-moment";
 import Input from "../../../components/Form/Input/Input";
 import Image from "../../../components/Image/Image.jsx";
-import Button from "../../../components/Button/Button";
-import "./SinglePost.css";
+import Back from "../../../components/Button/Back";
+
 
 export default props => {
   const fields = [
@@ -79,25 +79,49 @@ export default props => {
   return (
     <Fragment>
       {/* <a onClick={props.history.goBack}>baaaacklink="home"</a> */}
-      <Button
-        click
-        onClick={props.history.goBack}
-        className="btn mx--1 mt-8 mb-0"
-      >
-        back to home
-      </Button>
+
       <section className="feed_edit">
+        <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
-        <h2>
-          Created by {state.author} on {state.date}
-        </h2>
         <div className="single-post__image">
           <Image imageUrl={state.imageUrl} />
         </div>
-        <p>{state.content}</p>
+
+        <li className="post-content comment-contain">
+          {state.user && (
+            <Fragment>
+              <Image
+                key={"imagesPreview avatar"}
+                className={"user-profile"}
+                imageUrl={state.user.Avatar.imageRef}
+                left
+              />
+
+              <div>
+                <div className="comment-right">
+                  <h5>{state.user.username}</h5>
+                  <Moment format="YYYY/MM/DD hh:mm">{state.createdAt}</Moment>
+                </div>
+                <p>{state.content}</p>
+              </div>
+            </Fragment>
+          )}
+        </li>
+
+        {/* <div className="post-content">
+          {state.user && (
+            <Image
+              key={"imagesPreview avatar"}
+              className={"user-profile"}
+              imageUrl={state.user.Avatar.imageRef}
+              left
+            />
+          )}
+          <p>{state.content}</p>
+        </div> */}
       </section>
 
-      {state.postComments && (
+      {state.postComments && state.postComments.length > 0 && (
         <ul className="feed_edit comments">
           <p>{state.postComments.length} comments</p>
           {state.postComments.map(comment => {
@@ -112,7 +136,9 @@ export default props => {
                 <div>
                   <div className="comment-right">
                     <h5>{comment.user.username}</h5>
-                    <Moment format="YYYY/MM/DD hh:mm">{comment.createdAt}</Moment>
+                    <Moment format="YYYY/MM/DD hh:mm">
+                      {comment.createdAt}
+                    </Moment>
                     {/* <span>{comment.createdAt}</span> */}
                   </div>
                   <p>{comment.text}</p>
@@ -120,20 +146,21 @@ export default props => {
               </li>
             );
           })}
+
+          <section className="comment-add">
+            <i className="far fa-comment-dots"></i>
+            <Input
+              control="form"
+              fields={fields}
+              //validation={newPostValid}
+              //onChange={postInputChangeHandler}
+              formSubmit={value => addCommentHandler(value)}
+              btnValue="Add commit"
+              //cancelPostChangeHandler={cancelPostChangeHandler}
+            ></Input>
+          </section>
         </ul>
       )}
-      <section className="feed_edit comment-add">
-        <i class="far fa-comment-dots"></i>
-        <Input
-          control="form"
-          fields={fields}
-          //validation={newPostValid}
-          //onChange={postInputChangeHandler}
-          formSubmit={value => addCommentHandler(value)}
-          btnValue="Add commit"
-          //cancelPostChangeHandler={cancelPostChangeHandler}
-        ></Input>
-      </section>
     </Fragment>
   );
 };

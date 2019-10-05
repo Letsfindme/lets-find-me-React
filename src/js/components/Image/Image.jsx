@@ -28,7 +28,7 @@ export default props =>
         className={props.className ? props.className : "image"}
         style={{
           backgroundImage: `url('${"http://localhost:8080/" +
-            props.imageUrl}')`,
+            props.imageUrl.replace("\\","/")}')`,
           backgroundSize: props.contain ? "contain" : "cover",
           backgroundPosition: props.backgroundPosition
             ? props.backgroundPosition

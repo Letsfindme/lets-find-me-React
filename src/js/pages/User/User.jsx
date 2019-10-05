@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
-import Button from "../../components/Button/Button.jsx";
+import Back from "../../components/Button/Back";
 import { required, length, email } from "../../util/validators";
 import { loginValid } from "../../components/Form/Input/validation";
 import { generateBase64FromImage } from "../../util/image";
@@ -54,20 +54,22 @@ export default props => {
 
   const appendUserDate = data => {
     setLodaingProfile(true);
-    fields[0].value = data.firstname;
-    fields[1].value = data.lastname;
-    fields[2].value = data.email;
+    if (data.firstname) {
+      fields[0].value = data.firstname;
+      fields[1].value = data.lastname;
+      fields[2].value = data.email;
 
-    addressFields[0].value = data.address.street;
-    addressFields[1].value = data.address.city;
-    addressFields[2].value = data.address.country;
-    addressFields[3].value = data.address.postcode;
+      addressFields[0].value = data.address.street;
+      addressFields[1].value = data.address.city;
+      addressFields[2].value = data.address.country;
+      addressFields[3].value = data.address.postcode;
 
-    setImageDefault(data.Avatar.imageRef);
-    setLoadedFields(fields);
-    setLoadedAddress(addressFields);
-    console.log(addressFields);
-    
+      setImageDefault(data.Avatar.imageRef);
+      setLoadedFields(fields);
+      setLoadedAddress(addressFields);
+    } else {
+    }
+
     setLodaingProfile(false);
   };
 
@@ -158,7 +160,10 @@ export default props => {
   return (
     <div className="profile-wrapper">
       <div className="login-card">
-        <h2>My avatar!</h2>
+        <Back click={props.history.goBack} text=" back to home" />
+        <span>
+          <h2>My avatar!</h2>
+        </span>
         <Input
           control="form"
           btnValue="Update my avatar"
@@ -190,7 +195,10 @@ export default props => {
         </Input>
       </div>
       <div className="login-card">
-        <h2>Profile info!</h2>
+        <span>
+          {" "}
+          <h2>Profile info!</h2>
+        </span>
         {!lodaingProfile ? (
           <Input
             control="form"
@@ -204,15 +212,18 @@ export default props => {
         )}
       </div>
       <div className="login-card">
-        <h2>My Address</h2>
+        <span>
+          <h2>My Address</h2>
+        </span>
+
         {!lodaingProfile ? (
-        <Input
-          control="form"
-          btnValue="Update My Address"
-          fields={loadedAddress}
-          //   validation={loginValid}
-          formSubmit={e => adressInfoHandler(e)}
-        />
+          <Input
+            control="form"
+            btnValue="Update My Address"
+            fields={loadedAddress}
+            //   validation={loginValid}
+            formSubmit={e => adressInfoHandler(e)}
+          />
         ) : (
           ""
         )}
