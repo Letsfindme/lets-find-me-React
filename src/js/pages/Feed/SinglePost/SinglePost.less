@@ -35,12 +35,10 @@
 }
 @media screen and(max-width:@breakpoint-xs) {
   .post-action {
-    padding-top: .5rem;
+    padding-top: 0.5rem;
   }
 }
-.feed_edit.comments {
-  background-color: #eaeaea;
-}
+
 .feed_edit .comment-contain ~ .comment-contain {
   margin-top: 0.5rem;
 }
@@ -48,9 +46,20 @@
   position: relative;
   display: flex;
 }
-.comment-contain div:last-child {
-  position: relative;
+@media (max-width: @breakpoint-xs) {
+  .feed_edit.comments {
+    background-color: @orange-lighter;
+  }
 }
+@media (min-width: @breakpoint-xs) {
+  .comment-contain > div:last-child {
+    position: relative;
+    padding: 0.5rem;
+    background-color: @orange-lighter;
+    border-radius: 15px;
+  }
+}
+
 .comment-contain .user-profile {
   margin-right: 0.5rem;
 }
@@ -108,7 +117,7 @@
 .comment-add .feed__actions {
   display: none;
 }
-.user-profile.user-profile-commment{
+.user-profile.user-profile-commment {
   margin-top: 1.8rem;
 }
 /* li.comment-contain .comment-right:after {
