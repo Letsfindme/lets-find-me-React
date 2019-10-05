@@ -23,7 +23,7 @@ export default props =>
       ""
     )
   ) : props.imageUrl ? (
-    <div>
+    <div className="bg-avatar-contaiver">
       <div
         className={props.className ? props.className : "image"}
         style={{
