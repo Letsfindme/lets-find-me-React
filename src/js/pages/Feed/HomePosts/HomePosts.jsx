@@ -17,6 +17,7 @@ export default props => {
   const [postsLoading, setPostsLoading] = useState(true);
   const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [rating, setRating] = useState(5);
 
   const useStyles = makeStyles(theme => ({
     text: {
@@ -139,6 +140,7 @@ export default props => {
               <FeedCard
                 key={post.id}
                 id={post.id}
+                startCount={post.starCount}
                 author={post.user.username}
                 date={new Date(post.createdAt).toLocaleDateString("en-US")}
                 title={post.title}
