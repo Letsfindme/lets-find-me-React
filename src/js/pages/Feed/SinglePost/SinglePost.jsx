@@ -3,6 +3,7 @@ import Moment from "react-moment";
 import Input from "../../../components/Form/Input/Input";
 import Image from "../../../components/Image/Image.jsx";
 import Back from "../../../components/Button/Back";
+import StarRatingComponent from "react-star-rating-component";
 
 export default props => {
   const fields = [
@@ -15,6 +16,7 @@ export default props => {
   ];
 
   const [state, setState] = useState({});
+  const [rating, setRating] = useState(2);
   //   {
   //   title: "",
   //   author: "",
@@ -75,12 +77,31 @@ export default props => {
     });
   };
 
+  const onStarClick = (nextValue, prevValue, name) => {
+    const postId = props.match.params.postId;
+    fetch("http://localhost:8080/feed/post/" + postId + "/" + nextValue, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + props.token,
+        "Content-Type": "application/json"
+      }
+    }).then(postRate => {
+      setRating(postRate.rate);
+    });
+  };
+
   return (
     <Fragment>
       <section className="feed_edit post-content">
         <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
         <div className="single-post__image">
+          <StarRatingComponent
+            name="rate1"
+            starCount={5}
+            value={state.starCount}
+            onStarClick={onStarClick}
+          />
           <Image imageUrl={state.imageUrl} />
         </div>
         <li className="post-content comment-contain">
@@ -103,7 +124,14 @@ export default props => {
         </li>
         <p>{state.content}</p>
         <div className="post-action">
-          <i className="far fa-thumbs-up"></i>
+          <i className="far fa-thumbs-up">
+            <StarRatingComponent
+              name="rate1"
+              starCount={5}
+              value={state.starCount}
+              onStarClick={onStarClick}
+            />
+          </i>
           <i className="far fa-comment-alt"></i>
         </div>
         {/* profile public et profile privee */}
