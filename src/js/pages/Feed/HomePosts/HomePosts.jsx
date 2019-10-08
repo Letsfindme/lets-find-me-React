@@ -55,12 +55,15 @@ export default props => {
     const classes = useStyles();
 
     useEffect(() => {
-        if (getPosts.length == 0) {
-            setPostsLoading(true);
-            loadPosts();
-        } else {
-            setPostsLoading(false);
-        }
+        setPostsLoading(true);
+        loadPosts();
+        setPostsLoading(false);
+        // if (getPosts.length == 0) {
+        //     setPostsLoading(true);
+        //     loadPosts();
+        // } else {
+        //     setPostsLoading(false);
+        // }
     }, []);
 
     const loadPosts = () => {
@@ -163,7 +166,7 @@ export default props => {
                             onClick={() => {
                                 history.push("/feed");
                             }}
-                        ></button>
+                        />
                     )}
                 />
             </div>

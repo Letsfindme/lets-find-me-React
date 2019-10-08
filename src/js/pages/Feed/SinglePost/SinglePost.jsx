@@ -16,8 +16,10 @@ export default (props) => {
         }
     ];
 
-    const [state, setState] = useState({});
+    const [state, setState] = useState([]);
+    const [postComments, setPostComments] = useState([]);
     const [rating, setRating] = useState(0);
+    const [posttingComment, setPosttingComment] = useState(false);
 
     useEffect(() => {
         const postId = props.match.params.postId;
@@ -34,6 +36,7 @@ export default (props) => {
             })
             .then((resData) => {
                 setState(resData.post);
+                setPostComments(resData.post.postComments);
                 setRating(resData.post.starCount);
             })
             .catch((err) => {
@@ -54,11 +57,16 @@ export default (props) => {
                 Authorization: 'Bearer ' + props.token
             }
         }).then((res) => {
-            if (res.status !== 200 || res.status !== 201) {
+            if (res.status !== 201 || res.status !== 201) {
                 throw new Error('Failed to add comment');
             }
             return res.json();
-        });
+        }).then(res => {
+                setPosttingComment(true);
+                setPostComments([...postComments, res.comment]);
+                setPosttingComment(false);
+            }
+        );
     };
 
     const onStarClick = (nextValue, prevValue, name) => {
@@ -134,11 +142,11 @@ export default (props) => {
         </div> */}
             </section>
             <ul className="feed_edit comments">
-                {state.postComments &&
-                state.postComments.length > 0 && (
+                {postComments &&
+                postComments.length > 0 && (
                     <Fragment>
-                        <p>{state.postComments.length} comments</p>
-                        {state.postComments.map((comment) => {
+                        <p>{postComments.length} comments</p>
+                        {postComments.map((comment) => {
                             return (
                                 <li key={comment.id} className="comment-contain">
                                     <Image
@@ -169,6 +177,7 @@ export default (props) => {
                             left
                         />
                     )}
+                    {!posttingComment &&
                     <Input
                         control="form"
                         fields={fields}
@@ -177,7 +186,7 @@ export default (props) => {
                         formSubmit={(value) => addCommentHandler(value)}
                         btnValue="Add commit"
                         //cancelPostChangeHandler={cancelPostChangeHandler}
-                    />
+                    />}
                 </section>
             </ul>
         </Fragment>
