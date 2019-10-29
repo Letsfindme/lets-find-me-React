@@ -9,12 +9,12 @@ import {
 import LoginPage from "../../pages/Auth/Login";
 import User from "../../pages/User/User";
 import HomePage from "../../pages/Home/Home";
-import SignupPage from "../../pages/Auth/Signup";
 import PrivateRoute from "./PrivateRoute";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AddPost from "../Feed/AddPost/AddPost";
 import SinglePost from "../Feed/SinglePost/SinglePost";
 import Feed from "../Feed/Feed";
+import Store from "../Store/Store";
 
 const routs = props => {
   const [wasInitialized, setWasInitialized] = useState(false);
@@ -37,6 +37,7 @@ const routs = props => {
         <Route path="/profile" exact component={User} />
         <Route path="/add" exact component={AddPost} />
         <Route path="/feed" exact render={props => <Feed {...props} />} />
+        <Route path="/store" exact render={props => <Store {...props} />} />
         <Route
           path="/feed/:postId"
           exact
