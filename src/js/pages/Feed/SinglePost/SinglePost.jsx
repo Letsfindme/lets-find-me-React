@@ -5,6 +5,7 @@ import Image from '../../../components/Image/Image.jsx';
 import Back from '../../../components/Button/Back';
 import StarRatingComponent from 'react-star-rating-component';
 import avatarPng from "../../../../assets/images/User_Avatar.png";
+import {useSelector} from "react-redux";
 
 export default (props) => {
     const fields = [
@@ -20,7 +21,7 @@ export default (props) => {
     const [postComments, setPostComments] = useState([]);
     const [rating, setRating] = useState(0);
     const [posttingComment, setPosttingComment] = useState(false);
-
+    const userAvatar = useSelector(state => state.auth.avatar);
     useEffect(() => {
         const postId = props.match.params.postId;
         fetch('http://localhost:8080/feed/post/' + postId, {
@@ -152,7 +153,9 @@ export default (props) => {
                                     <Image
                                         key={'imagesPreview avatar'}
                                         className={'user-profile'}
-                                        imageUrl={comment.imageRef}
+                                        previews={comment.imageRef ? undefined : true}
+                                        local={comment.imageRef ? undefined : true}
+                                        imageUrl={comment.imageRef ? comment.imageRef : avatarPng}
                                         left
                                     />
                                     <div>
@@ -173,8 +176,8 @@ export default (props) => {
                         <Image
                             key={'imagesPreview avatar'}
                             className={'user-profile user-profile-commment'}
-                            imageUrl={state.user.Avatar ? state.user.Avatar.imageRef : ""}
                             left
+                            imageUrl={userAvatar ? userAvatar : avatarPng}
                         />
                     )}
                     {!posttingComment &&
