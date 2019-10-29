@@ -34,10 +34,19 @@ const userId = (state = null, action) => {
       return state;
   }
 };
+const avatar = (state = "", action) => {
+  switch (action.type) {
+    case "SET_AVATAR":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export default combineReducers({
   isAuthenticated,
   token,
   userId,
-  isLoading
+  isLoading,
+  avatar
 });
