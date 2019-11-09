@@ -14,10 +14,10 @@ export default props => {
     { label: "Firstname", type: "input", name: "firstname", value: "" },
     { label: "Lastname", type: "input", name: "lastname", value: "" },
     { label: "Email", type: "input", name: "email", value: "" },
-    { label: "Password", type: "input", name: "password", value: "" }
+    //{ label: "Password", type: "input", name: "password", value: "" }
   ];
 
-  const addressFields = [
+  let addressFields = [
     { label: "Street", type: "input", name: "street", value: "" },
     { label: "City", type: "input", name: "city", value: "" },
     { label: "Country", type: "input", name: "country", value: "" },
@@ -30,7 +30,7 @@ export default props => {
   const [userProfile, setUserProfile] = useState("");
   const [lodaingProfile, setLodaingProfile] = useState(false);
   const [loadedFields, setLoadedFields] = useState(fields);
-  const [loadedAddress, setLoadedAddress] = useState(fields);
+  const [loadedAddress, setLoadedAddress] = useState(addressFields);
 
   useEffect(() => {
     if (getToken) {
@@ -54,21 +54,19 @@ export default props => {
 
   const appendUserDate = data => {
     setLodaingProfile(true);
-    if (data.firstname) {
-      fields[0].value = data.firstname;
-      fields[1].value = data.lastname;
-      fields[2].value = data.email;
 
-      addressFields[0].value = data.address.street;
-      addressFields[1].value = data.address.city;
-      addressFields[2].value = data.address.country;
-      addressFields[3].value = data.address.postcode;
+    data.firstname ? (fields[0].value = data.firstname) : "";
+    data.lastname ? (fields[1].value = data.lastname) : "";
+    data.email ? (fields[2].value = data.email) : "";
+    data.Avatar ? setImageDefault(data.Avatar.imageRef) : "";
+    setLoadedFields(fields);
 
-      setImageDefault(data.Avatar.imageRef);
-      setLoadedFields(fields);
-      setLoadedAddress(addressFields);
-    } else {
-    }
+    let address = data.addresses[0];
+    address.street ? (addressFields[0].value = address.street) : "";
+    address.city ? (addressFields[1].value = address.city) : "";
+    address.country ? (addressFields[2].value = address.country) : "";
+    address.postcode ? (addressFields[3].value = address.postcode) : "";
+    setLoadedAddress(addressFields);
 
     setLodaingProfile(false);
   };
@@ -76,6 +74,7 @@ export default props => {
   const acceptPostChangeHandler = files => {
     const formData = new FormData();
     formData.append("image", files.images[0]);
+    // let url = "http://localhost:8080/upload";
     let url = "http://localhost:8080/user/profile/avatar";
     let method = "POST";
     fetch(url, {
