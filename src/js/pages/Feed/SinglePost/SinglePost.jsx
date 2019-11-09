@@ -97,7 +97,7 @@ export default (props) => {
                     <StarRatingComponent name="rate1" starCount={5} value={rating} onStarClick={onStarClick}/>
                     <Image imageUrl={state.imageUrl}/>
                 </div>
-                <li className="post-content comment-contain">
+                <li className="post-content comment-contain post-contain">
                     {state.user && (
                         <Fragment>
                             <Image
