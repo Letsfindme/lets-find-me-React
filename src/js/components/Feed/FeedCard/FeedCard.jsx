@@ -14,7 +14,7 @@ export default props => (
         <p>{props.content}</p>
       </article>
 
-      <li className="post-content comment-contain">
+      <li className="post-content comment-contain post-contain">
         <Image
           key={Date.now()}
           className={"user-profile"}
