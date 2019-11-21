@@ -49,7 +49,7 @@ const input = props => {
                   ? "wrong  invalid"
                   : "";
               const istouched = touched[input.name] ? " touched " : "";
-              const empty = (values[input.name] == "" ? " empty " : "");
+              const empty = (values[input.name] == "" ? " empty " : " touched");
               return (
                 <Fragment>
                   <input

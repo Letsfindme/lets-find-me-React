@@ -61,3 +61,5 @@ yarn-error.log*
 
 dist/
 .cache
+
+.env

@@ -11,9 +11,9 @@ export default props => {
   const dispatch = useDispatch();
   const avatar = [{ label: "images", type: "file", name: "images", value: "" }];
   let fields = [
-    { label: "Firstname", type: "input", name: "firstname", value: "" },
-    { label: "Lastname", type: "input", name: "lastname", value: "" },
-    { label: "Email", type: "input", name: "email", value: "" },
+    { id: 1, label: "Firstname", type: "input", name: "firstname", value: "" },
+    { id: 2, label: "Lastname", type: "input", name: "lastname", value: "" },
+    { id: 3, label: "Email", type: "input", name: "email", value: "" }
     //{ label: "Password", type: "input", name: "password", value: "" }
   ];
 
@@ -54,19 +54,23 @@ export default props => {
 
   const appendUserDate = data => {
     setLodaingProfile(true);
-
-    data.firstname ? (fields[0].value = data.firstname) : "";
-    data.lastname ? (fields[1].value = data.lastname) : "";
-    data.email ? (fields[2].value = data.email) : "";
-    data.Avatar ? setImageDefault(data.Avatar.imageRef) : "";
-    setLoadedFields(fields);
-
-    let address = data.addresses[0];
-    address.street ? (addressFields[0].value = address.street) : "";
-    address.city ? (addressFields[1].value = address.city) : "";
-    address.country ? (addressFields[2].value = address.country) : "";
-    address.postcode ? (addressFields[3].value = address.postcode) : "";
-    setLoadedAddress(addressFields);
+    if (data) {
+      let { firstname, lastname, email, Avatar } = data;
+      firstname ? (fields[0].value = firstname) : "";
+      lastname ? (fields[1].value = lastname) : "";
+      email ? (fields[2].value = email) : "";
+      Avatar ? setImageDefault(Avatar.imageRef) : "";
+      setLoadedFields(fields);
+      let address = data.addresses[0];
+      if (address) {
+        let { street, city, country, postcode } = address;
+        street ? (addressFields[0].value = street) : "";
+        city ? (addressFields[1].value = city) : "";
+        country ? (addressFields[2].value = country) : "";
+        postcode ? (addressFields[3].value = postcode) : "";
+        setLoadedAddress(addressFields);
+      }
+    }
 
     setLodaingProfile(false);
   };
