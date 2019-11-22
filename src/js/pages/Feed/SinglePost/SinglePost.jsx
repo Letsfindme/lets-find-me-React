@@ -7,6 +7,7 @@ import StarRatingComponent from "react-star-rating-component";
 import avatarPng from "../../../../assets/images/User_Avatar.png";
 import { useSelector } from "react-redux";
 import MapWrapped from "../../../components/map/map";
+import UserCard from "../../../components/User/UserCard/UserCard";
 
 export default props => {
   const fields = [
@@ -107,26 +108,12 @@ export default props => {
           />
           <Image imageUrl={state.imageUrl} />
         </div>
-        <li className="post-content comment-contain post-contain">
+        <li className="usercard-container">
           {state.user && (
-            <Fragment>
-              <Image
-                previews={state.user.Avatar ? undefined : true}
-                local={state.user.Avatar ? undefined : true}
-                key={"imagesPreview avatar"}
-                className={"user-profile"}
-                imageUrl={
-                  state.user.Avatar ? state.user.Avatar.imageRef : avatarPng
-                }
-                left
-              />
-              <div>
-                <div className="comment-right">
-                  <h5>{state.user.username}</h5>
-                  <Moment format="YYYY/MM/DD hh:mm">{state.createdAt}</Moment>
-                </div>
-              </div>
-            </Fragment>
+            <UserCard
+              user={state.user}
+              createdAt={state.createdAt}
+            />
           )}
         </li>
         <p>{state.content}</p>
@@ -155,12 +142,12 @@ export default props => {
         </div> */}
       </section>
       <section className="feed_edit map">
-        <MapWrapped
+        {/* <MapWrapped
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `200px` }} />}
           mapElement={<div style={{ height: `201px` }} />}
-        />
+        /> */}
       </section>
 
       <ul className="feed_edit comments">

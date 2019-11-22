@@ -37,9 +37,10 @@
 .feed_edit {
   &.map {
     padding: 0;
-    margin: -30px auto;
+    // margin: -30px auto;
   }
   &.post-content {
+    margin-top: 3rem;
     -webkit-transition: all 0.35s ease;
     transition: all 0.35s ease;
     .far.fa-thumbs-up {
@@ -67,6 +68,22 @@
           transition: all 0.35s ease;
         }
       }
+    }
+  }
+  .usercard-container {
+    display: flex;
+    background-color: #d4d3be26;
+    border-radius: 15px;
+    .username-container {
+      align-self: center;
+      h5 {
+        margin: 0;
+      }
+    }
+    Button{
+      margin-left: auto;
+      height: 40px;
+      align-self: center;
     }
   }
 }
