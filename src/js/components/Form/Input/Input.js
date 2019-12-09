@@ -86,9 +86,10 @@ const input = props => {
   };
 
   const renderAutoComplete = input => {
-    <div className="group" key={input.name}>
+   return(
+   <div className="group" key={input.name}>
       <Field name="location" component={FormikPlacesAutoComplete} />
-    </div>;
+    </div>)
   };
 
   const renderSelect = input => {
