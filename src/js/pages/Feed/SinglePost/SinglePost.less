@@ -34,36 +34,60 @@
   margin: 1rem auto;
 }
 
-.feed_edit.post-content {
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-  .far.fa-thumbs-up {
-    position: relative;
-    .dv-star-rating {
-      width: 6rem;
-      right: auto;
-      z-index: -18;
-      opacity: 0;
-      top: -100%;
-      -webkit-transition: all 0.35s ease;
-      transition: all 0.35s ease;
-    }
-    &:hover {
-      &::before {
-        content: none;
-      }
+.feed-container {
+  &.map {
+    padding: 0;
+    // margin: -30px auto;
+  }
+  &.post-content {
+    margin-top: 3rem;
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+    .far.fa-thumbs-up {
+      position: relative;
       .dv-star-rating {
+        width: 6rem;
         right: auto;
-        z-index: 1;
-        opacity: 1;
-        top: 0;
-        display: block !important;
+        z-index: -18;
+        opacity: 0;
+        top: -100%;
         -webkit-transition: all 0.35s ease;
         transition: all 0.35s ease;
       }
+      &:hover {
+        &::before {
+          content: none;
+        }
+        .dv-star-rating {
+          right: auto;
+          z-index: 1;
+          opacity: 1;
+          top: 0;
+          display: block !important;
+          -webkit-transition: all 0.35s ease;
+          transition: all 0.35s ease;
+        }
+      }
+    }
+  }
+  .usercard-container {
+    display: flex;
+    background-color: #d4d3be26;
+    border-radius: 15px;
+    .username-container {
+      align-self: center;
+      h5 {
+        margin: 0;
+      }
+    }
+    Button{
+      margin-left: auto;
+      height: 40px;
+      align-self: center;
     }
   }
 }
+
 .post-action {
   display: flex;
   flex-direction: row;
@@ -82,7 +106,7 @@
   }
 }
 
-.feed_edit .comment-contain ~ .comment-contain {
+.feed-container .comment-contain ~ .comment-contain {
   margin-top: 0.5rem;
 }
 
@@ -98,7 +122,7 @@
 }
 
 @media (max-width: @breakpoint-xs) {
-  .feed_edit.comments {
+  .feed-container.comments {
     background-color: @orange-lighter;
   }
   .comment-contain p:after {
@@ -109,7 +133,11 @@
     height: 1px;
     background-color: #8080802e;
   }
+  .comment-contain .comment-right {
+    margin-top: 15px;
+  }
 }
+
 @media (min-width: @breakpoint-xs) {
   .comment-contain:not(.post-content) > div:last-child,
   .comment-add > .wrapper {

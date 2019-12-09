@@ -2,13 +2,17 @@ import React, { Fragment } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import Button from "../../Button/Button";
 import FilePicker from "../../Form/Input/FilePicker";
+import FormikPlacesAutoComplete from "../PlaceAuto/FormikPlacesAutocomplete";
+
 const input = props => {
   const handleChangeFile = e => {
     props.onChange(e.target.value, e.target.files);
   };
+
   const handleFormSubmit = value => {
     props.formSubmit(value);
   };
+
   const getInitialValues = inputs => {
     const initialValues = {};
     //loop loop over fields array
@@ -37,19 +41,22 @@ const input = props => {
       if (input.type === "file") {
         return renderImageInput(input);
       }
+      if (input.type === "autoComplete") {
+        return renderAutoComplete(input);
+      }
       return (
         <div className="group" key={input.name}>
           <Field
             name={input.name}
             render={props => {
               const { field } = props;
-              const { errors, touched, handleBlur,values } = props.form;
+              const { errors, touched, handleBlur, values } = props.form;
               const hasError =
                 errors[input.name] && touched[input.name]
                   ? "wrong  invalid"
                   : "";
               const istouched = touched[input.name] ? " touched " : "";
-              const empty = (values[input.name] == "" ? " empty " : "");
+              const empty = values[input.name] == "" ? " empty " : " touched";
               return (
                 <Fragment>
                   <input
@@ -76,6 +83,13 @@ const input = props => {
         </div>
       );
     });
+  };
+
+  const renderAutoComplete = input => {
+   return(
+   <div className="group" key={input.name}>
+      <Field name="location" component={FormikPlacesAutoComplete} />
+    </div>)
   };
 
   const renderSelect = input => {
