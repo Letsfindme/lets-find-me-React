@@ -1,4 +1,4 @@
-.feed_edit {
+.feed-container {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -6,6 +6,9 @@
   margin: 1rem auto;
   padding: 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  &.feed-edit {
+    margin-top: 3rem;
+  }
   p {
     padding: 1rem;
     letter-spacing: 1px;
@@ -63,13 +66,13 @@
 }
 
 @media (max-width: @breakpoint-md) {
-  .feed_edit {
+  .feed-container {
     width: 100%;
   }
 }
 
 @media (max-width: @breakpoint-xs) {
-  .feed_edit {
+  .feed-container {
     width: 100%;
     padding: 0.5rem;
     h1 {
@@ -85,7 +88,7 @@
 }
 
 @media (max-width: 375.98px) {
-  // .feed_edit {
+  // .feed-container {
   //   p:first-of-type {
   //     font-size: 4.5vw;
   //   }

@@ -10,18 +10,27 @@ import Button from "../../../components/Button/Button";
 import { newPostValid } from "../../../components/Form/Input/validation";
 
 export default props => {
+  
   const fields = [
     { label: "Title for your post", type: "input", name: "title", value: "" },
+    { label: "In which city", type: "autoComplete", name: "city", value: "" },
     {
-      label: "Post content goes here!",
-      type: "textarea",
-      name: "content",
-      value: ""
+      label: "Category",
+      type: "select",
+      data: ["Restaurant", "Hotel", "House", "Villages"],
+      name: "category",
+      value: "Please Select"
     },
     {
       label: "Add images",
       type: "file",
       name: "images",
+      value: ""
+    },
+    {
+      label: "Post content goes here!",
+      type: "textarea",
+      name: "content",
       value: ""
     }
   ];
@@ -131,7 +140,7 @@ export default props => {
 
   return props.editing ? (
     <Fragment>
-      <div className="feed_edit">
+      <div className="feed-container feed-edit">
         {props.children}
         {props.title && <h1>{props.title}</h1>}
         <Input

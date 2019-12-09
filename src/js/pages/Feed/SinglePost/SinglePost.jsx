@@ -96,7 +96,7 @@ export default props => {
   console.log(process.env);
   return (
     <Fragment>
-      <section className="feed_edit post-content">
+      <section className="feed-container post-content">
         <Back click={props.history.goBack} text=" back to home" />
         <h1>{state.title}</h1>
         <div className="single-post__image">
@@ -141,7 +141,7 @@ export default props => {
           <p>{state.content}</p>
         </div> */}
       </section>
-      <section className="feed_edit map">
+      <section className="feed-container map">
         {/* <MapWrapped
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
           loadingElement={<div style={{ height: `100%` }} />}
@@ -150,7 +150,7 @@ export default props => {
         /> */}
       </section>
 
-      <ul className="feed_edit comments">
+      <ul className="feed-container comments">
         {postComments && postComments.length > 0 && (
           <Fragment>
             <p>{postComments.length} comments</p>
