@@ -18,12 +18,12 @@ export default props => {
       value: ""
     }
   ];
-
   const [state, setState] = useState([]);
   const [postComments, setPostComments] = useState([]);
   const [rating, setRating] = useState(0);
   const [posttingComment, setPosttingComment] = useState(false);
   const userAvatar = useSelector(state => state.auth.avatar);
+
   useEffect(() => {
     const postId = props.match.params.postId;
     fetch("http://localhost:8080/feed/post/" + postId, {
@@ -93,7 +93,6 @@ export default props => {
       });
   };
 
-  console.log(process.env);
   return (
     <Fragment>
       <section className="feed-container post-content">
@@ -139,12 +138,16 @@ export default props => {
         </div> */}
       </section>
       <section className="feed-container map">
-        {/* <MapWrapped
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `200px` }} />}
-          mapElement={<div style={{ height: `201px` }} />}
-        /> */}
+        {state.address && (
+          <MapWrapped
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `200px` }} />}
+            mapElement={<div style={{ height: `201px` }} />}
+            lat={state.address.lat}
+            lang={state.address.lang}
+          />
+        )}
       </section>
 
       <ul className="feed-container comments">
