@@ -135,6 +135,7 @@ export default props => {
       const formData = new FormData();
       formData.append("title", postData.title);
       formData.append("content", postData.content);
+      formData.append("category", postData.category);
       formData.append("location",JSON.stringify(postData.location));
       for (var x = 0; x < postData.image.length; x++) {
         formData.append("image", postData.image[x]);
