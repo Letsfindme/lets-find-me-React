@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import {
   withGoogleMap,
   withScriptjs,
@@ -8,10 +8,14 @@ import {
 } from "react-google-maps";
 import mapStyles from "./mapStyles";
 
-function Map() {
+const Map = props => {
   const [selectedPark, setSelectedPark] = useState(null);
+  const [lat, setLat] = useState(null);
+  const [lang, setLang] = useState(null);
 
   useEffect(() => {
+    setLang(parseFloat(props.lang));
+    setLat(parseFloat(props.lat));
     const listener = e => {
       if (e.key === "Escape") {
         setSelectedPark(null);
@@ -25,15 +29,15 @@ function Map() {
   }, []);
 
   return (
-    <GoogleMap
-      defaultZoom={17}
-      defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-    //   defaultOptions={{ styles: mapStyles }}
-    >
-        <Marker
-          position={{lat: 45.4211, lng: -75.6903}}
-        />
-      {/* {parkData.features.map(park => (
+    <Fragment>
+      {lat != null && (
+        <GoogleMap
+          defaultZoom={17}
+          defaultCenter={{ lat: lat, lng: lang }}
+          //   defaultOptions={{ styles: mapStyles }} lat: props.lat, lng: props.lang
+        >
+          <Marker position={{ lat: lat, lng: lang }} />
+          {/* {parkData.features.map(park => (
         <Marker
           key={park.properties.PARK_ID}
           position={{
@@ -50,25 +54,27 @@ function Map() {
         />
       ))} */}
 
-      {selectedPark && (
-        <InfoWindow
-          onCloseClick={() => {
-            setSelectedPark(null);
-          }}
-          position={{
-            lat: selectedPark.geometry.coordinates[1],
-            lng: selectedPark.geometry.coordinates[0]
-          }}
-        >
-          <div>
-            <h2>{selectedPark.properties.NAME}</h2>
-            <p>{selectedPark.properties.DESCRIPTIO}</p>
-          </div>
-        </InfoWindow>
+          {selectedPark && (
+            <InfoWindow
+              onCloseClick={() => {
+                setSelectedPark(null);
+              }}
+              position={{
+                lat: selectedPark.geometry.coordinates[1],
+                lng: selectedPark.geometry.coordinates[0]
+              }}
+            >
+              <div>
+                <h2>{selectedPark.properties.NAME}</h2>
+                <p>{selectedPark.properties.DESCRIPTIO}</p>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
       )}
-    </GoogleMap>
+    </Fragment>
   );
-}
+};
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 

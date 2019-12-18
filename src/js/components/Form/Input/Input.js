@@ -107,8 +107,8 @@ const input = props => {
             );
             const options = input.data.map(i => (
               <option key={i} value={i}>
-                {" "}
-                {i}{" "}
+                
+                {i}
               </option>
             ));
             const selectOptions = [defaultOption, ...options];

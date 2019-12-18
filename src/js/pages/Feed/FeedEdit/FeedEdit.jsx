@@ -10,8 +10,13 @@ import Button from "../../../components/Button/Button";
 import { newPostValid } from "../../../components/Form/Input/validation";
 
 export default props => {
-  
   const fields = [
+    {
+      label: "Add images",
+      type: "file",
+      name: "images",
+      value: ""
+    },
     { label: "Title for your post", type: "input", name: "title", value: "" },
     { label: "In which city", type: "autoComplete", name: "city", value: "" },
     {
@@ -20,12 +25,6 @@ export default props => {
       data: ["Restaurant", "Hotel", "House", "Villages"],
       name: "category",
       value: "Please Select"
-    },
-    {
-      label: "Add images",
-      type: "file",
-      name: "images",
-      value: ""
     },
     {
       label: "Post content goes here!",
@@ -127,11 +126,15 @@ export default props => {
   };
 
   const acceptPostChangeHandler = formValue => {
-    const post = {
+
+    let post = {
       title: formValue.title,
+      category: formValue.category,
       image: filesToBeSent,
-      content: formValue.content
+      content: formValue.content,
+      location:formValue.location
     };
+    console.log(post);
     props.onFinishEdit(post);
     //setPostForm(POST_FORM);
     //setFormIsValid(false);
@@ -143,6 +146,19 @@ export default props => {
       <div className="feed-container feed-edit">
         {props.children}
         {props.title && <h1>{props.title}</h1>}
+        <div className="new-post__preview-image">
+          {imagePreview &&
+            imagePreview.map((images, index) => (
+              <Image
+                onClick={() => handleRemoveImage(index)}
+                previews
+                key={index + "imagesPreview"}
+                className={"imageItem"}
+                imageUrl={images}
+                left
+              />
+            ))}
+        </div>
         <Input
           cancel
           value={postForm.title}
@@ -153,21 +169,7 @@ export default props => {
           formSubmit={value => acceptPostChangeHandler(value)}
           btnValue="Create my post"
           cancelPostChangeHandler={cancelPostChangeHandler}
-        >
-          <div className="new-post__preview-image">
-            {imagePreview &&
-              imagePreview.map((images, index) => (
-                <Image
-                  onClick={() => handleRemoveImage(index)}
-                  previews
-                  key={index + "imagesPreview"}
-                  className={"imageItem"}
-                  imageUrl={images}
-                  left
-                />
-              ))}
-          </div>
-        </Input>
+        ></Input>
       </div>
     </Fragment>
   ) : null;
