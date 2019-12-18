@@ -110,10 +110,7 @@ export default props => {
         </div>
         <li className="usercard-container">
           {state.user && (
-            <UserCard
-              user={state.user}
-              createdAt={state.createdAt}
-            />
+            <UserCard user={state.user} createdAt={state.createdAt} />
           )}
         </li>
         <p>{state.content}</p>
@@ -181,13 +178,15 @@ export default props => {
           </Fragment>
         )}
         <section className="comment-add">
-          {state.user && (
+          {state.user & userAvatar ? (
             <Image
               key={"imagesPreview avatar"}
               className={"user-profile user-profile-commment"}
               left
               imageUrl={userAvatar ? userAvatar : avatarPng}
             />
+          ) : (
+            <img className="user-profile" src={avatarPng} />
           )}
           {!posttingComment && (
             <Input

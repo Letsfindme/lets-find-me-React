@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Moment from "react-moment";
 import Image from "../../../components/Image/Image.jsx";
 import Button from "../../Button/Button";
+import avatarPng from "../../../../assets/images/User_Avatar.png";
 
 const UserCard = ({ className, user, createdAt }) => (
   <Fragment>

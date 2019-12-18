@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import FeedCard from "../../../components/Feed/FeedCard/FeedCard";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchCard from "../../../components/Search/SearchCard";
+import avatarPng from "../../../../assets/images/User_Avatar.png";
 
 export default props => {
     const dispatch = useDispatch();
@@ -149,7 +150,7 @@ export default props => {
                             date={new Date(post.createdAt).toLocaleDateString("en-US")}
                             title={post.title}
                             thumb={post.imageUrl}
-                            image={post.user.Avatar ? post.user.Avatar.imageRef : ""}
+                            image={post.user.Avatar ? post.user.Avatar.imageRef : undefined}
                             content={post.content}
                             onStartEdit={startEditPostHandler.bind(this, post.id)}
                         />

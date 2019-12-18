@@ -3,11 +3,16 @@ import Image from "../../Image/Image";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import StarRatingComponent from "react-star-rating-component";
+import avatarPng from "../../../../assets/images/User_Avatar.png";
 
 export default props => (
   <div className="post-card" link={"/feed/" + props.id}>
     <Link to={"/feed/" + props.id}>
-      <StarRatingComponent name="rate1" starCount={5} value={props.startCount} />
+      <StarRatingComponent
+        name="rate1"
+        starCount={5}
+        value={props.startCount}
+      />
       <Image imageUrl={props.thumb} className="thumb" alt="profile avatar" />
       <article>
         <span>{props.title}</span>
@@ -15,12 +20,16 @@ export default props => (
       </article>
 
       <li className="post-content comment-contain post-contain">
-        <Image
-          key={Date.now()}
-          className={"user-profile"}
-          imageUrl={props.image}
-          left
-        />
+        {props.image ? (
+          <Image
+            key={Date.now()}
+            className={"user-profile"}
+            imageUrl={props.image}
+            left
+          />
+        ) : (
+          <img className="user-profile" src={avatarPng} />
+        )}
         <div className="comment-right">
           <h5>{props.author}</h5>
           <Moment format="YYYY/MM/DD hh:mm">{props.date}</Moment>
