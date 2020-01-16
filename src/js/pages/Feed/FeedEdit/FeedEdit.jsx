@@ -126,15 +126,13 @@ export default props => {
   };
 
   const acceptPostChangeHandler = formValue => {
-
     let post = {
       title: formValue.title,
       category: formValue.category,
       image: filesToBeSent,
       content: formValue.content,
-      location:formValue.location
+      location: formValue.location
     };
-    console.log(post);
     props.onFinishEdit(post);
     //setPostForm(POST_FORM);
     //setFormIsValid(false);
