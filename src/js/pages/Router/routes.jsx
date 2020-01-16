@@ -41,13 +41,14 @@ const routs = props => {
         <Route path="/login" exact component={LoginPage} />
         <Route path="/profile" exact component={User} />
         <Route path="/add" exact component={AddPost} />
-        <Route path="/feed" exact render={props => <Feed {...props} />} />
-        <Route path="/store" exact render={props => <Store {...props} />} />
         <Route
-          path="/search"
+          path="/feed/search"
           //:city:category
           render={props => <Search {...props} />}
         />
+        <Route path="/feed" exact render={props => <Feed {...props} />} />
+        <Route path="/store" exact render={props => <Store {...props} />} />
+        
         <Route
           path="/feed/:postId"
           exact

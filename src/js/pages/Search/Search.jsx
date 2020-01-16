@@ -4,6 +4,7 @@ import FeedCard from "../../components/Feed/FeedCard/FeedCard";
 import SearchCard from "../../components/Search/SearchCard";
 
 export default props => {
+  const baseUrl = "http://localhost:8080/feed/search";
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [searchVlaues, setSearchVlaues] = useState({
@@ -13,9 +14,15 @@ export default props => {
   });
   useEffect(() => {
     appendSearchForm(queryString.parse(props.location.search));
+    getSearchPosts(props.location.search);
+  }, []);
 
-    //console.log("search valu", searchVlaues);
-    fetch("http://localhost:8080/feed/search" + props.location.search, {
+  const appendSearchForm = searchTerm => {
+    setSearchVlaues(searchTerm);
+  };
+
+  const getSearchPosts = path => {
+    fetch(baseUrl + path, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -26,11 +33,15 @@ export default props => {
       })
       .then(res => setPosts(res.post))
       .then(setLoading(true));
-  }, []);
-
-  const appendSearchForm = searchTerm => {
-    setSearchVlaues(searchTerm);
   };
+
+  const acceptSearchChangeHandler = searchForm => {
+    const { what, city, category } = searchForm;
+    let searchUrl = "?term=" + what + "&category=" + category + "&city=" + city;
+    props.history.push("/feed/search" + searchUrl);
+    return getSearchPosts(searchUrl);
+  };
+
   return (
     <Fragment>
       <div className="search-container -result">
@@ -39,16 +50,15 @@ export default props => {
             {...props}
             searchVlaues={searchVlaues}
             className="box-shadow-7"
-            onClick={() => {
-              goToSearch;
-            }}
+            acceptSearchChangeHandler={acceptSearchChangeHandler}
           />
         </div>
       </div>
       <div className="posts-container">
         <h1>Check out Best ME articles</h1>
         <div className="post-grid">
-          {loading && posts &&
+          {loading &&
+            posts &&
             // getPosts &&
             posts.map(post => (
               <FeedCard

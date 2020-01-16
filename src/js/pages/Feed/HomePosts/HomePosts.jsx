@@ -59,12 +59,6 @@ export default props => {
     setPostsLoading(true);
     loadPosts();
     setPostsLoading(false);
-    // if (getPosts.length == 0) {
-    //     setPostsLoading(true);
-    //     loadPosts();
-    // } else {
-    //     setPostsLoading(false);
-    // }
   }, []);
 
   const loadPosts = () => {
@@ -115,17 +109,15 @@ export default props => {
     });
   };
 
-  const catchError = error => {
-    setError(error);
+  const acceptSearchChangeHandler = searchForm => {
+    const { what, city, category } = searchForm;
+    return props.history.push(
+      "/feed/search?term=" + what + "&category=" + category + "&city=" + city
+    );
   };
 
-  const goToSearch = () => {
-    //return props.history.push("/search");
-    return <Redirect to="/search" />;
-  };
-  const goToFeed = () => {
-    props.history.push("/feed");
-    return <Redirect to="/login" />;
+  const catchError = error => {
+    setError(error);
   };
 
   return (
@@ -134,10 +126,8 @@ export default props => {
         <div className="search-card" position="sticky">
           <SearchCard
             {...props}
+            acceptSearchChangeHandler={acceptSearchChangeHandler}
             className="box-shadow-7"
-            onClick={() => {
-              goToSearch;
-            }}
           />
         </div>
       </div>

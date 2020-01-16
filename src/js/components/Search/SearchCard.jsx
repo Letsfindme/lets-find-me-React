@@ -37,9 +37,9 @@ export default props => {
     setLoading(true);
     if (props.searchVlaues) {
       const { category, city, term } = props.searchVlaues;
-      fields[0].value = term;
-      fields[1].value = city;
-      fields[2].value = category;
+      term != undefined ? (fields[0].value = term) : "";
+      city != undefined ? (fields[1].value = city) : "";
+      category != undefined ? (fields[2].value = category) : "";
       setLoadedFields(fields);
     } else {
       setLoading(false);
@@ -86,13 +86,6 @@ export default props => {
     });
   };
 
-  const acceptSearchChangeHandler = searchForm => {
-    const { what, city, category } = searchForm;
-    return props.history.push(
-      "/search?term=" + what + "&category=" + category + "&city=" + city
-    );
-  };
-
   return (
     <Fragment>
       <div className="text-guid">
@@ -104,7 +97,7 @@ export default props => {
           btnValue="Search"
           fields={loadedFields}
           validation={searchValid}
-          formSubmit={value => acceptSearchChangeHandler(value)}
+          formSubmit={value => props.acceptSearchChangeHandler(value)}
         />
       )}
     </Fragment>
