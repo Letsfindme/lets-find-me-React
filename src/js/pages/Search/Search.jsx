@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import queryString from "query-string";
 import FeedCard from "../../components/Feed/FeedCard/FeedCard";
 import SearchCard from "../../components/Search/SearchCard";
 import Paginator from "../../components/Paginator/Paginator";
 
 export default props => {
+  const dispatch = useDispatch();
   const baseUrl = "http://localhost:8080/feed/search";
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
@@ -24,6 +26,7 @@ export default props => {
 
   const appendSearchForm = searchTerm => {
     const { term, category, city, currentPage = 1 } = searchTerm;
+    dispatch({ type: "SET_SEARCHVAL", payload: { term, category, city, currentPage }});
     setSearchVlaues({ term, category, city, currentPage });
     setSearchUrl(
       "?term=" +
@@ -38,8 +41,6 @@ export default props => {
   };
 
   const getSearchPosts = async path => {
-    console.log("path", path);
-
     // path = ?term=&category=&city=
     const res = await fetch(baseUrl + path, {
       method: "GET",
@@ -88,7 +89,7 @@ export default props => {
         <div className="search-card -result" position="sticky">
           <SearchCard
             {...props}
-            searchVlaues={searchVlaues}
+            searchVlaue={searchVlaues}
             className="box-shadow-7"
             acceptSearchChangeHandler={appendSearchForm}
           />
