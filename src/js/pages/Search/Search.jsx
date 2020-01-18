@@ -2,44 +2,77 @@ import React, { Fragment, useEffect, useState } from "react";
 import queryString from "query-string";
 import FeedCard from "../../components/Feed/FeedCard/FeedCard";
 import SearchCard from "../../components/Search/SearchCard";
+import Paginator from "../../components/Paginator/Paginator";
 
 export default props => {
   const baseUrl = "http://localhost:8080/feed/search";
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [searchUrl, setSearchUrl] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [lastPage, setLastPage] = useState(0);
   const [searchVlaues, setSearchVlaues] = useState({
     category: "",
     city: "",
     term: ""
   });
+
   useEffect(() => {
     appendSearchForm(queryString.parse(props.location.search));
-    getSearchPosts(props.location.search);
   }, []);
-
   const appendSearchForm = searchTerm => {
     setSearchVlaues(searchTerm);
+    const { term, category, city, currentPage = 0 } = searchTerm;
+    setSearchUrl(
+      "?term=" +
+        term +
+        "&category=" +
+        category +
+        "&city=" +
+        city +
+        "&currentPage=" +
+        currentPage
+    );
   };
 
-  const getSearchPosts = path => {
-    fetch(baseUrl + path, {
+  const getSearchPosts = async path => {
+    // path = ?term=&category=&city=
+    const res = await fetch(baseUrl + path, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(res => {
-        return res.json();
-      })
-      .then(res => setPosts(res.post))
-      .then(setLoading(true));
+    });
+    const json = await res.json();
+    setCurrentPage(Number(json.currentPage));
+    setLastPage(json.count - 1);
+    setPosts(json.post);
+    setLoading(true);
   };
 
-  const acceptSearchChangeHandler = searchForm => {
-    const { what, city, category } = searchForm;
-    let searchUrl = "?term=" + what + "&category=" + category + "&city=" + city;
+  const submitSearchHandler = searchForm => {
+    const { term, city, category } = searchForm;
+    setSearchUrl("?term=" + term + "&category=" + category + "&city=" + city);
+  };
+  useEffect(() => {
     props.history.push("/feed/search" + searchUrl);
-    return getSearchPosts(searchUrl);
+    getSearchPosts(searchUrl);
+  }, [searchUrl]);
+
+  const nextSearchHandler = searchForm => {
+    let num = currentPage + 1;
+    setCurrentPage(currentPage + 1);
+    const nextPage = searchUrl + "&currentPage=" + num;
+    props.history.push(nextPage);
+    return getSearchPosts(nextPage);
+  };
+
+  const prevSearchHandler = searchForm => {
+    let num = currentPage - 1;
+    setCurrentPage(currentPage - 1);
+    const nextPage = searchUrl + "&currentPage=" + num;
+    props.history.push(nextPage);
+    return getSearchPosts(nextPage);
   };
 
   return (
@@ -50,13 +83,13 @@ export default props => {
             {...props}
             searchVlaues={searchVlaues}
             className="box-shadow-7"
-            acceptSearchChangeHandler={acceptSearchChangeHandler}
+            acceptSearchChangeHandler={appendSearchForm}
           />
         </div>
       </div>
       <div className="posts-container">
-        <h1>Check out Best ME articles</h1>
         <div className="post-grid">
+          <h1>Check out Best ME articles</h1>
           {loading &&
             posts &&
             // getPosts &&
@@ -75,6 +108,12 @@ export default props => {
               />
             ))}
         </div>
+        <Paginator
+          currentPage={currentPage}
+          lastPage={lastPage}
+          onPrevious={prevSearchHandler}
+          onNext={nextSearchHandler}
+        ></Paginator>
       </div>
     </Fragment>
   );
