@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import './Paginator.css';
+import "./Paginator.css";
 
 const paginator = props => (
-  <div className="post-grid">
+  <div className="paginator">
     {props.children}
     <div className="paginator__controls">
-      {props.currentPage > 1 && (
+      {props.currentPage > 0 && (
         <button className="paginator__control" onClick={props.onPrevious}>
           Previous
         </button>
