@@ -15,7 +15,7 @@ export default props => {
     {
       label: "What are you looking for?",
       type: "input",
-      name: "what",
+      name: "term",
       value: ""
     },
     { label: "In which city", type: "input", name: "city", value: "" },

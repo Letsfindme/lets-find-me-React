@@ -110,9 +110,9 @@ export default props => {
   };
 
   const acceptSearchChangeHandler = searchForm => {
-    const { what, city, category } = searchForm;
+    const { term, city, category } = searchForm;
     return props.history.push(
-      "/feed/search?term=" + what + "&category=" + category + "&city=" + city
+      "/feed/search?term=" + term + "&category=" + category + "&city=" + city
     );
   };
 
@@ -137,8 +137,8 @@ export default props => {
         </Button>
       </section> */}
       <div className="posts-container">
-        <h1>Check out Best ME articles</h1>
         <div className="post-grid">
+          <h1>Check out Best ME articles</h1>
           {!postsLoading &&
             // getPosts &&
             getPosts.map(post => (

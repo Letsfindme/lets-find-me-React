@@ -1,7 +1,6 @@
 {
-  "presets": [
-    "@babel/preset-env"
-  ],
+  //babel-preset-es2017
+  "presets": ["@babel/preset-env"],
 
   "plugins": [
     [
@@ -9,6 +8,8 @@
       {
         "loose": true
       }
-    ]
+    ],
+    // Async await
+    ["@babel/transform-runtime"]
   ]
 }

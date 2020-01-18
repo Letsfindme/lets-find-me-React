@@ -1,3 +1,6 @@
+.paginator {
+  margin: 1rem;
+}
 .paginator__controls {
   display: flex;
   justify-content: center;
