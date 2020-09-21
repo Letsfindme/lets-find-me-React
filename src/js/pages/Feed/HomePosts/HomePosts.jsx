@@ -121,6 +121,7 @@ export default props => {
   };
 
   return (
+    <Fragment>
     <div className="home-wrapper">
       <div className="search-container">
         <div className="search-card" position="sticky">
@@ -172,5 +173,6 @@ export default props => {
         />
       </div>
     </div>
+   </Fragment>
   );
 };
