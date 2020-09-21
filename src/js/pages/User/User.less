@@ -1,5 +1,4 @@
 .profile-wrapper {
-  padding-top: 2rem;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -8,13 +7,24 @@
       align-items: center;
     }
   }
+  .navigation {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    .back-link {
+      position: relative;
+      top: auto;
+      left: auto;
+    }
+  }
   .login-card {
     padding: 0rem 2rem 1rem 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    .back-link{
-      position: absolute;
-    }
+
     & span {
       width: fit-content;
       position: relative;

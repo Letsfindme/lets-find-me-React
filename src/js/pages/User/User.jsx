@@ -2,10 +2,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
 import Back from "../../components/Button/Back";
-import { required, length, email } from "../../util/validators";
-import { loginValid } from "../../components/Form/Input/validation";
 import { generateBase64FromImage } from "../../util/image";
 import Image from "../../components/Image/Image.jsx";
+import Button from "../../components/Button/Button";
 
 export default props => {
   const dispatch = useDispatch();
@@ -31,6 +30,7 @@ export default props => {
   const [lodaingProfile, setLodaingProfile] = useState(false);
   const [loadedFields, setLoadedFields] = useState(fields);
   const [loadedAddress, setLoadedAddress] = useState(addressFields);
+  const [filesToBeSent, setFilesToBeSent] = useState([]);
 
   useEffect(() => {
     if (getToken) {
@@ -75,9 +75,9 @@ export default props => {
     setLodaingProfile(false);
   };
 
-  const acceptPostChangeHandler = files => {
+  const acceptPostChangeHandler = (val, files) => {
     const formData = new FormData();
-    formData.append("image", files.images[0]);
+    formData.append("image", filesToBeSent[0]);
     // let url = "http://localhost:8080/upload";
     let url = "http://localhost:8080/user/profile/avatar";
     let method = "POST";
@@ -146,6 +146,7 @@ export default props => {
 
   const avatarHandler = (postContent, files) => {
     if (files) {
+      setFilesToBeSent([files[0]]);
       generateBase64FromImage(files[0])
         .then(b64 => {
           setImagePreview(b64);
@@ -159,11 +160,20 @@ export default props => {
   const handleRemoveImage = () => {
     setImagePreview(null);
   };
+  
+  const goToMyPosts = () => {
+    props.history.push("/feed/user-posts");
+  };
 
   return (
     <div className="profile-wrapper">
+      <div className={"navigation"}>
+        <Back click={props.history.goBack} text="Back to store" />
+        <div className={"finalize"}>
+          <Button onClick={goToMyPosts}>My posts</Button>
+        </div>
+      </div>
       <div className="login-card">
-        <Back click={props.history.goBack} text=" back to home" />
         <span>
           <h2>My avatar!</h2>
         </span>
@@ -173,7 +183,7 @@ export default props => {
           fields={avatar}
           onChange={avatarHandler}
           //   validation={loginValid}
-          formSubmit={value => acceptPostChangeHandler(value)}
+          formSubmit={(value, files) => acceptPostChangeHandler(value, files)}
         >
           <div className="new-post__preview-image">
             {imagePreview.length > 1 ? (
