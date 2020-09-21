@@ -1,0 +1,119 @@
+.wrapper-store {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  .navigation {
+    .back-link,
+    > p {
+      padding-right: 10px;
+    }
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    &.-edit {
+      padding: 2rem;
+      border: 1px solid gray;
+    }
+    .back-link {
+      position: relative;
+      top: auto;
+    }
+    .finalize {
+      display: flex;
+      align-items: center;
+      .fa-surprise {
+        font-size: 2rem;
+        transition: all ease;
+        transform: scale(0);
+        animation: blip 2s infinite;
+      }
+      & .-popup {
+        display: none;
+      }
+      > button {
+        position: relative;
+        z-index: 101;
+      }
+      &:hover {
+        .-popup {
+          color: black;
+          padding: 1rem;
+          font-size: 1rem;
+          text-align: initial;
+          display: block;
+          position: absolute;
+          width: 150px;
+          top: 40px;
+          right: 0;
+          z-index: 100;
+          background-color: cornsilk;
+          padding: 1rem;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+      }
+    }
+  }
+  & .-product {
+    width: 100%;
+    &.-orders {
+      display: inline;
+    }
+    .order-grid {
+      display: flex;
+    }
+  }
+  & .-red {
+   color: red;
+  }
+}
+.new-post__preview-image {
+  &.-product {
+    justify-content: center;
+  }
+  .imageItem {
+    &.-product {
+      width: 200px;
+    }
+  }
+}
+
+/////// Animations ///////
+@keyframes spinner {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(0);
+  }
+}
+
+@keyframes blip {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
