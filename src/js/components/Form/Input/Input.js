@@ -7,10 +7,13 @@ import FormikPlacesAutoComplete from "../PlaceAuto/FormikPlacesAutocomplete";
 const input = props => {
   const handleChangeFile = e => {
     props.onChange(e.target.value, e.target.files);
+    // Empty field so it can detect change when adding the same file
+    e.target.files = null;
+    e.target.value = null;
   };
 
-  const handleFormSubmit = value => {
-    props.formSubmit(value);
+  const handleFormSubmit = form => {
+    props.formSubmit(form.values, form);
   };
 
   const getInitialValues = inputs => {
@@ -34,62 +37,61 @@ const input = props => {
     return inputs.map(input => {
       if (input.type === "select") {
         return renderSelect(input);
-      }
-      if (input.type === "textarea") {
+      } else if (input.type === "textarea") {
         return renderTextArea(input);
-      }
-      if (input.type === "file") {
+      } else if (input.type === "file") {
         return renderImageInput(input);
-      }
-      if (input.type === "autoComplete") {
+      } else if (input.type === "autoComplete") {
         return renderAutoComplete(input);
-      }
-      return (
-        <div className="group" key={input.name}>
-          <Field
-            name={input.name}
-            render={props => {
-              const { field } = props;
-              const { errors, touched, handleBlur, values } = props.form;
-              const hasError =
-                errors[input.name] && touched[input.name]
-                  ? "wrong  invalid"
-                  : "";
-              const istouched = touched[input.name] ? " touched " : "";
-              const empty = values[input.name] == "" ? " empty " : " touched";
-              return (
-                <Fragment>
-                  <input
-                    {...field}
-                    value={field.value}
-                    onBlur={handleBlur}
-                    id={field.name}
-                    name={input.name}
-                    className={[hasError, istouched, empty]}
-                    type="text"
-                  />
-                  <span className="highlight" />
-                  <span className="bar" />
-                  <label htmlFor={field.name}>{input.label}</label>
-                  <ErrorMessage
-                    name={input.name}
-                    component="div"
-                    className="required"
-                  />
-                </Fragment>
-              );
-            }}
-          />
-        </div>
-      );
+      } else
+        return (
+          <div className="group" key={input.name}>
+            <Field
+              name={input.name}
+              render={props => {
+                const { field } = props;
+                const { errors, touched, handleBlur, values } = props.form;
+                const hasError =
+                  errors[input.name] && touched[input.name]
+                    ? "wrong  invalid"
+                    : "";
+                const istouched = touched[input.name] ? " touched " : "";
+                const empty = values[input.name] == "" ? " empty " : " touched";
+                const fieldId = Math.random();
+                return (
+                  <Fragment>
+                    <input
+                      {...field}
+                      value={props.field.value}
+                      onBlur={handleBlur}
+                      id={fieldId}
+                      name={input.name}
+                      className={[hasError, istouched, empty]}
+                      type="text"
+                    />
+                    <span className="highlight" />
+                    <span className="bar" />
+                    <label htmlFor={fieldId}>{input.label}</label>
+                    <ErrorMessage
+                      name={input.name}
+                      component="div"
+                      className="required"
+                    />
+                  </Fragment>
+                );
+              }}
+            />
+          </div>
+        );
     });
   };
 
   const renderAutoComplete = input => {
-   return(
-   <div className="group" key={input.name}>
-      <Field name="location" component={FormikPlacesAutoComplete} />
-    </div>)
+    return (
+      <div className="group" key={input.name}>
+        <Field name="location" component={FormikPlacesAutoComplete} />
+      </div>
+    );
   };
 
   const renderSelect = input => {
@@ -107,7 +109,6 @@ const input = props => {
             );
             const options = input.data.map(i => (
               <option key={i} value={i}>
-                
                 {i}
               </option>
             ));
@@ -139,11 +140,20 @@ const input = props => {
         <Field
           name={input.name}
           render={props => {
+            const { errors, touched, handleBlur, values } = props.form;
+            const istouched = touched[input.name] ? " touched " : "";
+            const empty = values[input.name] == "" ? " empty " : " touched";
             const { field } = props;
-            const { errors, touched } = props.form;
             const hasError =
               errors[input.name] && touched[input.name] ? "hasError" : "";
-            return <textarea {...field} id={input.id} rows="5"></textarea>;
+            return (
+              <textarea
+                {...field}
+                className={[hasError, istouched, empty]}
+                id={input.id}
+                rows="5"
+              ></textarea>
+            );
           }}
         />
         <span className="highlight" />
@@ -157,7 +167,7 @@ const input = props => {
   const renderImageInput = input => {
     return (
       <div className="group image-group" key={"tadsopi"}>
-        <p>Please choose some images.</p>
+        {/* <p>Please choose some images.</p> */}
         <Field
           name={input.name}
           render={props => {
@@ -171,6 +181,7 @@ const input = props => {
             } = props.form;
             const hasError =
               errors[input.name] && touched[input.name] ? "hasError" : "";
+            const randomId = Math.random();
             return (
               <div className="input file_picker">
                 <input
@@ -180,9 +191,10 @@ const input = props => {
                   }}
                   onBlur={onBlur}
                   type="file"
-                  id={input.name}
+                  id={randomId}
+                  accept="image/*"
                 />
-                <label className={["btn-3"].join(" ")} htmlFor={input.name}>
+                <label className={["btn-3"].join(" ")} htmlFor={randomId}>
                   <span>
                     <i className="fas fa-plus"></i>
                     {input.label}
@@ -202,26 +214,35 @@ const input = props => {
       {props.control === "form" ? (
         <Formik
           onSubmit={values => {
-            handleFormSubmit(values);
+            props.onSubmit(values);
           }}
           validationSchema={props.validation}
           initialValues={initialValues}
+          enableReinitialize={true}
           render={form => {
             return (
-              <form id="my-form" onSubmit={form.handleSubmit}>
+              <form
+                id={props.id ? props.id : "my-form" + Date.now()}
+                onSubmit={form.handleSubmit}
+              >
                 {renderFields(props.fields, form)}
                 {props.children}
                 <div className="feed__actions">
                   {props.cancel && (
                     <Button
+                      type="button"
                       design="danger"
                       mode="flat"
-                      onClick={props.cancelPostChangeHandler}
+                      onClick={() => props.cancelPostChangeHandler(form)}
                     >
-                      Cancel
+                      {props.cancelBtn ? props.cancelBtn : "Cancel"}
                     </Button>
                   )}
-                  <Button type="submit" className="btn">
+                  <Button
+                    type="button"
+                    className="btn"
+                    onClick={() => handleFormSubmit(form)}
+                  >
                     {props.btnValue}
                   </Button>
                 </div>
@@ -313,7 +334,6 @@ export default input;
 
 // <Formik
 //   onSubmit={values => {
-//     console.log(values);
 //   }}
 //   validationSchema={props.validation}
 //   initialValues={initialValues}
