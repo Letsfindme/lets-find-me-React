@@ -10,7 +10,6 @@ const PrivateRoute = ({
   ...rest
 }) => {
   getAuth = useSelector(state => state.auth.isAuthenticated);
-  console.log("rest", rest);
 
   return (
     <Route

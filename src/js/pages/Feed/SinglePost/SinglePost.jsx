@@ -149,7 +149,7 @@ export default props => {
           />
         )}
       </section>
-
+      {/* comments */}
       <ul className="feed-container comments">
         {postComments && postComments.length > 0 && (
           <Fragment>
@@ -180,8 +180,9 @@ export default props => {
             })}
           </Fragment>
         )}
+        {/* Add new comment section */}
         <section className="comment-add">
-          {state.user & userAvatar ? (
+          {state &&userAvatar ? (
             <Image
               key={"imagesPreview avatar"}
               className={"user-profile user-profile-commment"}
@@ -193,12 +194,14 @@ export default props => {
           )}
           {!posttingComment && (
             <Input
+              id={"commentId"}
               control="form"
               fields={fields}
               //validation={newPostValid}
               //onChange={postInputChangeHandler}
               formSubmit={value => addCommentHandler(value)}
-              btnValue="Add commit"
+              onSubmit={value => addCommentHandler(value)}
+              btnValue={<i className="fas fa-paper-plane"></i>}
               //cancelPostChangeHandler={cancelPostChangeHandler}
             />
           )}

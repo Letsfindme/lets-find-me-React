@@ -1,15 +1,8 @@
 import React, { Component, useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Form/Input/Input";
-import Button from "../../components/Button/Button.jsx";
-import { required, length, email } from "../../util/validators";
 import { loginValid } from "../../components/Form/Input/validation";
-import { NavLink, Route, withRouter } from "react-router-dom";
-import {
-  CSSTransition,
-  Transition,
-  TransitionGroup
-} from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import Auth from "./Auth.jsx";
 
 export default props => {
@@ -37,14 +30,25 @@ export default props => {
   const dispatch = useDispatch();
   const getAuth = useSelector(state => state.auth.isAuthenticated);
 
-  // useEffect(() => {
-  //   props.history.location.pathname == "/signup"
-  //     ? setRegistred(false)
-  //     : setRegistred(true);
-  // }, [props.history.location]);
-
+  useEffect(() => {
+    try {
+      if (props.history.location.search == "?l=true") {
+        setRegistred(false);
+      }else{
+        setRegistred(true);
+      }
+    } catch (error) {}
+  }, []);
+  useEffect(() => {
+    try {
+      if (props.history.location.search == "?l=true") {
+        setRegistred(false);
+      }else{
+        setRegistred(true);
+      }
+    } catch (error) {}
+  }, [props.history.location.search]);
   const loginHandler = authData => {
-    // event.preventDefault();
     setAuthLoading(true);
     fetch("http://localhost:8080/auth/login", {
       method: "POST",
@@ -71,7 +75,9 @@ export default props => {
         dispatch({ type: "SET_UID", payload: resData.userId });
         localStorage.setItem("token", resData.token);
         localStorage.setItem("userId", resData.userId);
-        const remainingMilliseconds = 6.048e+8;
+        localStorage.setItem("rewards-"+resData.userId, resData.credit);
+        localStorage.setItem("ref", resData.type);
+        const remainingMilliseconds = 6.048e8;
         const expiryDate = new Date(
           new Date().getTime() + remainingMilliseconds
         );
@@ -82,8 +88,6 @@ export default props => {
         if (!modal) {
           props.history.push("/");
         } else {
-          console.log("closind");
-
           props.closeModal();
         }
       })
@@ -107,7 +111,8 @@ export default props => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
-    props.history.push("/hi");
+    localStorage.setItem("ref", "User");
+    props.history.push("/");
   };
 
   const toggleRegidtred = () => {
@@ -148,7 +153,6 @@ export default props => {
         setMessage("Registred successfully! please signin!");
         //setAuthLoading(false);
         // props.history.push("/");
-        // console.log('signup ',props.history);
       })
       .catch(err => {
         console.log(err);
@@ -173,7 +177,6 @@ export default props => {
               formSubmit={e => loginHandler(e)}
             />
             <a onClick={toggleRegidtred}>Don't have an account? join us</a>
-
           </div>
         </CSSTransition>
       ) : (
@@ -187,9 +190,7 @@ export default props => {
               validation={loginValid}
               formSubmit={e => signupHandler(e)}
             />
-            <a onClick={toggleRegidtred}>
-              Already registred? Go to Login
-            </a>
+            <a onClick={toggleRegidtred}>Already registred? Go to Login</a>
           </div>
         </CSSTransition>
       )}

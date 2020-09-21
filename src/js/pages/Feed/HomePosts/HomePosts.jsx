@@ -121,6 +121,7 @@ export default props => {
   };
 
   return (
+    <Fragment>
     <div className="home-wrapper">
       <div className="search-container">
         <div className="search-card" position="sticky">
@@ -137,8 +138,8 @@ export default props => {
         </Button>
       </section> */}
       <div className="posts-container">
+        <h1 className="br-0">Check out Best ME articles</h1>
         <div className="post-grid">
-          <h1>Check out Best ME articles</h1>
           {!postsLoading &&
             // getPosts &&
             getPosts.map(post => (
@@ -172,5 +173,6 @@ export default props => {
         />
       </div>
     </div>
+   </Fragment>
   );
 };

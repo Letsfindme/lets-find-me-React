@@ -80,7 +80,7 @@
         margin: 0;
       }
     }
-    Button{
+    button {
       margin-left: auto;
       height: 40px;
       align-self: center;
@@ -88,6 +88,12 @@
   }
 }
 
+/////// comment section///////////
+#commentId {
+  .group > input {
+    padding-right: 4rem;
+  }
+}
 .post-action {
   display: flex;
   flex-direction: row;
@@ -206,7 +212,15 @@ time {
 }
 
 .comment-add .feed__actions {
-  display: none;
+  position: relative;
+  & button {
+    position: absolute;
+    top: -70px;
+    right: 0rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 1rem;
+  }
 }
 .user-profile.user-profile-commment {
   margin-top: 1.8rem;

@@ -6,12 +6,12 @@ const paginator = props => (
   <div className="paginator">
     {props.children}
     <div className="paginator__controls">
-      {props.currentPage > 0 && (
+      {props.currentPage > 1 && (
         <button className="paginator__control" onClick={props.onPrevious}>
           Previous
         </button>
       )}
-      {props.currentPage < props.lastPage && (
+      {props.currentPage < props.lastPage + 1 && (
         <button className="paginator__control" onClick={props.onNext}>
           Next
         </button>
