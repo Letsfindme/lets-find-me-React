@@ -48,8 +48,6 @@ export default props => {
         dispatch({ type: "SET_ISAUTH", payload: false });
         //setAuthLoading(false);
         props.history.push("/");
-        console.log('signup ',props.history);
-        
       })
       .catch(err => {
         console.log(err);
