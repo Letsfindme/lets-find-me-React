@@ -7,7 +7,7 @@ import Logo from "../../Logo/Logo";
 import avatarPng from "../../../../assets/images/User_Avatar.png";
 import logo from "../../../../assets/images/logo.png";
 import NavigationItems from "../NavigationItems/NavigationItems";
-import ProfileAvatar from "../ProfileAvatar/profileAvatar";
+import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
 
 const mainNavigation = props => {
   const dispatch = useDispatch();

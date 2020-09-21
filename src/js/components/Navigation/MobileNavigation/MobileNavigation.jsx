@@ -1,5 +1,4 @@
 import React from "react";
-import ProfileAvatar from "../ProfileAvatar/profileAvatar";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import avatar from "../../../../assets/images/User_Avatar.png";
 const navItems = [
