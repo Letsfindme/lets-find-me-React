@@ -14,7 +14,7 @@ const navItems = [
   {
     id: "store",
     text: "Store",
-    link: "/hi",
+    link: "/store",
     show: true,
     className: "",
     logo: <i className="fas fa-shopping-bag"></i>
@@ -22,7 +22,7 @@ const navItems = [
   {
     id: "signup",
     text: "Signup",
-    link: "/signup",
+    link: "/login?l=true",
     onAuth: false,
     logo: <i className="fas fa-user-plus"></i>
   },
@@ -41,23 +41,7 @@ const navItems = [
     logo: <i className="fas fa-user-circle"></i>
   },
 ];
-const subItems = [
-  {
-    id: "loginjnin",
-    text: "Account",
-    link: "/login",
-    onAuth: false,
-    className: "hideOnTablette",
-    logo: <i className="fas fa-user-circle"></i>
-  },
-  {
-    id: "logout",
-    text: "Logout",
-    link: "/logout",
-    onAuth: true,
-    logo: <i className="fas fa-power-off"></i>
-  }
-];
+
 const mobileNavigation = props => (
   <nav className={["mobile-nav", props.open ? "open" : ""].join(" ")}>
     <ul className={"nav-list-design  nav-list-mobile"}>
@@ -67,15 +51,6 @@ const mobileNavigation = props => (
         onChoose={props.onChooseItem}
         isAuth={props.isAuth}
       />
-      {/* <ProfileAvatar
-        className={"hideOnTabletteOnly"}
-        isAuth={props.isAuth}
-        onChoose={props.onChooseItem}
-        // handleLeave={handleLeave}
-        // handleHover={handleHover}
-        avatar={avatar}
-        subItems={subItems}
-      /> */}
     </ul>
   </nav>
 );
