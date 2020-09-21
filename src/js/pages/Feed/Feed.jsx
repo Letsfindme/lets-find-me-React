@@ -10,9 +10,18 @@ import ErrorHandler from "../../components/ErrorHandler/ErrorHandler";
 import Modal from "../../components/Modal/Modal";
 import Backdrop from "../../components/Backdrop/Backdrop";
 import Login from "../../pages/Auth/Login";
-import { NavLink, Route, withRouter } from "react-router-dom";
+import { apiFetch } from "../../util/fetch";
+import FeedCard from "../../components/Feed/FeedCard/FeedCard";
 
-export default props => {
+export default (props) => {
+  const url = `http://localhost:8080/feed/topsearch`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpeng] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
@@ -24,25 +33,28 @@ export default props => {
   const [postsLoading, setPostsLoading] = useState(true);
   const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState(false);
-  const getAuth = useSelector(state => state.auth.isAuthenticated);
-  const getToken = useSelector(state => state.auth.token);
-  const getPosts = useSelector(state => state.feed.posts);
+  const getAuth = useSelector((state) => state.auth.isAuthenticated);
+  const getToken = useSelector((state) => state.auth.token);
+  const getPosts = useSelector((state) => state.feed.posts);
+  const statusUrl = "http://localhost:8080/auth/status";
 
   useEffect(() => {
+    // Load top feed by choosen gategory
+    topsearch();
     if (getToken) {
-      // loadPosts();
-      fetch("http://localhost:8080/auth/status", {
+      // Get status
+      fetch(statusUrl, {
         headers: {
-          Authorization: "Bearer " + getToken
-        }
+          Authorization: "Bearer " + getToken,
+        },
       })
-        .then(res => {
+        .then((res) => {
           if (res.status !== 200) {
             throw new Error("Failed to fetch user status.");
           }
           return res.json();
         })
-        .then(resData => {
+        .then((resData) => {
           setStatus(resData.status);
         })
         .catch(catchError);
@@ -55,7 +67,14 @@ export default props => {
     setModalIsOpeng(false);
   };
 
-  const loadPosts = direction => {
+  const topsearch = async () => {
+    const { res } = await apiFetch(url, options);
+    dispatch({ type: "SET_POSTS", payload: res.posts }), setPosts(res.posts);
+    setTotalPosts(res.totalItems);
+    setPostsLoading(false);
+  };
+
+  const loadPosts = (direction) => {
     if (direction) {
       setPostsLoading(true);
       setPosts([]);
@@ -71,16 +90,16 @@ export default props => {
     }
     fetch("http://localhost:8080/feed/posts?page=" + page, {
       headers: {
-        Authorization: "Bearer " + getToken
-      }
+        Authorization: "Bearer " + getToken,
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch posts.");
         }
         return res.json();
       })
-      .then(resData => {
+      .then((resData) => {
         dispatch({ type: "SET_POSTS", payload: resData.posts }),
           setPosts(resData.posts);
         setTotalPosts(resData.totalItems);
@@ -89,19 +108,19 @@ export default props => {
       .catch(catchError);
   };
 
-  const statusUpdateHandler = event => {
+  const statusUpdateHandler = (event) => {
     event.preventDefault();
     fetch("http://localhost:8080/auth/status", {
       method: "PATCH",
       headers: {
         Authorization: "Bearer " + getToken,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        status: status
-      })
+        status: status,
+      }),
     })
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error("Can't update status!");
         }
@@ -114,9 +133,9 @@ export default props => {
     setIsEditing(true);
   };
 
-  const startEditPostHandler = postId => {
+  const startEditPostHandler = (postId) => {
     setEditPost(() => {
-      const loadedPost = posts.find(p => p.id === postId);
+      const loadedPost = posts.find((p) => p.id === postId);
       setIsEditing(true);
       return loadedPost;
     });
@@ -127,7 +146,7 @@ export default props => {
     setEditPost(null);
   };
 
-  const finishEditHandler = postData => {
+  const finishEditHandler = (postData) => {
     if (!getAuth) {
       setModalIsOpeng(true);
     } else {
@@ -136,7 +155,7 @@ export default props => {
       formData.append("title", postData.title);
       formData.append("content", postData.content);
       formData.append("category", postData.category);
-      formData.append("location",JSON.stringify(postData.location));
+      formData.append("location", JSON.stringify(postData.location));
       for (var x = 0; x < postData.image.length; x++) {
         formData.append("image", postData.image[x]);
       }
@@ -150,42 +169,23 @@ export default props => {
         method: method,
         body: formData,
         headers: {
-          Authorization: "Bearer " + getToken
-        }
+          Authorization: "Bearer " + getToken,
+        },
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
+        .then((res) => {
+          if (res.status !== 201) {
             throw new Error("Creating or editing a post failed!");
           }
           return res.json();
         })
-        .then(resData => {
-          const post = {
-            id: resData.post.id,
-            title: resData.post.title,
-            content: resData.post.content,
-            creator: resData.post.creator,
-            createdAt: resData.post.createdAt
-          };
-          setPosts(prevState => {
-            let updatedPosts = [...prevState.posts];
-            if (prevState.editPost) {
-              const postIndex = prevState.posts.findIndex(
-                p => p.id === prevState.editPost.id
-              );
-              updatedPosts[postIndex] = post;
-            } else if (prevState.posts.length < 2) {
-              updatedPosts = prevState.posts.concat(post);
-            }
-            return {
-              posts: updatedPosts,
-              isEditing: false,
-              editPost: null,
-              editLoading: false
-            };
-          });
+        .then((resData) => {
+          localStorage.setItem("rewards-" + resData.userId, resData.credit);
+          //todo post on hold for admin
+          //user can see there own post
+          //user can modify there posts
+          props.history.push("/feed/" + resData.post.id);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           // setState(...state, {
           //   isEditing: false,
@@ -201,7 +201,7 @@ export default props => {
     setStatus(value);
   };
 
-  const deletePostHandler = postId => {
+  const deletePostHandler = (postId) => {
     // setState(...state, { postsLoading: true });
     // fetch("http://localhost:8080/feed/post/" + postId, {
     //   method: "DELETE",
@@ -216,7 +216,6 @@ export default props => {
     //     return res.json();
     //   })
     //   .then(resData => {
-    //     console.log(resData);
     //     setState(prevState => {
     //       const updatedPosts = prevState.posts.filter(p => p._id !== postId);
     //       return { posts: updatedPosts, postsLoading: false };
@@ -232,7 +231,7 @@ export default props => {
     setError(null);
   };
 
-  const catchError = error => {
+  const catchError = (error) => {
     setError(error);
   };
 
@@ -262,39 +261,30 @@ export default props => {
         </Button>
       </FeedEdit>
       <section className="feed">
-        {postsLoading && (
+        {postsLoading ? (
           <div style={{ textAlign: "center", marginTop: "2rem" }}>
             <Loader />
           </div>
-        )}
-        {posts.length <= 0 && !postsLoading ? (
-          <p style={{ textAlign: "center" }}>No posts found.</p>
-        ) : null}
-        {!postsLoading && (
-          // <Paginator
-          //   onPrevious={loadPosts.bind(this, "previous")}
-          //   onNext={loadPosts.bind(this, "next")}
-          //   lastPage={Math.ceil(totalPosts / 2)}
-          //   currentPage={postPage}
-          // >
+        ) : (
           <div className="post-grid">
-            {getPosts.map(post => (
-              <Post
-                {...props}
+            {posts.length === 0 && (
+              <p style={{ textAlign: "center" }}>No posts found.</p>
+            )}
+            {getPosts.map((post) => (
+              <FeedCard
                 key={post.id}
                 id={post.id}
-                author={post.author}
+                startCount={post.starCount}
+                author={post.user.username}
                 date={new Date(post.createdAt).toLocaleDateString("en-US")}
                 title={post.title}
-                image={post.imageUrl}
+                thumb={post.imageUrl}
+                image={post.user.Avatar ? post.user.Avatar.imageRef : undefined}
                 content={post.content}
                 onStartEdit={startEditPostHandler.bind(this, post.id)}
-                onDelete={deletePostHandler.bind(this, post.id)}
               />
             ))}
           </div>
-
-          // </Paginator>
         )}
       </section>
     </Fragment>
