@@ -5,7 +5,7 @@ import { apiFetch } from "../../util/fetch";
 import Moment from "react-moment";
 
 export default (props) => {
-  const url = `http://letsfindme.site/shop/cart/orders`;
+  const url = `https://letsfindme.site/shop/cart/orders`;
   const options = {
     method: "GET",
     headers: {

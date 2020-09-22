@@ -14,7 +14,7 @@ import { apiFetch } from "../../util/fetch";
 import FeedCard from "../../components/Feed/FeedCard/FeedCard";
 
 export default (props) => {
-  const url = `http://letsfindme.site/feed/topsearch`;
+  const url = `https://letsfindme.site/feed/topsearch`;
   const options = {
     method: "GET",
     headers: {
@@ -36,7 +36,7 @@ export default (props) => {
   const getAuth = useSelector((state) => state.auth.isAuthenticated);
   const getToken = useSelector((state) => state.auth.token);
   const getPosts = useSelector((state) => state.feed.posts);
-  const statusUrl = "http://letsfindme.site/auth/status";
+  const statusUrl = "https://letsfindme.site/auth/status";
 
   useEffect(() => {
     // Load top feed by choosen gategory
@@ -88,7 +88,7 @@ export default (props) => {
       page--;
       setPostPage(page);
     }
-    fetch("http://letsfindme.site/feed/posts?page=" + page, {
+    fetch("https://letsfindme.site/feed/posts?page=" + page, {
       headers: {
         Authorization: "Bearer " + getToken,
       },
@@ -110,7 +110,7 @@ export default (props) => {
 
   const statusUpdateHandler = (event) => {
     event.preventDefault();
-    fetch("http://letsfindme.site/auth/status", {
+    fetch("https://letsfindme.site/auth/status", {
       method: "PATCH",
       headers: {
         Authorization: "Bearer " + getToken,
@@ -159,10 +159,10 @@ export default (props) => {
       for (var x = 0; x < postData.image.length; x++) {
         formData.append("image", postData.image[x]);
       }
-      let url = "http://letsfindme.site/feed/post";
+      let url = "https://letsfindme.site/feed/post";
       let method = "POST";
       if (editPost) {
-        url = "http://letsfindme.site/feed/post/" + editPost._id;
+        url = "https://letsfindme.site/feed/post/" + editPost._id;
         method = "PUT";
       }
       fetch(url, {
@@ -203,7 +203,7 @@ export default (props) => {
 
   const deletePostHandler = (postId) => {
     // setState(...state, { postsLoading: true });
-    // fetch("http://letsfindme.site/feed/post/" + postId, {
+    // fetch("https://letsfindme.site/feed/post/" + postId, {
     //   method: "DELETE",
     //   headers: {
     //     Authorization: "Bearer " + props.token

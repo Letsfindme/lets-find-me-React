@@ -38,7 +38,7 @@ export default props => {
       page--;
       setPostPage(page);
     }
-    fetch("http://letsfindme.site/feed/posts?page=" + page, {
+    fetch("https://letsfindme.site/feed/posts?page=" + page, {
       headers: {
         Authorization: "Bearer " + props.token
       }

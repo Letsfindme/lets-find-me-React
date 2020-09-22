@@ -26,7 +26,7 @@ export default props => {
 
   useEffect(() => {
     const postId = props.match.params.postId;
-    fetch("http://letsfindme.site/feed/post/" + postId, {
+    fetch("https://letsfindme.site/feed/post/" + postId, {
       headers: {
         Authorization: "Bearer " + props.token
       }
@@ -50,7 +50,7 @@ export default props => {
   const addCommentHandler = value => {
     let method = "POST";
     const postId = props.match.params.postId;
-    fetch("http://letsfindme.site/feed/post/" + postId, {
+    fetch("https://letsfindme.site/feed/post/" + postId, {
       method: method,
       body: JSON.stringify({
         text: value.comment
@@ -75,7 +75,7 @@ export default props => {
 
   const onStarClick = (nextValue, prevValue, name) => {
     const postId = props.match.params.postId;
-    fetch("http://letsfindme.site/feed/post/" + postId + "/" + nextValue, {
+    fetch("https://letsfindme.site/feed/post/" + postId + "/" + nextValue, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + props.token,

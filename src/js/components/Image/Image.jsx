@@ -41,7 +41,7 @@ export default props =>
             <div
                 className={props.className ? props.className : "image"}
                 style={{
-                    backgroundImage: `url('${"http://letsfindme.site/" +
+                    backgroundImage: `url('${"https://letsfindme.site/" +
                     props.imageUrl.replace("\\", "/")}')`,
                     backgroundSize: props.contain ? "contain" : "cover",
                     backgroundPosition: props.backgroundPosition

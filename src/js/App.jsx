@@ -42,7 +42,7 @@ export default props => {
   const signupHandler = (event, authData) => {
     event.preventDefault();
     setAuthLoading(true);
-    fetch("http://letsfindme.site/auth/signup", {
+    fetch("https://letsfindme.site/auth/signup", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
