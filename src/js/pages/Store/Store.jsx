@@ -9,8 +9,8 @@ import EditProduct from "./EditProduct";
 import { date } from "yup";
 
 export default (props) => {
-  const url = `http://localhost:8080/admin/product`;
-  const shopUrl = `http://localhost:8080/shop/products`;
+  const url = `http://letsfindme.site/admin/product`;
+  const shopUrl = `http://letsfindme.site/shop/products`;
   const options = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),

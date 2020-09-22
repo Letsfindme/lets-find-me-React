@@ -7,7 +7,7 @@ import Paginator from "../../components/Paginator/Paginator";
 
 export default props => {
   const dispatch = useDispatch();
-  const baseUrl = "http://localhost:8080/feed/search";
+  const baseUrl = "http://letsfindme.site/feed/search";
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [searchUrl, setSearchUrl] = useState("");

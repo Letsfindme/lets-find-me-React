@@ -62,7 +62,7 @@ export default props => {
   }, []);
 
   const loadPosts = () => {
-    fetch("http://localhost:8080/feed/topfeed")
+    fetch("http://letsfindme.site/feed/topfeed")
       .then(res => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch posts.");
@@ -78,7 +78,7 @@ export default props => {
 
   const statusUpdateHandler = event => {
     event.preventDefault();
-    fetch("http://localhost:8080/auth/status", {
+    fetch("http://letsfindme.site/auth/status", {
       method: "PATCH",
       headers: {
         Authorization: "Bearer " + props.token,

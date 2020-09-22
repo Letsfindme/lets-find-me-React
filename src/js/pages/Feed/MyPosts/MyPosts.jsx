@@ -5,7 +5,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 import { apiFetch } from "../../../util/fetch";
 
 export default props => {
-  const url = `http://localhost:8080/feed/user-posts`;
+  const url = `http://letsfindme.site/feed/user-posts`;
   const options = {
     method: "GET",
     headers: {

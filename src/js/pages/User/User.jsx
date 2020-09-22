@@ -34,7 +34,7 @@ export default props => {
 
   useEffect(() => {
     if (getToken) {
-      fetch("http://localhost:8080/user/profile", {
+      fetch("http://letsfindme.site/user/profile", {
         headers: {
           Authorization: "Bearer " + getToken
         }
@@ -78,8 +78,8 @@ export default props => {
   const acceptPostChangeHandler = (val, files) => {
     const formData = new FormData();
     formData.append("image", filesToBeSent[0]);
-    // let url = "http://localhost:8080/upload";
-    let url = "http://localhost:8080/user/profile/avatar";
+    // let url = "http://letsfindme.site/upload";
+    let url = "http://letsfindme.site/user/profile/avatar";
     let method = "POST";
     fetch(url, {
       method: method,
@@ -100,7 +100,7 @@ export default props => {
   };
 
   const adressInfoHandler = address => {
-    let url = "http://localhost:8080/user/profile/address/";
+    let url = "http://letsfindme.site/user/profile/address/";
     let method = "POST";
     fetch(url, {
       method: method,
@@ -123,7 +123,7 @@ export default props => {
   };
 
   const profileInfoHandler = profile => {
-    let url = "http://localhost:8080/user/profile/";
+    let url = "http://letsfindme.site/user/profile/";
     let method = "POST";
     fetch(url, {
       method: method,

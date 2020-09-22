@@ -50,7 +50,7 @@ export default props => {
   }, [props.history.location.search]);
   const loginHandler = authData => {
     setAuthLoading(true);
-    fetch("http://localhost:8080/auth/login", {
+    fetch("http://letsfindme.site/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -125,7 +125,7 @@ export default props => {
 
   const signupHandler = authData => {
     //setAuthLoading(true);
-    fetch("http://localhost:8080/auth/signup", {
+    fetch("http://letsfindme.site/auth/signup", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

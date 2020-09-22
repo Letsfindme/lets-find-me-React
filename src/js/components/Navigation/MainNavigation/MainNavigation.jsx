@@ -29,7 +29,7 @@ const mainNavigation = props => {
   }, [token]);
 
   const getUserProfileImage = cb => {
-    fetch("http://localhost:8080/user/profile/avatar", {
+    fetch("http://letsfindme.site/user/profile/avatar", {
       headers: {
         Authorization: "Bearer " + token
       }

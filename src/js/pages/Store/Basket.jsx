@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button";
 import { apiFetch } from "../../util/fetch";
 
 export default (props) => {
-  const url = `http://localhost:8080/shop/cart`;
+  const url = `http://letsfindme.site/shop/cart`;
   const options = {
     method: "POST",
     headers: {
