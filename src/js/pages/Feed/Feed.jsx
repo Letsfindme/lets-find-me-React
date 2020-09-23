@@ -166,6 +166,7 @@ export default (props) => {
         method = "PUT";
       }
       fetch(url, {
+        mode: 'cors',
         method: method,
         body: formData,
         headers: {
