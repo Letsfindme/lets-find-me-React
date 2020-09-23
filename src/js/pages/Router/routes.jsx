@@ -4,7 +4,7 @@ import {
   BrowserRouter,
   Switch,
   Redirect,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 import LoginPage from "../../pages/Auth/Login";
 import User from "../../pages/User/User";
@@ -21,10 +21,10 @@ import EditProduct from "../Store/EditProduct";
 import Basket from "../Store/Basket";
 import Orders from "../Store/Orders";
 
-const routs = props => {
+const routs = (props) => {
   const [wasInitialized, setWasInitialized] = useState(false);
-  const getAuth = useSelector(state => state.auth.isAuthenticated);
-  const getToken = useSelector(state => state.auth.token);
+  const getAuth = useSelector((state) => state.auth.isAuthenticated);
+  const getToken = useSelector((state) => state.auth.token);
 
   useEffect(() => {}, [getAuth]);
 
@@ -39,7 +39,7 @@ const routs = props => {
         <Route
           path="/"
           exact
-          render={props => <HomePage {...props} />}
+          render={(props) => <HomePage {...props} />}
           //component={HomePage}
         />
         <Route path="/login" exact component={LoginPage} />
@@ -48,31 +48,31 @@ const routs = props => {
         <Route
           path="/feed/search"
           //:city:category
-          render={props => <Search {...props} />}
+          render={(props) => <Search {...props} />}
         />
-        <Route path="/feed" exact render={props => <Feed {...props} />} />
+        <Route path="/feed" exact render={(props) => <Feed {...props} />} />
         <Route path="/feed/user-posts" component={MyPosts} />
-        <Route path="/store" exact render={props => <Store {...props} />} />
+        <Route path="/store" exact render={(props) => <Store {...props} />} />
         <Route
           path="/store/edit-products"
           exact
-          render={props => <EditProduct {...props} />}
+          render={(props) => <EditProduct {...props} />}
         />
         <Route
           path="/store/basket"
           exact
-          render={props => <Basket {...props} />}
+          render={(props) => <Basket {...props} />}
         />
         <Route
           path="/store/orders"
           exact
-          render={props => <Orders {...props} />}
+          render={(props) => <Orders {...props} />}
         />
 
         <Route
           path="/feed/:postId"
           exact
-          render={props => <SinglePost {...props} token={getToken} />}
+          render={(props) => <SinglePost {...props} token={getToken} />}
         />
         <PrivateRoute
           path="/admin"
@@ -82,11 +82,19 @@ const routs = props => {
         />
         <Redirect to="/" />
       </Switch>
-      <div className="home-wrapper -footer">
+      <div id="find_me" className="home-wrapper -footer">
         <h1>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe quidem
-          iure cum? Ut suscipit id fugiat. Nisi velit illo, assumenda nemo unde
-          eius modi vero voluptatum voluptas? Aliquid, dolorem sit!
+          <p>Welcome to Let's Find Me!</p>
+        </h1>
+        <h1>
+          <br></br>Here you will find articles and discussions adapted to your
+          desires and needs when you are traveling in a foreign country.{" "}
+          <p>
+            You'll find tips from fellow travelers who share the same culture as
+            you
+          </p>
+          in order to avoid unpleasant surprises and get the best experience
+          possible in the country you're visiting. Enjoy !
         </h1>
       </div>
     </BrowserRouter>

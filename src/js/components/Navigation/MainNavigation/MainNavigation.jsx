@@ -9,12 +9,12 @@ import logo from "../../../../assets/images/logo.png";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
 
-const mainNavigation = props => {
+const mainNavigation = (props) => {
   const dispatch = useDispatch();
-  const token = useSelector(state => state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
-  const updateAvatar = useSelector(state => state.app.updateAvatar);
+  const updateAvatar = useSelector((state) => state.app.updateAvatar);
 
   useEffect(() => {
     setAvatar(updateAvatar);
@@ -22,25 +22,25 @@ const mainNavigation = props => {
 
   useEffect(() => {
     token
-      ? getUserProfileImage(newAvatar => {
+      ? getUserProfileImage((newAvatar) => {
           setAvatar(newAvatar);
         })
       : "";
   }, [token]);
 
-  const getUserProfileImage = cb => {
+  const getUserProfileImage = (cb) => {
     fetch("https://letsfindme.site/user/profile/avatar", {
       headers: {
-        Authorization: "Bearer " + token
-      }
+        Authorization: "Bearer " + token,
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch avatar.");
         }
         return res.json();
       })
-      .then(newAvatar => {
+      .then((newAvatar) => {
         newAvatar.Avatar
           ? dispatch({ type: "SET_AVATAR", payload: newAvatar.Avatar })
           : "";
@@ -50,7 +50,7 @@ const mainNavigation = props => {
 
   const logoutHandler = () => {};
 
-  const onChoose = item => {
+  const onChoose = (item) => {
     if (item.id === "logout") {
       dispatch({ type: "SET_TOK", payload: null });
       dispatch({ type: "SET_ISAUTH", payload: false });
@@ -62,7 +62,7 @@ const mainNavigation = props => {
 
     ////////////// explode function //////////////
     var anchors = document.querySelectorAll("li");
-    Array.prototype.forEach.call(anchors, function(anchor) {
+    Array.prototype.forEach.call(anchors, function (anchor) {
       anchor.addEventListener("click", explode);
     });
     function explode(e) {
@@ -96,7 +96,7 @@ const mainNavigation = props => {
           friction: 0.9,
           opacity: r(0, 0.5, true),
           yVel: 0,
-          gravity: 0.1
+          gravity: 0.1,
         };
       }
 
@@ -107,7 +107,7 @@ const mainNavigation = props => {
       function render() {
         ctx.clearRect(0, 0, c.width, c.height);
 
-        particles.forEach(function(p, i) {
+        particles.forEach(function (p, i) {
           angleTools.moveOnAngle(p, p.speed);
 
           p.opacity -= 0.01;
@@ -133,31 +133,31 @@ const mainNavigation = props => {
         render();
       })();
 
-      setTimeout(function() {
+      setTimeout(function () {
         document.body.removeChild(c);
       }, 3000);
     }
     var angleTools = {
-      getAngle: function(t, n) {
+      getAngle: function (t, n) {
         var a = n.x - t.x,
           e = n.y - t.y;
         return (Math.atan2(e, a) / Math.PI) * 180;
       },
-      getDistance: function(t, n) {
+      getDistance: function (t, n) {
         var a = t.x - n.x,
           e = t.y - n.y;
         return Math.sqrt(a * a + e * e);
       },
-      moveOnAngle: function(t, n) {
+      moveOnAngle: function (t, n) {
         var a = this.getOneFrameDistance(t, n);
         (t.x += a.x), (t.y += a.y);
       },
-      getOneFrameDistance: function(t, n) {
+      getOneFrameDistance: function (t, n) {
         return {
           x: n * Math.cos((t.rotation * Math.PI) / 180),
-          y: n * Math.sin((t.rotation * Math.PI) / 180)
+          y: n * Math.sin((t.rotation * Math.PI) / 180),
         };
-      }
+      },
     };
     function r(a, b, c) {
       return parseFloat(
@@ -170,12 +170,13 @@ const mainNavigation = props => {
 
   let navItems = [
     {
+      href:"#find_me",
       id: "guidbecomea",
       text: "Join us",
-      link: "/guide",
+      link: "",
       show: true,
       className: "hideOnTablette",
-      logo: <i className="fas fa-hands-helping"></i>
+      logo: <i className="fas fa-hands-helping"></i>,
     },
     {
       id: "dtorenavitem",
@@ -183,7 +184,7 @@ const mainNavigation = props => {
       link: "/store",
       show: true,
       className: "hideOnTablette",
-      logo: <i className="fas fa-shopping-bag"></i>
+      logo: <i className="fas fa-shopping-bag"></i>,
     },
     {
       id: "signupitemid",
@@ -191,7 +192,7 @@ const mainNavigation = props => {
       link: "/login?l=true",
       onAuth: false,
       className: "hideOnTablette",
-      logo: <i className="fas fa-user-plus"></i>
+      logo: <i className="fas fa-user-plus"></i>,
     },
     {
       id: "loinitemnav",
@@ -199,8 +200,8 @@ const mainNavigation = props => {
       link: "/login",
       onAuth: false,
       className: "hideOnTablette",
-      logo: <i className="fas fa-user-circle"></i>
-    }
+      logo: <i className="fas fa-user-circle"></i>,
+    },
   ];
   useEffect(() => {
     if (props.history.location.pathname == "/store") {
@@ -219,22 +220,22 @@ const mainNavigation = props => {
       link: "/login",
       onAuth: false,
       className: "hideOnTablette",
-      logo: <i className="fas fa-user-circle"></i>
+      logo: <i className="fas fa-user-circle"></i>,
     },
     {
       id: "logout",
       text: "Logout",
       link: "/logout",
       onAuth: true,
-      logo: <i className="fas fa-power-off"></i>
+      logo: <i className="fas fa-power-off"></i>,
     },
     {
       id: "profile",
       text: "Profile",
       link: "/profile",
       onAuth: true,
-      logo: <i className="fas fa-user-circle"></i>
-    }
+      logo: <i className="fas fa-user-circle"></i>,
+    },
   ];
 
   return (
